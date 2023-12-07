@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 
-from helpers import login_required
+from helpers import login_required, raise_error
 
 app = Flask(__name__)
 
@@ -24,15 +24,16 @@ def after_request(response):
 
 
 @app.route('/')
-#@login_required
+# @login_required
 def index():
-    flash('HEEEEEEEEEEEEELO','error')
-    flash('HI')
     return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    flash('message')
+    flash('very important info','info')
+    return raise_error('HIIIIIIIIIIII', '/')
     session.clear()
     if request.method == 'POST':
         if not request.form.get('username'):
@@ -66,5 +67,6 @@ def logout():
     session.clear()
     return redirect('/')
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     pass

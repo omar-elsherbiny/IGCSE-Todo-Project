@@ -1,4 +1,4 @@
-from flask import redirect, render_template, session
+from flask import flash, redirect, render_template, session
 from functools import wraps
 
 def login_required(f):
@@ -9,3 +9,7 @@ def login_required(f):
             return redirect('/login')
         return f(*args, **kwargs)
     return decorated_function
+
+def raise_error(err,url):
+    flash(err,'error')
+    return redirect(url)
