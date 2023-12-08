@@ -110,6 +110,10 @@ def logout():
     flash('Successfully logged out','success')
     return redirect('/')
 
+@app.route('/account', methods=['GET', 'POST'])
+def account():
+    return render_template('account.html')
+
 
 if __name__ == '__main__':
     # app.run()

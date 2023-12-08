@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Account
+{% endblock %}
+
+{% block navbar %}
+    <a class="link" style="color:var(--text_alt);" href="./index.html">Home</a>
+    <a class="link" href="./flash">Flash</a>
+{% endblock %}
+
+{% block main %}
+    <h5>You are currently logged in as {{ session["user_name"] }}</h5>
+    <div id="login_form">
+        <form action="/logout" method="get">
+            <button name="submit" value="submit_logout" type="submit" autofocus>Log Out</button>
+        </form>
+    </div>
+{% endblock %}
