@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Log In
+Sign Up
 {% endblock %}
 
 {% block navbar %}
@@ -11,11 +11,12 @@ Log In
 
 {% block main %}
     <div id="login_form">
-        <form action="/login" method="post">
+        <form action="/signup" method="post">
             <input name="username" type="text" placeholder="Username" autofocus>
             <input name="password" type="password" placeholder="Password" autofocus>
-            <button name="submit" value="submit_login" type="submit" autofocus>Log In</button>
+            <input name="confirmation" type="password" placeholder="Confirm Password" autofocus>
+            <button name="submit" value="submit_signup" type="submit" autofocus>Sign Up</button>
         </form>
     </div>
-    <h5>Dont have an account?</h5><a class="link" href="./signup">Sign Up</a>
+    <h5>Already have an account?</h5><a class="link" href="./login">Log In</a>
 {% endblock %}

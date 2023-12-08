@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+Home
+{% endblock %}
+
+{% block navbar %}
+    <a class="link" style="color:var(--text_alt);" href="./index.html">Home</a>
+    <a class="link" href="./flash">Flash</a>
 {% endblock %}
 
 {% block main %}
@@ -25,5 +30,12 @@
     <h4 style="font-style: italic;">Hello</h4>
     <h5 style="font-style: italic;">Hello</h5>
     <h6 style="font-style: italic;">Hello</h6>
-    <p style="font-style: italic;">Hello</p>
+    <p style="font-weight: bold; font-style: italic;">Hello</p>
+    <h1 style="font-weight: bold; font-style: italic;">Hello</h1>
+    <h2 style="font-weight: bold; font-style: italic;">Hello</h2>
+    <h3 style="font-weight: bold; font-style: italic;">Hello</h3>
+    <h4 style="font-weight: bold; font-style: italic;">Hello</h4>
+    <h5 style="font-weight: bold; font-style: italic;">Hello</h5>
+    <h6 style="font-weight: bold; font-style: italic;">Hello</h6>
+    <p style="font-weight: bold; font-style: italic;">Hello</p>
 {% endblock %}
