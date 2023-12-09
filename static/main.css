@@ -2,7 +2,97 @@ main {
     padding: 2rem;
     flex: 1;
     background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     transition: all 0.5s ease-in-out;
+}
+/*######################## main*/
+
+.input_box {
+    position: relative;
+    margin: 0.5rem;
+}
+.input_box>input {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: var(--text);
+    border-bottom: 0.5px solid black;
+}
+.input_box>input::placeholder {
+    color: rgb(from var(--text) r g b / 65%);
+    opacity: 1;
+}
+.input_box>input:focus {outline: none;}
+.input_box::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 0;
+    height: 3px;
+    z-index: 5;
+    background-color: var(--accent);
+    transition: all .3s ease;
+}
+.input_box:focus-within::after {width: 100%;}
+/*######################## input box*/
+
+.input_button {
+    position: relative;
+    margin: 0.5rem;
+    padding: 0.2rem;
+    min-width: 4rem;
+    width: 50%;
+    border-radius: 10px;
+    color: var(--text-alt);
+    background-color: rgb(from var(--accent) r g b / 20%);
+    border: solid var(--accent);
+    transition: all .3s ease;
+    overflow: hidden;
+    z-index: 0;
+}
+.input_button:hover {
+    color: var(--text);
+    transform: scale(105%);
+}
+.input_button:active {
+    border-color: var(--text);
+}
+.input_button::after {
+    background-color: var(--accent);
+    border-radius: 10px;
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-100%, 0) rotate(10deg);
+    transform-origin: top left;
+    z-index: -1;
+    transition: .2s transform ease-out;
+}
+.input_button:hover::after {
+    transform: translate(-5px, -5px);
+}
+/*######################## input button*/
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10px;
+    margin: 1rem;
+    padding: 1rem;
+    width: clamp(10rem, 22%, 100%);
+    box-shadow: var(--shadow-elevation-medium);
 }
 
 #adder {
@@ -19,12 +109,13 @@ main {
     height: 3.5rem;
     border-radius: 10px;
     background-color: #fff;
+    box-shadow: var(--shadow-elevation-medium);
 
     transition: all 0.5s ease-in-out;
 }
 #adder svg {
-    transition: transform 0.5s ease-in-out;
+    color: var(--border-highlight);
+    transition: all 0.5s ease-in-out;
 }
-#adder:hover svg {
-    color: red;
-}
+#adder:hover svg {color: #000;}
+/*######################## adder*/
