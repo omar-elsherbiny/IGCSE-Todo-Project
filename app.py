@@ -11,6 +11,8 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
+tooltips=False
+
 
 def db_query(query, *params):
     connection_obj = sqlite3.connect('database.db')
@@ -26,13 +28,19 @@ def db_query(query, *params):
         connection_obj.commit()
         connection_obj.close()
 
-## REMOVE
-@app.route('/flash', methods=['GET', 'POST'])
+def set_tooltips(*args):
+    if tooltips:
+        for arg in args:
+            flash(arg,'info')
+
+# REMOVE
+@app.route('/flash')
 def flash_test():
     flash('message')
     flash('very important info', 'info')
     flash('very good success', 'success')
     return raise_error('very dangerous error', '/')
+
 
 @app.after_request
 def after_request(response):
@@ -43,20 +51,33 @@ def after_request(response):
     return response
 
 
+@app.route('/receive_data', methods=['POST'])
+def receive_data():
+    global tooltips
+    data_from_client = request.json
+    # Process the received data as needed
+    tooltips = True if data_from_client['tooltips']=='true' else False
+    return {'message': 'Data received successfully'}
+
+
 @app.route('/')
 @login_required
 def index():
+    set_tooltips('Welcome here','MY BALLS','hehehehe')
     return render_template('index.html')
+
 
 @app.route('/todos', methods=['GET', 'POST'])
 @login_required
 def todos():
     return render_template('todos.html')
 
+
 @app.route('/subjects', methods=['GET', 'POST'])
 @login_required
 def subjects():
     return render_template('subjects.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
