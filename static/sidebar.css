@@ -19,3 +19,6 @@
     justify-content: end;
     align-items: center;
 }
+#pulltab:hover svg {
+    color: #FFF;
+}

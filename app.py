@@ -56,6 +56,7 @@ def receive_data():
     global tooltips
     data_from_client = request.json
     # Process the received data as needed
+    print(data_from_client)
     tooltips = True if data_from_client['tooltips']=='true' else False
     return {'message': 'Data received successfully'}
 
