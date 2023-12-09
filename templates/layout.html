@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/styles.css" rel="stylesheet">
+    <link href="./static/main.css" rel="stylesheet">
+    <link href="./static/sidebar.css" rel="stylesheet">
     <script src="/static/script.js"></script>
 
     <title>IGCSE Todo List: {% block title %}{% endblock %}</title>
@@ -57,7 +59,7 @@
 
     <div id="content">
         {% block sidebar %}{% endblock %}  
-        <main id="main">
+        <main id="main" class="scroll">
             {% block main %}{% endblock %}
         </main>
     </div>
