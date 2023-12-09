@@ -63,7 +63,7 @@ def receive_data():
 @app.route('/')
 @login_required
 def index():
-    set_tooltips('Welcome here','MY BALLS','hehehehe')
+    set_tooltips('Welcome here','test','hehehehe')
     return render_template('index.html')
 
 
