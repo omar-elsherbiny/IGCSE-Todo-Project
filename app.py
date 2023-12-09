@@ -11,19 +11,28 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-def db_query(query,*params):
+
+def db_query(query, *params):
     connection_obj = sqlite3.connect('database.db')
     connection_obj.row_factory = sqlite3.Row
     db = connection_obj.cursor()
     if 'SELECT' in query:
-        res = db.execute(query,params).fetchall()
+        res = db.execute(query, params).fetchall()
         connection_obj.close()
         print(res)
         return res
     elif 'INSERT' in query:
-        db.execute(query,params)
+        db.execute(query, params)
         connection_obj.commit()
         connection_obj.close()
+
+## REMOVE
+@app.route('/flash', methods=['GET', 'POST'])
+def flash_test():
+    flash('message')
+    flash('very important info', 'info')
+    flash('very good success', 'success')
+    return raise_error('very dangerous error', '/')
 
 @app.after_request
 def after_request(response):
@@ -35,26 +44,28 @@ def after_request(response):
 
 
 @app.route('/')
-#@login_required
+@login_required
 def index():
     return render_template('index.html')
 
+@app.route('/todos', methods=['GET', 'POST'])
+@login_required
+def todos():
+    return render_template('todos.html')
 
-@app.route('/flash', methods=['GET', 'POST'])
-def flash_test():
-    flash('message')
-    flash('very important info', 'info')
-    flash('very good success', 'success')
-    return raise_error('very dangerous error', '/')
+@app.route('/subjects', methods=['GET', 'POST'])
+@login_required
+def subjects():
+    return render_template('subjects.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     get_flashed_messages()
     session.clear()
     if request.method == 'POST':
-        username=request.form.get('username')
-        password=request.form.get('password')
-        confirmation=request.form.get('confirmation')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirmation = request.form.get('confirmation')
         if not username:
             return raise_error('Must provide username', request.path)
         elif not password:
@@ -62,23 +73,26 @@ def signup():
         elif not confirmation:
             return raise_error('Must re-type password', request.path)
 
-        
-        rows = db_query('SELECT * FROM users WHERE username = ?',username)
+        rows = db_query('SELECT * FROM users WHERE username = ?', username)
 
         if len(rows) != 0:
-            return raise_error('Username already taken',request.path)
-        
-        if confirmation != password:
-            return raise_error('Passwords do not match',request.path)
+            return raise_error('Username already taken', request.path)
 
-        db_query('INSERT INTO users (username,hash) VALUES (?,?)',username,get_hash(password))
+        if confirmation != password:
+            return raise_error('Passwords do not match', request.path)
+
+        db_query('INSERT INTO users (username,hash) VALUES (?,?)',
+                 username, get_hash(password))
 
         session['user_name'] = username
-        session['user_id'] = db_query('SELECT id FROM users WHERE username=?',username)
+        session['user_id'] = db_query(
+            'SELECT id FROM users WHERE username=?', username)
 
+        flash('New account made', 'success')
         return redirect('/')
     else:
         return render_template('signup.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -90,8 +104,8 @@ def login():
         elif not request.form.get('password'):
             return raise_error('Must provide password', request.path)
 
-        rows = db_query('SELECT * FROM users WHERE username = ?',request.form.get('username'))
-        print(rows)
+        rows = db_query('SELECT * FROM users WHERE username = ?',
+                        request.form.get('username'))
 
         if len(rows) != 1 or not check_hash(rows[0]['hash'], request.form.get('password')):
             return raise_error('Invalid username and/or password', request.path)
@@ -99,6 +113,7 @@ def login():
         session['user_id'] = rows[0]['id']
         session['user_name'] = rows[0]['username']
 
+        flash('Successfully logged in', 'success')
         return redirect('/')
     else:
         return render_template('login.html')
@@ -107,10 +122,12 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    flash('Successfully logged out','success')
+    flash('Successfully logged out', 'success')
     return redirect('/')
 
+
 @app.route('/account', methods=['GET', 'POST'])
+@login_required
 def account():
     return render_template('account.html')
 

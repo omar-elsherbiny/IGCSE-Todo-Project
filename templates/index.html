@@ -4,9 +4,51 @@
 Home
 {% endblock %}
 
-{% block navbar %}
-    <a class="link" style="color:var(--text_alt);" href="./index.html">Home</a>
-    <a class="link" href="./flash">Flash</a>
+{% block navbar1 %}
+    <a class="link alt" href="./">Home</a>
+    <a class="link" href="./todos">Lists</a>
+    <a class="link" href="./subjects">Subjects</a>
+{% endblock %}
+
+{% block navbar2 %}
+    <a class="link" href="./account">{{ session["user_name"] }}</a>
+{% endblock %}
+
+{% block sidebar %}
+    <div id="sidebar">
+        <div id="pulltab" >
+            <svg id="pulltab_open" onclick="toggleSidebar()" class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#888888" d="m14.475 12l-7.35-7.35q-.375-.375-.363-.888t.388-.887q.375-.375.888-.375t.887.375l7.675 7.7q.3.3.45.675t.15.75q0 .375-.15.75t-.45.675l-7.7 7.7q-.375.375-.875.363T7.15 21.1q-.375-.375-.375-.888t.375-.887L14.475 12Z"/></svg>
+            <svg id="pulltab_close" onclick="toggleSidebar()" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#888888" d="m3.55 12l7.35 7.35q.375.375.363.875t-.388.875q-.375.375-.875.375t-.875-.375l-7.7-7.675q-.3-.3-.45-.675T.825 12q0-.375.15-.75t.45-.675l7.7-7.7q.375-.375.888-.363t.887.388q.375.375.375.875t-.375.875L3.55 12Z"/></svg>
+        </div>
+        <h1>Hello</h1>
+        <h2>Hello</h2>
+        <h3>Hello</h3>
+        <h4>Hello</h4>
+        <h5>Hello</h5>
+        <h6>Hello</h6>
+        <p>Hello</p>
+        <h1 style="font-weight: bold;">Hello</h1>
+        <h2 style="font-weight: bold;">Hello</h2>
+        <h3 style="font-weight: bold;">Hello</h3>
+        <h4 style="font-weight: bold;">Hello</h4>
+        <h5 style="font-weight: bold;">Hello</h5>
+        <h6 style="font-weight: bold;">Hello</h6>
+        <p style="font-weight: bold;">Hello</p>
+        <h1 style="font-style: italic;">Hello</h1>
+        <h2 style="font-style: italic;">Hello</h2>
+        <h3 style="font-style: italic;">Hello</h3>
+        <h4 style="font-style: italic;">Hello</h4>
+        <h5 style="font-style: italic;">Hello</h5>
+        <h6 style="font-style: italic;">Hello</h6>
+        <p style="font-weight: bold; font-style: italic;">Hello</p>
+        <h1 style="font-weight: bold; font-style: italic;">Hello</h1>
+        <h2 style="font-weight: bold; font-style: italic;">Hello</h2>
+        <h3 style="font-weight: bold; font-style: italic;">Hello</h3>
+        <h4 style="font-weight: bold; font-style: italic;">Hello</h4>
+        <h5 style="font-weight: bold; font-style: italic;">Hello</h5>
+        <h6 style="font-weight: bold; font-style: italic;">Hello</h6>
+        <p style="font-weight: bold; font-style: italic;">Hello</p>
+    </div>
 {% endblock %}
 
 {% block main %}

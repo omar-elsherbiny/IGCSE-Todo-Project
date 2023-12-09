@@ -19,15 +19,15 @@
             </svg>
         </div>
         <div>
-            {% block navbar %}{% endblock %}
+            {% block navbar1 %}{% endblock %}
         </div>
         <div style="display:flex; white-space:nowrap;">
             <input type="checkbox" id="theme_toggle" class="toggle">
             <label for="theme_toggle"></label>
             {% if session["user_id"] %}
-            <a class="link" href="./account">{{ session["user_name"] }}</a>
+                {% block navbar2 %}{% endblock %}
             {% else %}
-            <a class="link" href="./login">Log In</a>
+                <a class="link alt" href="./login">Log In</a>
             {% endif %}
         </div>
     </nav>
@@ -55,9 +55,12 @@
         {% endwith %}
     </header>
 
-    <main id="main">
-        {% block main %}{% endblock %}
-    </main>
+    <div id="content">
+        {% block sidebar %}{% endblock %}  
+        <main id="main">
+            {% block main %}{% endblock %}
+        </main>
+    </div>
 
     <footer>
     </footer>

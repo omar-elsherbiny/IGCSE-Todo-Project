@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let toggle = document.getElementById("theme_toggle");
-    let storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    let toggle = document.getElementById('theme_toggle');
+    let storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     if (storedTheme) {
         document.documentElement.setAttribute('data-theme', storedTheme)
-        if (storedTheme === "dark") {
+        if (storedTheme === 'dark') {
             toggle.checked = true;
         }
         else {
@@ -14,12 +14,23 @@ document.addEventListener('DOMContentLoaded', function () {
     toggle.addEventListener('click', function () {
         let currentTheme = document.documentElement.getAttribute("data-theme");
 
-        let targetTheme = "light";
-        if (currentTheme === "light") {
-            targetTheme = "dark";
+        let targetTheme = 'light';
+        if (currentTheme === 'light') {
+            targetTheme = 'dark';
         }
 
         document.documentElement.setAttribute('data-theme', targetTheme)
         localStorage.setItem('theme', targetTheme);
     });
 })
+
+function toggleSidebar () {
+    bar = document.getElementById('sidebar')
+    if (bar.style.width=='2px') {
+        bar.style.width='';
+    } else {
+        bar.style.width='2px'
+    }
+    document.getElementById('pulltab_open').classList.toggle('hide')
+    document.getElementById('pulltab_close').classList.toggle('hide')
+}
