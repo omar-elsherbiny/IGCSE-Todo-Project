@@ -61,13 +61,18 @@ Subjects
 {% endblock %}
 
 {% block main %}
-<div id="adder" onclick="toggleAdderMenu()">
-    <svg id="adder_icon" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24">
+<div id="adder" class="close">
+    <svg onclick="toggleAdderMenu()" id="adder_icon" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24">
         <path fill="currentColor"
             d="M11 13H6q-.425 0-.712-.288T5 12q0-.425.288-.712T6 11h5V6q0-.425.288-.712T12 5q.425 0 .713.288T13 6v5h5q.425 0 .713.288T19 12q0 .425-.288.713T18 13h-5v5q0 .425-.288.713T12 19q-.425 0-.712-.288T11 18v-5Z" />
     </svg>
-    <div id="adder_menu" class="hide">
-        <h6>option1</h6>
+    <div id="adder_menu" class="close">
+        <div class="input_box">
+            <input name="name" type="text" placeholder="Session Text">
+        </div>
+        <div class="input_box">
+            <input name="start" type="date">
+        </div>
         <h6>option2</h6>
     </div>
 </div>

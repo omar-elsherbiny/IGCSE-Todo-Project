@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-
+    let sb_status = localStorage.getItem('sb_status') || 'opened';
+    console.log(sb_status);
+    if (sb_status) {
+        document.documentElement.setAttribute('sb_status', sb_status)
+        if (sb_status === 'closed') { toggleSidebar(true); }
+    }
 })
 
-function toggleSidebar() {
+function toggleSidebar(maintain) {
     bar = document.getElementById('sidebar')
     if (bar.style.width == '2px') {
         bar.style.width = '';
@@ -11,25 +16,35 @@ function toggleSidebar() {
     }
     document.getElementById('pulltab_open').classList.toggle('hide')
     document.getElementById('pulltab_close').classList.toggle('hide')
+
+    if (!maintain) {
+        let current_sb_status = document.documentElement.getAttribute("sb_status");
+        let target_sb_status = 'opened';
+        if (current_sb_status === 'opened') {
+            target_sb_status = 'closed';
+        }
+        console.log(current_sb_status,target_sb_status);
+        document.documentElement.setAttribute('sb_status', target_sb_status);
+        localStorage.setItem('sb_status', target_sb_status);
+    }
 }
 
-adder_open=false;
+adder_open = false;
 
 function toggleAdderMenu() {
     let adder_div = document.getElementById('adder');
     let icon = document.getElementById('adder_icon');
     let menu = document.getElementById('adder_menu');
 
+    adder_div.classList.toggle('close');
+    adder_div.classList.toggle('open');
+    menu.classList.toggle('close');
+    menu.classList.toggle('open');
     if (adder_open) {
-        adder_open=false;
-        adder_div.style.height='';
-        adder_div.style.width='';
-        icon.style.transform='rotate(0deg)';
+        adder_open = false;
+        icon.style.transform = 'rotate(0deg)';
     } else {
-        adder_open=true;
-        adder_div.style.height='40dvh';
-        adder_div.style.width='10dvw';
-        icon.style.transform='rotate(-180deg)';
+        adder_open = true;
+        icon.style.transform = 'rotate(-180deg)';
     }
-    menu.classList.toggle('hide');
 }

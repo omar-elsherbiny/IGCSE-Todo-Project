@@ -13,10 +13,12 @@ Session(app)
 
 tooltips=False
 
+def dict_factory(cursor, row):
+    return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
 
 def db_query(query, *params):
     connection_obj = sqlite3.connect('database.db')
-    connection_obj.row_factory = sqlite3.Row
+    connection_obj.row_factory = dict_factory
     db = connection_obj.cursor()
     if 'SELECT' in query:
         res = db.execute(query, params).fetchall()
@@ -95,7 +97,9 @@ def signup():
         elif not confirmation:
             return raise_error('Must re-type password', request.path)
 
-        rows = db_query('SELECT * FROM users WHERE username = ?', username)
+        rows = db_query('SELECT * FROM users WHERE username = ?',
+                        request.form.get('username'))
+        print("rows:::::: ",rows)
 
         if len(rows) != 0:
             return raise_error('Username already taken', request.path)

@@ -9,6 +9,11 @@ main {
     transition: all 0.5s ease-in-out;
 }
 /*######################## main*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {transition: background-color 600000s 0s, color 600000s 0s;}
+input[data-autocompleted] {background-color: transparent !important;}
 
 .input_box {
     position: relative;
@@ -55,6 +60,7 @@ main {
     z-index: 0;
 }
 .input_button:hover {
+    cursor: pointer;
     color: var(--text);
     transform: scale(105%);
 }
@@ -95,6 +101,16 @@ main {
     box-shadow: var(--shadow-elevation-medium);
 }
 
+#adder_menu {
+    transition: transform 0.5s ease-in-out;
+}
+#adder_menu.close {
+    height: 0;
+    transform: scale(0%);
+}
+#adder_menu.open {
+    transform: scale(100%);
+}
 #adder {
     position: absolute;
     right: 5%;
@@ -105,17 +121,25 @@ main {
     justify-content: space-between;
     align-items: center;
 
-    width: 3.5rem;
-    height: 3.5rem;
     border-radius: 10px;
-    background-color: #fff;
     box-shadow: var(--shadow-elevation-medium);
 
     transition: all 0.5s ease-in-out;
 }
+#adder.close {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #fff;
+}
+#adder.open {
+    width: clamp(3.5rem, 15rem, 20rem);
+    height: clamp(3.5rem, 10rem, 20rem);
+    background-color: #fff;
+}
 #adder svg {
-    color: var(--border-highlight);
+    color: rgba(0, 0, 0, 0.25);
     transition: all 0.5s ease-in-out;
 }
-#adder:hover svg {color: #000;}
+#adder:hover svg,
+#adder:focus-within svg {color: #000;}
 /*######################## adder*/

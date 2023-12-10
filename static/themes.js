@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
             targetTheme = 'dark';
         }
 
-        document.documentElement.setAttribute('data-theme', targetTheme)
+        document.documentElement.setAttribute('data-theme', targetTheme);
         localStorage.setItem('theme', targetTheme);
     });
 })
