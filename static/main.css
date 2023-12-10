@@ -21,6 +21,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .input_box>input {
     position: relative;
+    width: 97%;
     border: none;
     background-color: transparent;
     color: var(--text);
@@ -35,7 +36,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     content: '';
     position: absolute;
     left: 0;
-    top: 100%;
+    top: 90%;
     width: 0;
     height: 3px;
     z-index: 5;
