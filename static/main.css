@@ -9,6 +9,7 @@ main {
     transition: all 0.5s ease-in-out;
 }
 /*######################## main*/
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -101,6 +102,26 @@ input[data-autocompleted] {background-color: transparent !important;}
     width: clamp(10rem, 22%, 100%);
     box-shadow: var(--shadow-elevation-medium);
 }
+
+.dropbox{
+    border: solid #fff;
+}
+.draggable {
+    /*################################################################## fix ya 3am el 7ag*/
+    margin: 1rem;
+    padding: 1rem;
+    background-color: var(--secondary);
+    border: solid #fff;
+    border-radius: 10px;
+    cursor: move;
+    cursor: grab;
+}
+.draggable.dragging{
+    opacity: .5;
+    transform: scale(90%);
+    cursor: grabbing;
+}
+/*######################## containers*/
 
 #adder_menu {
     transition: transform 0.5s ease-in-out;

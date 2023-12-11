@@ -1,50 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let sb_status = localStorage.getItem('sb_status') || 'opened';
-    console.log(sb_status);
-    if (sb_status) {
-        document.documentElement.setAttribute('sb_status', sb_status)
-        if (sb_status === 'closed') { toggleSidebar(true); }
-    }
+    const draggables = document.querySelectorAll('.draggable');
+    const containers = document.querySelectorAll('.dropbox');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', function () {
+            draggable.classList.add('dragging');
+        })
+
+        draggable.addEventListener('dragend', function () {
+            draggable.classList.remove('dragging');
+        })
+    })
+
+    containers.forEach(container => {
+        container.addEventListener('dragover', e => {
+            e.preventDefault();
+            const afterE = getDragAfter(container, e.clientY);
+            const draggable = document.querySelector('.dragging');
+            if (afterE==null) {
+                container.appendChild(draggable);
+            } else {
+                container.insertBefore(draggable,afterE);
+            }
+        })
+    })
 })
 
-function toggleSidebar(maintain) {
-    bar = document.getElementById('sidebar')
-    if (bar.style.width == '2px') {
-        bar.style.width = '';
-    } else {
-        bar.style.width = '2px'
-    }
-    document.getElementById('pulltab_open').classList.toggle('hide')
-    document.getElementById('pulltab_close').classList.toggle('hide')
+function getDragAfter(container, y) {
+    const draggableEs = [...container.querySelectorAll('.draggable:not(.dragging)')];
 
-    if (!maintain) {
-        let current_sb_status = document.documentElement.getAttribute("sb_status");
-        let target_sb_status = 'opened';
-        if (current_sb_status === 'opened') {
-            target_sb_status = 'closed';
+    return draggableEs.reduce(function (closest, child) {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+            return closest
         }
-        console.log(current_sb_status,target_sb_status);
-        document.documentElement.setAttribute('sb_status', target_sb_status);
-        localStorage.setItem('sb_status', target_sb_status);
-    }
-}
-
-adder_open = false;
-
-function toggleAdderMenu() {
-    let adder_div = document.getElementById('adder');
-    let icon = document.getElementById('adder_icon');
-    let menu = document.getElementById('adder_menu');
-
-    adder_div.classList.toggle('close');
-    adder_div.classList.toggle('open');
-    menu.classList.toggle('close');
-    menu.classList.toggle('open');
-    if (adder_open) {
-        adder_open = false;
-        icon.style.transform = 'rotate(0deg)';
-    } else {
-        adder_open = true;
-        icon.style.transform = 'rotate(-180deg)';
-    }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
 }
