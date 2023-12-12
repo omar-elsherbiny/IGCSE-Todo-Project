@@ -28,34 +28,14 @@ Subjects
         </svg>
     </div>
     <div id="sidebar_content" class="scroll">
-        <h1>Hello</h1>
-        <h2>Hello</h2>
-        <h3>Hello</h3>
-        <h4>Hello</h4>
-        <h5>Hello</h5>
-        <h6>Hello</h6>
-        <p>Hello</p>
-        <h1 style="font-weight: bold;">Hello</h1>
-        <h2 style="font-weight: bold;">Hello</h2>
-        <h3 style="font-weight: bold;">Hello</h3>
-        <h4 style="font-weight: bold;">Hello</h4>
-        <h5 style="font-weight: bold;">Hello</h5>
-        <h6 style="font-weight: bold;">Hello</h6>
-        <p style="font-weight: bold;">Hello</p>
-        <h1 style="font-style: italic;">Hello</h1>
-        <h2 style="font-style: italic;">Hello</h2>
-        <h3 style="font-style: italic;">Hello</h3>
-        <h4 style="font-style: italic;">Hello</h4>
-        <h5 style="font-style: italic;">Hello</h5>
-        <h6 style="font-style: italic;">Hello</h6>
-        <p style="font-weight: bold; font-style: italic;">Hello</p>
-        <h1 style="font-weight: bold; font-style: italic;">Hello</h1>
-        <h2 style="font-weight: bold; font-style: italic;">Hello</h2>
-        <h3 style="font-weight: bold; font-style: italic;">Hello</h3>
-        <h4 style="font-weight: bold; font-style: italic;">Hello</h4>
-        <h5 style="font-weight: bold; font-style: italic;">Hello</h5>
-        <h6 style="font-weight: bold; font-style: italic;">Hello</h6>
-        <p style="font-weight: bold; font-style: italic;">Hello</p>
+        <div>
+            <h5>Number of sessions: </h5>
+            <input class="input_number" name="nsessions" type="number" min="1" value="5" disabled>
+            <button class="input_button" name="submit" value="edit" type="submit">Edit</button>
+        </div>
+        <div>
+            <h5>Info: </h5>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -76,12 +56,28 @@ Subjects
         <h6>option2</h6>
     </div>
 </div>
-<div class="container dropbox">
-    <h5 class="draggable" draggable="true">SUBJECT 001</h5>
-    <h5 class="draggable" draggable="true">SUBJECT 002</h5>
+<div class="session">
+    <div>
+        <div class="header_container">
+            <h5>Session 1</h5>
+        </div>
+        <div class="sub_container dropbox">
+            <h5 class="draggable" draggable="true">SUBJECT 001</h5>
+            <h5 class="draggable" draggable="true">SUBJECT 002</h5>
+        </div>
+    </div>
+    <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="10 0 24 3.28"><defs><style>.cls-1{fill:#888;}</style></defs><path class="cls-1" d="M22.51,2.52V.45H.23c-.06,0-.12-.02-.16-.06C.02,.34,0,.29,0,.23,0,.16,.02,.11,.06,.06,.11,.02,.16,0,.23,0H22.51c.12,0,.23,.04,.32,.13,.09,.09,.13,.19,.13,.32V2.52l.65-.65s.1-.07,.16-.07c.06,0,.12,.02,.16,.06,.05,.05,.07,.1,.07,.16s-.02,.12-.07,.16l-1.04,1.04s-.05,.04-.07,.05c-.03,0-.05,.01-.08,.01-.03,0-.06,0-.08-.01-.03,0-.05-.03-.07-.05l-1.04-1.04s-.07-.1-.06-.16c0-.06,.03-.11,.07-.16,.05-.04,.1-.06,.16-.06,.06,0,.11,.02,.16,.06l.65,.65Z"/></svg>
 </div>
-<div class="container dropbox">
-    <h5 class="draggable" draggable="true">SUBJECT 003</h5>
-    <h5 class="draggable" draggable="true">SUBJECT 004</h5>
+<div class="session flip">
+    <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="10 0 24 3.28"><defs><style>.cls-1{fill:#888;}</style></defs><path class="cls-1" d="M22.51,2.52V.45H.23c-.06,0-.12-.02-.16-.06C.02,.34,0,.29,0,.23,0,.16,.02,.11,.06,.06,.11,.02,.16,0,.23,0H22.51c.12,0,.23,.04,.32,.13,.09,.09,.13,.19,.13,.32V2.52l.65-.65s.1-.07,.16-.07c.06,0,.12,.02,.16,.06,.05,.05,.07,.1,.07,.16s-.02,.12-.07,.16l-1.04,1.04s-.05,.04-.07,.05c-.03,0-.05,.01-.08,.01-.03,0-.06,0-.08-.01-.03,0-.05-.03-.07-.05l-1.04-1.04s-.07-.1-.06-.16c0-.06,.03-.11,.07-.16,.05-.04,.1-.06,.16-.06,.06,0,.11,.02,.16,.06l.65,.65Z"/></svg>
+    <div>
+        <div class="header_container">
+            <h5>Session 1</h5>
+        </div>
+        <div class="sub_container dropbox">
+            <h5 class="draggable" draggable="true">SUBJECT 003</h5>
+            <h5 class="draggable" draggable="true">SUBJECT 004</h5>
+        </div>
+    </div>
 </div>
 {% endblock %}

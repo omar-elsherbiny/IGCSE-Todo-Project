@@ -51,8 +51,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     position: relative;
     margin: 0.5rem;
     padding: 0.2rem;
-    min-width: 4rem;
-    width: 50%;
+    width: clamp(4rem,50%,13rem);
     border-radius: 10px;
     color: var(--text-alt);
     background-color: rgb(from var(--accent) r g b / 20%);
@@ -90,6 +89,32 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 /*######################## input button*/
 
+.input_number {
+    margin: 0.5rem;
+    width: 2.5rem;
+    height: 2rem;
+    font-size: 1.2em;
+    color: var(--text);
+    background-color: var(--text-alt);
+    text-align: center;
+    border-radius: 10px;
+    border: solid var(--accent);
+    transition: all .3s ease;
+}
+.input_number:disabled {
+    border: 0.5px solid var(--border-highlight);
+    width: 2rem;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+.input_number:disabled::-webkit-outer-spin-button,
+.input_number:disabled::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input_number:focus {outline: none;}
+/*######################## input number*/
+
 .container {
     display: flex;
     flex-direction: column;
@@ -108,7 +133,6 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .draggable {
     /*################################################################## fix ya 3am el 7ag*/
-    margin: 1rem;
     padding: 1rem;
     background-color: var(--secondary);
     border: solid #fff;
@@ -151,12 +175,12 @@ input[data-autocompleted] {background-color: transparent !important;}
 #adder.close {
     width: 3.5rem;
     height: 3.5rem;
-    background-color: #fff;
+    background-color: whitesmoke;
 }
 #adder.open {
     width: clamp(3.5rem, 15rem, 20rem);
     height: clamp(3.5rem, 10rem, 20rem);
-    background-color: #fff;
+    background-color: whitesmoke;
 }
 #adder svg {
     color: rgba(0, 0, 0, 0.25);
@@ -165,3 +189,46 @@ input[data-autocompleted] {background-color: transparent !important;}
 #adder:hover svg,
 #adder:focus-within svg {color: #000;}
 /*######################## adder*/
+
+.session {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    margin: 1rem;
+}
+.session>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.session>svg {
+    margin: 0 0.5rem;
+}
+.session.flip>svg {
+    transform: rotateY(180deg);
+}
+.header_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 1rem;
+    width: clamp(10rem, 85%, 100%);
+    box-shadow: var(--shadow-elevation-medium);
+}
+.sub_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+    border-radius: 10px;
+    padding: 1rem;
+    width: clamp(10rem, 80%, 100%);
+    box-shadow: var(--shadow-elevation-medium);
+}

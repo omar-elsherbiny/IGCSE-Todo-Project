@@ -1,11 +1,17 @@
 #sidebar {
     width: clamp(10%,30%,50%);
     background-color: var(--background-alt);
-    transition: all .1s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: left;
+    transition: all .2s ease-out;
 }
 #sidebar_content {
+    padding-left: 1rem;
     height: calc(100% - 2.4rem);
     margin-right: 1px;
+    white-space: nowrap;
     transition: all 0.5s ease-in-out;
 }
 
