@@ -8,6 +8,8 @@
     transition: all .2s ease-out;
 }
 #sidebar_content {
+    display: flex;
+    flex-direction: column;
     padding: 0 1rem;
     height: calc(100% - 2.4rem);
     margin-right: 1px;
@@ -34,3 +36,35 @@
     transition: color 0.3s ease-in-out;
 }
 #pulltab:hover svg {color: #FFF;}
+/*######################## pulltab*/
+
+#boards_list {
+    flex: 1;
+}
+
+#trash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    margin-bottom: 1rem;
+}
+#trash div {display: none;}
+#trash svg {
+    position: absolute;
+    color: var(--border-highlight);
+    transition: all 0.3s ease-in-out;
+}
+#trash.open svg {
+    scale: 1.1;
+    color: #FFF;
+}
+#trash.open>#trash_lid {
+    rotate: -20deg;
+    transform: translate(5px,-3px);
+}
+#trash.open>#trash_can {
+    rotate: 1deg;
+    transform: translate(0px,5px);
+}
+/*######################## trash*/

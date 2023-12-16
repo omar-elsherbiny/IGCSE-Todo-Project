@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const draggable = document.querySelector('.dragging');
             if (container.classList.contains("dropzone")) {
                 container.classList.remove("dragover");
+                handleDragHover(false, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
             }
             if (checkValidTags(draggable, container)) {
                 if (re_afterE == null) {
@@ -47,14 +48,22 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 
         container.addEventListener('dragenter', event => {
-            if (container.classList.contains("dropzone") && checkValidTags(document.querySelector('.dragging'), container)) {
+            const draggable = document.querySelector('.dragging');
+            if (container.classList.contains("dropzone") && checkValidTags(draggable, container)) {
                 container.classList.add("dragover");
+                handleDragHover(true, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
             }
         })
 
         container.addEventListener('dragleave', event => {
+            const draggable = document.querySelector('.dragging');
             if (container.classList.contains("dropzone")) {
-                container.classList.remove("dragover");
+                const newTarget = event.relatedTarget;
+                if (!newTarget || !container.contains(newTarget)) {
+                    // Check if the new target is not a child of the container
+                    container.classList.remove("dragover");
+                    handleDragHover(false, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+                }
             }
         })
     })
@@ -85,5 +94,17 @@ function checkValidTags(draggable, container) {
 }
 
 function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, dest_afterE) {
-    console.log(prev_container, dest_container)
+    if (dest_container.id == 'trash') {
+        prev_container.removeChild(draggable);
+    }
+}
+
+function handleDragHover(ishover, draggable, prev_container, prev_afterE, dest_container, dest_afterE) {
+    if (dest_container.id == 'trash') {
+        if (ishover) {
+            document.getElementById('trash').classList.add('open');
+        } else {
+            document.getElementById('trash').classList.remove('open');
+        }
+    }
 }

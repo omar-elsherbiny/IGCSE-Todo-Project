@@ -129,13 +129,14 @@ input[data-autocompleted] {background-color: transparent !important;}
     box-shadow: var(--shadow-elevation-medium);
 }
 
-.dropzone{
+/*.dropzone{
     border: solid #fff;
 }
 .dropzone.dragover {
     border: solid #00f;
-}
+}*/
 .draggable {
+    /*REMOVE*/
     width: 4rem;
     cursor: move;
     cursor: grab;
@@ -146,7 +147,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     cursor: grabbing;
 }
 /*######################## containers*/
-
+/*REMOVE*/
 .board_minimised {
     border: solid #000;
 }
@@ -155,29 +156,19 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 /*######################## draggable styles*/
 
-#adder_menu {
-    transition: transform 0.5s ease-in-out;
-}
-#adder_menu.close {
-    height: 0;
-    transform: scale(0%);
-}
-#adder_menu.open {
-    transform: scale(100%);
-}
 #adder {
     position: absolute;
-    right: 5%;
-    bottom: 5%;
-
+    right: calc(5% + 1rem);
+    bottom: calc(5% + 1rem);
+    
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
-
+    
     border-radius: 10px;
     box-shadow: var(--shadow-elevation-medium);
-
+    
     transition: all 0.5s ease-in-out;
 }
 #adder.close {
@@ -196,8 +187,19 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 #adder:hover svg,
 #adder:focus-within svg {color: #000;}
+#adder_menu {
+    transition: transform 0.5s ease-in-out;
+}
+#adder_menu.close {
+    height: 0;
+    transform: scale(0%);
+}
+#adder_menu.open {
+    transform: scale(100%);
+}
 /*######################## adder*/
 
+/*REMOVE*/
 .session {
     width: 100%;
     display: grid;
