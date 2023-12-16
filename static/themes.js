@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*### sidebar*/
     let sb_status = localStorage.getItem('sb_status') || 'opened';
-    console.log(sb_status);
     if (sb_status) {
         document.documentElement.setAttribute('sb_status', sb_status)
         if (sb_status === 'closed') { toggleSidebar(true); }
@@ -49,7 +48,6 @@ function toggleSidebar(maintain) {
         if (current_sb_status === 'opened') {
             target_sb_status = 'closed';
         }
-        console.log(current_sb_status, target_sb_status);
         document.documentElement.setAttribute('sb_status', target_sb_status);
         localStorage.setItem('sb_status', target_sb_status);
     }

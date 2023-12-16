@@ -1,5 +1,6 @@
 main {
     padding: 2rem;
+    overflow-x: hidden;
     flex: 1;
     background-color: var(--background);
     display: flex;
@@ -128,15 +129,13 @@ input[data-autocompleted] {background-color: transparent !important;}
     box-shadow: var(--shadow-elevation-medium);
 }
 
-.dropbox{
+.dropzone{
     border: solid #fff;
 }
+.dropzone.dragover {
+    border: solid #00f;
+}
 .draggable {
-    /*################################################################## fix ya 3am el 7ag*/
-    padding: 1rem;
-    background-color: var(--secondary);
-    border: solid #fff;
-    border-radius: 10px;
     cursor: move;
     cursor: grab;
 }
@@ -146,6 +145,14 @@ input[data-autocompleted] {background-color: transparent !important;}
     cursor: grabbing;
 }
 /*######################## containers*/
+
+.board_minimised {
+    border: solid #000;
+}
+.board_maximised {
+    border: solid #f00;
+}
+/*######################## draggable styles*/
 
 #adder_menu {
     transition: transform 0.5s ease-in-out;

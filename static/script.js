@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const draggables = document.querySelectorAll('.draggable');
-    const containers = document.querySelectorAll('.dropbox');
+    const containers = document.querySelectorAll('.dropzone');
+    let re_draggable, re_container, re_afterE;
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', function () {
@@ -13,14 +14,40 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     containers.forEach(container => {
-        container.addEventListener('dragover', e => {
-            e.preventDefault();
-            const afterE = getDragAfter(container, e.clientY);
+        container.addEventListener('dragover', event => {
+            event.preventDefault();
+            const afterE = getDragAfter(container, event.clientY);
             const draggable = document.querySelector('.dragging');
-            if (afterE==null) {
+            if (afterE == null) {
                 container.appendChild(draggable);
             } else {
-                container.insertBefore(draggable,afterE);
+                container.insertBefore(draggable, afterE);
+            }
+        })
+
+        container.addEventListener('drop', event => {
+            event.preventDefault();
+            if (re_afterE == null) {
+                re_container.appendChild(re_draggable);
+                console.log(re_container, re_draggable);
+            } else {
+                re_container.insertBefore(re_draggable, re_afterE);
+            }
+            handleDragDrop(re_draggable, container, re_container);
+            re_draggable, re_container, re_afterE = null;
+        })
+
+        container.addEventListener('dragenter', event => {
+            if (container.classList.contains("dropzone")) {
+                container.classList.add("dragover");
+                const draggable = document.querySelector('.dragging');
+                [re_draggable, re_container, re_afterE] = [draggable, draggable.parentElement, draggable.nextElementSibling];
+            }
+        })
+
+        container.addEventListener('dragleave', event => {
+            if (container.classList.contains("dropzone")) {
+                container.classList.remove("dragover");
             }
         })
     })
@@ -38,4 +65,8 @@ function getDragAfter(container, y) {
             return closest
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element
+}
+
+function handleDragDrop(draggable, container, prev_container) {
+
 }

@@ -8,7 +8,7 @@
     transition: all .2s ease-out;
 }
 #sidebar_content {
-    padding-left: 1rem;
+    padding: 0 1rem;
     height: calc(100% - 2.4rem);
     margin-right: 1px;
     white-space: nowrap;
