@@ -25,7 +25,7 @@ def db_query(query, *params):
     if 'SELECT' in query:
         res = db.execute(query, params).fetchall()
         connection_obj.close()
-        print(res)
+        print(f'{res=}')
         return res
     elif 'INSERT' in query:
         db.execute(query, params)
@@ -61,7 +61,7 @@ def receive_data():
     global tooltips
     data_from_client = request.json
     # Process the received data as needed
-    print(data_from_client)
+    print(f'{data_from_client=}')
     tooltips = True if data_from_client['tooltips'] == 'true' else False
     return {'message': 'Data received successfully'}
 
@@ -77,12 +77,6 @@ def index():
 @login_required
 def todos():
     return render_template('todos.html')
-
-# REMOVE
-@app.route('/subjects', methods=['GET', 'POST'])
-@login_required
-def subjects():
-    return render_template('ihatemyself.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])

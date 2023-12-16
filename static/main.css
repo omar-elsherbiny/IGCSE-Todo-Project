@@ -136,6 +136,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     border: solid #00f;
 }
 .draggable {
+    width: 4rem;
     cursor: move;
     cursor: grab;
 }

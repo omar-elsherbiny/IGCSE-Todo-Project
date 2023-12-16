@@ -28,15 +28,18 @@ Boards
     </div>
     <div id="sidebar_content" class="scroll">
         <h4 style="border-bottom: solid var(--border-highlight);">Your Boards:</h4>
-        <div class="dropzone">
-            <div class="draggable" draggable="true">
+        <div id="boards_list" class="board dropzone">
+            <div class="draggable board" draggable="true">
                 <h6>Board 001</h6>
                 <input type="checkbox">
             </div>
-            <div class="draggable" draggable="true">
+            <div class="draggable board" draggable="true">
                 <h6>Board 002</h6>
                 <input type="checkbox">
             </div>
+        </div>
+        <div id="trash" class="board dropzone">
+
         </div>
     </div>
 </div>
@@ -58,12 +61,12 @@ Boards
         <h6>option2</h6>
     </div>
 </div>
-<div class="dropzone" style="width: 100%; height: 100%;">
-    <div class="draggable" draggable="true">
+<div id="boards_view" class="board dropzone" style="width: 100%; height: 100%;">
+    <div class="draggable board" draggable="true">
         <h6>Board 003</h6>
         <input type="button">
     </div>
-    <div class="draggable" draggable="true">
+    <div class="draggable board" draggable="true">
         <h6>Board 004</h6>
         <input type="button">
     </div>

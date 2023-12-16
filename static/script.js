@@ -1,47 +1,54 @@
 document.addEventListener('DOMContentLoaded', function () {
     const draggables = document.querySelectorAll('.draggable');
     const containers = document.querySelectorAll('.dropzone');
-    let re_draggable, re_container, re_afterE;
+    let re_container, re_afterE;
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
+            [re_container, re_afterE] = [draggable.parentElement, draggable.nextElementSibling];
         })
 
         draggable.addEventListener('dragend', function () {
             draggable.classList.remove('dragging');
+            re_container, re_afterE = null;
         })
     })
 
     containers.forEach(container => {
         container.addEventListener('dragover', event => {
             event.preventDefault();
-            const afterE = getDragAfter(container, event.clientY);
             const draggable = document.querySelector('.dragging');
-            if (afterE == null) {
-                container.appendChild(draggable);
-            } else {
-                container.insertBefore(draggable, afterE);
+            if (checkValidTags(draggable, container)) {
+                const afterE = getDragAfter(container, event.clientY);
+                if (afterE == null) {
+                    container.appendChild(draggable);
+                } else {
+                    container.insertBefore(draggable, afterE);
+                }
             }
         })
 
         container.addEventListener('drop', event => {
             event.preventDefault();
-            if (re_afterE == null) {
-                re_container.appendChild(re_draggable);
-                console.log(re_container, re_draggable);
-            } else {
-                re_container.insertBefore(re_draggable, re_afterE);
+            const draggable = document.querySelector('.dragging');
+            if (container.classList.contains("dropzone")) {
+                container.classList.remove("dragover");
             }
-            handleDragDrop(re_draggable, container, re_container);
-            re_draggable, re_container, re_afterE = null;
+            if (checkValidTags(draggable, container)) {
+                if (re_afterE == null) {
+                    re_container.appendChild(draggable);
+                } else {
+                    re_container.insertBefore(draggable, re_afterE);
+                }
+                handleDragDrop(draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+            }
+            re_container, re_afterE = null;
         })
 
         container.addEventListener('dragenter', event => {
-            if (container.classList.contains("dropzone")) {
+            if (container.classList.contains("dropzone") && checkValidTags(document.querySelector('.dragging'), container)) {
                 container.classList.add("dragover");
-                const draggable = document.querySelector('.dragging');
-                [re_draggable, re_container, re_afterE] = [draggable, draggable.parentElement, draggable.nextElementSibling];
             }
         })
 
@@ -67,6 +74,16 @@ function getDragAfter(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-function handleDragDrop(draggable, container, prev_container) {
+const draggable_tags = ['board', 'task', 'list_item'];
+function checkValidTags(draggable, container) {
+    for (let i = 0; i < draggable_tags.length; i++) {
+        if (draggable.classList.contains(draggable_tags[i]) && container.classList.contains(draggable_tags[i])) {
+            return true;
+        }
+    }
+    return false;
+}
 
+function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, dest_afterE) {
+    console.log(prev_container, dest_container)
 }
