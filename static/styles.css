@@ -85,8 +85,8 @@ html {font-size: 100%;} /* 16px */
 h1 {font-size: 3.053rem; /* 48.8px */}
 h2 {font-size: 2.442rem; /* 39.04px */}
 h3 {font-size: 1.954rem; /* 31.2px */}
-h4 {font-size: 1.563rem; /* 24.96px */}
-h5 {font-size: 1.250rem; /* 20px */}
+h4 {font-size: 1.4rem; /* 24.96px 1.563rem*/}
+h5 {font-size: 1.1rem; /* 20px 1.250rem*/}
 small {font-size: 0.800rem; /* 12.8px */}
 
 .hide{display: none;}
@@ -247,8 +247,7 @@ input[type="checkbox"].toggle+label {
 input[type="checkbox"].toggle {
     opacity: 0;
     position: absolute;
-    top: -9000px;
-    left: -9000px;
+    scale: 0;
 }
 input[type="checkbox"].toggle+label:hover {
     color: rgb(117, 117, 117);

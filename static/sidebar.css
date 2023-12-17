@@ -35,12 +35,46 @@
     color: var(--border-highlight);
     transition: color 0.3s ease-in-out;
 }
-#pulltab:hover svg {color: #FFF;}
+#pulltab:hover svg {color: whitesmoke;}
 /*######################## pulltab*/
 
 #boards_list {
     flex: 1;
 }
+
+.draggable.board.closed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.2rem 0.5rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    color: var(--text-alt);
+    box-shadow: var(--shadow-elevation-medium);
+
+    border-left: 0.3rem solid #32d7c4;
+    /*transition: transform 0.3s ease-in-out;*/
+}
+
+.draggable.board.open {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.2rem 0.5rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    color: #1e060d;
+    box-shadow: var(--shadow-elevation-medium);
+    width: clamp(5rem, 40%, 50dvw);
+
+    border-left: 0.3rem solid #32d7c4;
+    /*transition: transform 0.3s ease-in-out;*/
+}
+/*######################## boards_list*/
 
 #trash {
     display: flex;
@@ -57,7 +91,7 @@
 }
 #trash.open svg {
     scale: 1.1;
-    color: #FFF;
+    color: whitesmoke;
 }
 #trash.open>#trash_lid {
     rotate: -20deg;
@@ -68,3 +102,18 @@
     transform: translate(0px,5px);
 }
 /*######################## trash*/
+
+input[type="checkbox"].pin+svg {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+input[type="checkbox"].pin {
+    opacity: 0;
+    scale: 0;
+    position: absolute;
+}
+input[type="checkbox"].pin+svg:hover {color: rgb(117, 117, 117);}
+input[type="checkbox"].pin:checked+svg {color: #2590f4;}
+input[type="checkbox"].pin:checked+svg:hover {color: #2875bd;}

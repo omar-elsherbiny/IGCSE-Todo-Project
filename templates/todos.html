@@ -27,15 +27,15 @@ Boards
         </svg>
     </div>
     <div id="sidebar_content" class="scroll">
-        <h4 style="border-bottom: solid var(--border-highlight);">Your Boards:</h4>
+        <h3 style="border-bottom: solid var(--border-highlight); margin-bottom: 1rem;">Your Boards:</h3>
         <div id="boards_list" class="board dropzone">
-            <div class="draggable board" draggable="true">
-                <h6>Board 001</h6>
-                <input type="checkbox">
+            <div class="draggable board closed" draggable="true">
+                <h4>Board 001</h4>
+                <h5>2</h5>
             </div>
-            <div class="draggable board" draggable="true">
-                <h6>Board 002</h6>
-                <input type="checkbox">
+            <div class="draggable board closed" draggable="true">
+                <h4>Board 002</h4>
+                <h5>4</h5>
             </div>
         </div>
         <div id="trash" class="board task list_item dropzone">
@@ -62,14 +62,21 @@ Boards
         <h6>option2</h6>
     </div>
 </div>
-<div id="boards_view" class="board dropzone" style="width: 100%; height: 100%;">
-    <div class="draggable board" draggable="true">
-        <h6>Board 003</h6>
-        <input type="button">
+<div id="boards_view" class="board dropzone">
+    <div class="draggable board open" draggable="true">
+        <h4>Board 003</h4>
+        <input class="pin" type="checkbox">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
     </div>
-    <div class="draggable board" draggable="true">
-        <h6>Board 004</h6>
-        <input type="button">
+    <div class="draggable board open" draggable="true">
+        <h4>Board 004</h4>
+        <input class="pin" checked="true" type="checkbox">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
+    </div>
+    <div class="draggable board open" draggable="true">
+        <h4>Board 005</h4>
+        <input class="pin" type="checkbox">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
     </div>
 </div>
 {% endblock %}

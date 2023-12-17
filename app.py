@@ -19,18 +19,16 @@ def dict_factory(cursor, row):
 
 
 def db_query(query, *params):
-    connection_obj = sqlite3.connect('database.db')
-    connection_obj.row_factory = dict_factory
-    db = connection_obj.cursor()
-    if 'SELECT' in query:
-        res = db.execute(query, params).fetchall()
-        connection_obj.close()
-        print(f'{res=}')
-        return res
-    elif 'INSERT' in query:
-        db.execute(query, params)
-        connection_obj.commit()
-        connection_obj.close()
+    with sqlite3.connect('database.db') as connection_obj:
+        connection_obj.row_factory = dict_factory
+        db = connection_obj.cursor()
+        if 'SELECT' in query:
+            res = db.execute(query, params).fetchall()
+            print(f'{res=}')
+            return res
+        elif 'INSERT' in query:
+            db.execute(query, params)
+            connection_obj.commit()
 
 
 def set_tooltips(*args):
