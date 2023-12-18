@@ -26,9 +26,8 @@ Boards
                 d="m3.55 12l7.35 7.35q.375.375.363.875t-.388.875q-.375.375-.875.375t-.875-.375l-7.7-7.675q-.3-.3-.45-.675T.825 12q0-.375.15-.75t.45-.675l7.7-7.7q.375-.375.888-.363t.887.388q.375.375.375.875t-.375.875L3.55 12Z" />
         </svg>
     </div>
-    <div id="sidebar_content" class="scroll">
+    <div id="sidebar_content" class="scroll rotating-border">
         <h3 style="border-bottom: solid var(--border-highlight); margin-bottom: 1rem;">Your Boards:</h3>
-        <button id="test_button">Touch Me</button>
         <div id="boards_list" class="board dropzone">
             <div class="draggable board closed" draggable="true">
                 <h4>Board 001</h4>
@@ -64,20 +63,21 @@ Boards
     </div>
 </div>
 <div id="boards_view" class="board dropzone">
-    <div class="draggable board open" draggable="true">
-        <h4>Board 003</h4>
-        <input class="pin" type="checkbox">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
-    </div>
-    <div class="draggable board open" draggable="true">
-        <h4>Board 004</h4>
-        <input class="pin" checked="true" type="checkbox">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
-    </div>
-    <div class="draggable board open" draggable="true">
-        <h4>Board 005</h4>
-        <input class="pin" type="checkbox">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
-    </div>
+    {% for board in boards %}
+        <div id="board{{ board.board_id }}" class="draggable board open" draggable="true">
+            <div style="border-color: #{{ board.color }};">
+                <h4>{{ board.board_name }}</h4>
+                <input class="pin" type="checkbox" checked="{{ board.is_pinned }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
+            </div>
+            <div class="dropzone task">
+                {% for task in board.tasks %}
+                <div class="draggable task" draggable="true">
+                    <h5>{{ task.task }}</h5>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}

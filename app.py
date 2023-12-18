@@ -1,7 +1,7 @@
 from flask import Flask, flash, get_flashed_messages, redirect, render_template, request, session
 from flask_session import Session
 
-from helpers import login_required, raise_error, db_query
+from helpers import login_required, raise_error, db_query, remove_dictlist_keys
 from crypto import get_hash, check_hash
 
 app = Flask(__name__)
@@ -12,12 +12,15 @@ Session(app)
 
 tooltips = False
 
+
 def set_tooltips(*args):
     if tooltips:
         for arg in args:
             flash(arg, 'info')
 
 # REMOVE
+
+
 @app.route('/flash')
 def flash_test():
     flash('message')
@@ -58,7 +61,13 @@ def index():
 @app.route('/todos', methods=['GET', 'POST'])
 @login_required
 def todos():
-    return render_template('todos.html')
+    boards = db_query('SELECT * FROM boards WHERE id=?', session['user_id'])
+    boards = remove_dictlist_keys(boards, 'id')
+    for board in boards:
+        ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
+                      session['user_id'], board['board_id'])
+        board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
+    return render_template('todos.html', boards=boards)
 
 
 @app.route('/signup', methods=['GET', 'POST'])

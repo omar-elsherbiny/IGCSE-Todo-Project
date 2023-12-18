@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', function () {
-            draggable.classList.add('dragging');
-            [re_container, re_afterE] = [draggable.parentElement, draggable.nextElementSibling];
+            if (document.querySelector('.dragging') == null) {
+                draggable.classList.add('dragging');
+                [re_container, re_afterE] = [draggable.parentElement, draggable.nextElementSibling];
+            }
         })
 
         draggable.addEventListener('dragend', function () {

@@ -9,18 +9,25 @@ main {
     align-items: center;
     transition: all 0.5s ease-in-out;
 }
+
 /*######################## main*/
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {transition: background-color 600000s 0s, color 600000s 0s;}
-input[data-autocompleted] {background-color: transparent !important;}
+input:-webkit-autofill:active {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input[data-autocompleted] {
+    background-color: transparent !important;
+}
 
 .input_box {
     position: relative;
     margin: 0.5rem;
 }
+
 .input_box>input {
     position: relative;
     width: 97%;
@@ -29,11 +36,16 @@ input[data-autocompleted] {background-color: transparent !important;}
     color: var(--text);
     border-bottom: 0.5px solid black;
 }
+
 .input_box>input::placeholder {
     color: rgb(from var(--text) r g b / 65%);
     opacity: 1;
 }
-.input_box>input:focus {outline: none;}
+
+.input_box>input:focus {
+    outline: none;
+}
+
 .input_box::after {
     content: '';
     position: absolute;
@@ -45,14 +57,18 @@ input[data-autocompleted] {background-color: transparent !important;}
     background-color: var(--accent);
     transition: all .3s ease;
 }
-.input_box:focus-within::after {width: 100%;}
+
+.input_box:focus-within::after {
+    width: 100%;
+}
+
 /*######################## input box*/
 
 .input_button {
     position: relative;
     margin: 0.5rem;
     padding: 0.2rem;
-    width: clamp(4rem,50%,13rem);
+    width: clamp(4rem, 50%, 13rem);
     border-radius: 10px;
     color: var(--text-alt);
     background-color: rgb(from var(--accent) r g b / 20%);
@@ -61,14 +77,17 @@ input[data-autocompleted] {background-color: transparent !important;}
     overflow: hidden;
     z-index: 0;
 }
+
 .input_button:hover {
     cursor: pointer;
     color: var(--text);
     transform: scale(105%);
 }
+
 .input_button:active {
     border-color: var(--text);
 }
+
 .input_button::after {
     background-color: var(--accent);
     border-radius: 10px;
@@ -85,9 +104,11 @@ input[data-autocompleted] {background-color: transparent !important;}
     z-index: -1;
     transition: .2s transform ease-out;
 }
+
 .input_button:hover::after {
     transform: translate(-5px, -5px);
 }
+
 /*######################## input button*/
 
 .input_number {
@@ -102,18 +123,24 @@ input[data-autocompleted] {background-color: transparent !important;}
     border: solid var(--accent);
     transition: all .3s ease;
 }
+
 .input_number:disabled {
     border: 0.5px solid var(--border-highlight);
     width: 2rem;
     appearance: textfield;
     -moz-appearance: textfield;
 }
+
 .input_number:disabled::-webkit-outer-spin-button,
 .input_number:disabled::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
-.input_number:focus {outline: none;}
+
+.input_number:focus {
+    outline: none;
+}
+
 /*######################## input number*/
 
 .container {
@@ -134,110 +161,148 @@ input[data-autocompleted] {background-color: transparent !important;}
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
-    width: 100%; 
+    width: 100%;
     height: 100%;
 }
 
-/*.dropzone{
-    border: solid #fff;
+.dropzone {
+    border: 0px solid var(--border-highlight);
+    transition: border 0.3s cubic-bezier(.62,1.05,.22,1);
+    border-radius: 10px;
 }
+
 .dropzone.dragover {
-    border: solid #00f;
-}*/
+    border: 5px dashed var(--accent);
+}
+
 .draggable {
     cursor: move;
     cursor: grab;
 }
-.draggable.dragging{
+
+.draggable.dragging {
     opacity: 0.9;
-    transform: scale(0.8,0.9);
+    transform: scale(0.8, 0.9);
     cursor: grabbing;
 }
+
 /*######################## containers*/
+
+.draggable.board.closed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.2rem 0.5rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    color: var(--text-alt);
+    box-shadow: var(--shadow-elevation-medium);
+
+    border-left: 0.3rem solid #32d7c4;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.draggable.board.open {
+    display: flex;
+    flex-direction: column;
+    width: clamp(5rem, 40%, 50dvw);
+    margin: 0.5rem;
+    background-color: #dcdcdc;
+    border-radius: 7px;
+    color: #1e060d;
+    box-shadow: var(--shadow-elevation-medium);
+
+    transition: transform 0.3s ease-in-out;
+}
+
+.draggable.board.open>div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.2rem 0.5rem;
+    border-radius: 7px;
+    background-color: whitesmoke;
+    box-shadow: var(--shadow-elevation-low);
+
+    border-left: 0.5rem solid #32d7c4;
+}
+
+.draggable.board.open>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+}
+
+.draggable.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.1rem 0.5rem;
+    margin: 0.1rem 0;
+    border-radius: 0 7px 7px 0;
+    background-color: whitesmoke;
+    box-shadow: var(--shadow-elevation-low);
+
+    border-left: 0.2rem solid #000;
+}
+
+/*######################## draggables*/
 
 #adder {
     position: absolute;
     right: calc(5% + 1rem);
     bottom: calc(5% + 1rem);
-    
+
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
-    
+
     border-radius: 10px;
     box-shadow: var(--shadow-elevation-medium);
-    
+
     transition: all 0.5s ease-in-out;
 }
+
 #adder.close {
     width: 3.5rem;
     height: 3.5rem;
     background-color: whitesmoke;
 }
+
 #adder.open {
     width: clamp(3.5rem, 15rem, 20rem);
     height: clamp(3.5rem, 10rem, 20rem);
     background-color: whitesmoke;
 }
+
 #adder svg {
     color: rgba(0, 0, 0, 0.25);
     transition: all 0.5s ease-in-out;
 }
+
 #adder:hover svg,
-#adder:focus-within svg {color: #000;}
+#adder:focus-within svg {
+    color: #000;
+}
+
 #adder_menu {
     transition: transform 0.5s ease-in-out;
 }
+
 #adder_menu.close {
     height: 0;
     transform: scale(0%);
 }
+
 #adder_menu.open {
     transform: scale(100%);
 }
-/*######################## adder*/
 
-/*REMOVE*/
-.session {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-    margin: 1rem;
-}
-.session>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.session>svg {
-    margin: 0 0.5rem;
-}
-.session.flip>svg {
-    transform: rotateY(180deg);
-}
-.header_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    padding: 1rem;
-    width: clamp(10rem, 85%, 100%);
-    box-shadow: var(--shadow-elevation-medium);
-}
-.sub_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary);
-    border-radius: 10px;
-    padding: 1rem;
-    width: clamp(10rem, 80%, 100%);
-    box-shadow: var(--shadow-elevation-medium);
-}
+/*######################## adder*/
