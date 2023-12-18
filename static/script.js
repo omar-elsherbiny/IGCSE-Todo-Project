@@ -108,3 +108,20 @@ function handleDragHover(ishover, draggable, prev_container, prev_afterE, dest_c
         }
     }
 }
+
+const updateData = async (data) => {
+    try {
+        const response = await fetch('/receive_data', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        console.log(result);
+    } catch (error) {
+        console.error('Error updating data:', error);
+    }
+};

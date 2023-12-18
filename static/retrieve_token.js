@@ -1,9 +1,20 @@
-// Assume you have some data stored in local storage
 const dataToBeSent = { tooltips: localStorage.getItem('tooltips') || 'true' };
 
-// Use AJAX to send the data to the Flask server
-let xhr = new XMLHttpRequest();
-xhr.open('POST', '/receive_data', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(JSON.stringify(dataToBeSent));
+fetch('/receive_data', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dataToBeSent),
+})
+    .then(response => response.json())
+    .then(data => {
+        // Handle success
+        console.log(data);
+    })
+    .catch(error => {
+        // Handle error
+        console.error('Error sending data:', error);
+    });
+
 localStorage.setItem('tooltips', false);

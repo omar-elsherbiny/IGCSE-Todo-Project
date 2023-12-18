@@ -55,7 +55,7 @@
     box-shadow: var(--shadow-elevation-medium);
 
     border-left: 0.3rem solid #32d7c4;
-    /*transition: transform 0.3s ease-in-out;*/
+    transition: transform 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 
 .draggable.board.open {
@@ -72,7 +72,7 @@
     width: clamp(5rem, 40%, 50dvw);
 
     border-left: 0.3rem solid #32d7c4;
-    /*transition: transform 0.3s ease-in-out;*/
+    transition: transform 0.5s ease-in-out, color 0.3s ease-in-out;
 }
 /*######################## boards_list*/
 

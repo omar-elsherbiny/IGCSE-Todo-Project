@@ -1,8 +1,7 @@
-import sqlite3
 from flask import Flask, flash, get_flashed_messages, redirect, render_template, request, session
 from flask_session import Session
 
-from helpers import login_required, raise_error
+from helpers import login_required, raise_error, db_query
 from crypto import get_hash, check_hash
 
 app = Flask(__name__)
@@ -12,24 +11,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 tooltips = False
-
-
-def dict_factory(cursor, row):
-    return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
-
-
-def db_query(query, *params):
-    with sqlite3.connect('database.db') as connection_obj:
-        connection_obj.row_factory = dict_factory
-        db = connection_obj.cursor()
-        if 'SELECT' in query:
-            res = db.execute(query, params).fetchall()
-            print(f'{res=}')
-            return res
-        elif 'INSERT' in query:
-            db.execute(query, params)
-            connection_obj.commit()
-
 
 def set_tooltips(*args):
     if tooltips:
@@ -54,13 +35,16 @@ def after_request(response):
     return response
 
 
-@app.route('/receive_data', methods=['POST'])
+@app.route('/receive_data', methods=['POST', 'PUT'])
 def receive_data():
-    global tooltips
-    data_from_client = request.json
-    # Process the received data as needed
+    data_from_client = request.get_json()
     print(f'{data_from_client=}')
-    tooltips = True if data_from_client['tooltips'] == 'true' else False
+    # Process the received data as needed
+    if 'tooltips' in data_from_client:
+        global tooltips
+        tooltips = True if data_from_client['tooltips'] == 'true' else False
+    else:
+        print('handling update')
     return {'message': 'Data received successfully'}
 
 
