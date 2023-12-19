@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const afterE = getDragAfter(container, event.clientY);
                 if (afterE == null) {
                     container.appendChild(draggable);
-                } else {
+                } else if (afterE.parentElement === container) {
                     container.insertBefore(draggable, afterE);
                 }
             }
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 handleDragHover(false, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
             }
             if (checkValidTags(draggable, container)) {
+                console.log()
                 if (re_afterE == null) {
                     re_container.appendChild(draggable);
                 } else {

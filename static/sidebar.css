@@ -49,7 +49,7 @@
     justify-content: center;
     align-items: center;
     min-height: 80px;
-   margin: 0 5rem;
+    margin: 0 5rem;
     margin-bottom: 1rem;
 }
 #trash div {display: none;}
@@ -70,7 +70,10 @@
     rotate: 1deg;
     transform: translate(0px,5px);
 }
-#trash.dropzone.dragover {border: none;}
+#trash.dropzone.dragover {
+    border: none;
+    animation: none;
+}
 /*######################## trash*/
 
 input[type="checkbox"].pin+svg {
