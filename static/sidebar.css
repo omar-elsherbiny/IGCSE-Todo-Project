@@ -1,5 +1,5 @@
 #sidebar {
-    width: clamp(10%,30%,50%);
+    width: clamp(10%, 30%, 50%);
     background-color: var(--background-alt);
     display: flex;
     flex-direction: column;
@@ -7,6 +7,7 @@
     align-items: left;
     transition: all .2s ease-out;
 }
+
 #sidebar_content {
     display: flex;
     flex-direction: column;
@@ -39,9 +40,7 @@
 #pulltab:hover svg {color: whitesmoke;}
 /*######################## pulltab*/
 
-#boards_list {
-    flex: 1;
-}
+#boards_list {flex: 1;}
 /*######################## boards_list*/
 
 #trash {
@@ -50,7 +49,7 @@
     align-items: center;
     min-height: 80px;
     margin: 0 5rem;
-    margin-bottom: 1rem;
+    margin-bottom: calc(5% + 1rem);
 }
 #trash div {display: none;}
 #trash svg {
@@ -64,11 +63,11 @@
 }
 #trash.open>#trash_lid {
     rotate: -20deg;
-    transform: translate(5px,-3px);
+    transform: translate(5px, -3px);
 }
 #trash.open>#trash_can {
     rotate: 1deg;
-    transform: translate(0px,5px);
+    transform: translate(0px, 5px);
 }
 #trash.dropzone.dragover {
     border: none;
@@ -90,3 +89,4 @@ input[type="checkbox"].pin {
 input[type="checkbox"].pin+svg:hover {color: rgb(117, 117, 117);}
 input[type="checkbox"].pin:checked+svg {color: #2590f4;}
 input[type="checkbox"].pin:checked+svg:hover {color: #2875bd;}
+/*######################## pin*/
