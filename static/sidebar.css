@@ -49,7 +49,7 @@
     align-items: center;
     min-height: 80px;
     margin: 0 5rem;
-    margin-bottom: calc(5% + 1rem);
+    margin-bottom: calc(5dvh + 1rem);
 }
 #trash div {display: none;}
 #trash svg {

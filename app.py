@@ -66,6 +66,8 @@ def todos():
     for board in boards:
         ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
                       session['user_id'], board['board_id'])
+        for t in ts:
+            t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split('::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
         board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
     return render_template('todos.html', boards=boards)
 

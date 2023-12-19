@@ -88,7 +88,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .input_button:hover::after {transform: translate(-5px, -5px);}
 /*######################## input button*/
-
+/* UNUSED */
 .input_number {
     margin: 0.5rem;
     width: 2.5rem;
@@ -113,6 +113,8 @@ input[data-autocompleted] {background-color: transparent !important;}
     margin: 0;
 }
 .input_number:focus {outline: none;}
+/*######################## input number*/
+
 /*######################## input number*/
 
 .container {
@@ -212,18 +214,54 @@ input[data-autocompleted] {background-color: transparent !important;}
     padding: 0.2rem;
     padding-left: 0.5rem;
 }
+
+@keyframes slide_side {
+    from {
+        margin-left: calc(100% - clamp(5rem, 50%, 20rem));
+    }
+    to {
+        margin-left: 0;
+    }
+}
+
 .draggable.task {
+    display: flex;
+    flex-direction: column;
+}
+.draggable.task>div:nth-child(1) {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 0.1rem 0.5rem;
+    padding: 0.1rem 0.25rem;
     margin: 0.1rem 0;
     border-radius: 0 7px 7px 0;
     background-color: whitesmoke;
     box-shadow: var(--shadow-elevation-low);
 
     border-left: 0.2rem solid #000;
+}
+.draggable.task>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8%;
+}
+.draggable.task>div:nth-child(2) li {
+    display: flex;
+    justify-content: start;
+    animation: slide_side 1s ease-in-out;
+}
+.draggable.task>div:nth-child(2) li svg {rotate: 180deg;}
+.draggable.task>div:nth-child(2) li div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: clamp(5rem, 50%, 20rem);
+    border-radius: 3px;
+    background-color: rgba(245, 245, 245, 0.5);
+    border: 2px solid #aba8a8;
+    box-shadow: var(--shadow-elevation-low);
 }
 /*######################## draggables*/
 

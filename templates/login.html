@@ -10,7 +10,7 @@ Log In
 {% endblock %}
 
 {% block main %}
-    <div id="login_form">
+    <div id="login_form" style="display: flex; flex-direction: column; align-items: center;">
         <form action="/login" method="post" class="container">
             <div class="input_box">
                 <input name="username" type="text" placeholder="Username" autofocus>
