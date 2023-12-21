@@ -10,11 +10,11 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-tooltips = False
+tmp_tooltips = False
 
 
 def set_tooltips(*args):
-    if tooltips:
+    if session['tooltips']:
         for arg in args:
             flash(arg, 'info')
 
@@ -44,11 +44,25 @@ def receive_data():
     print(f'{data_from_client=}')
     # Process the received data as needed
     if 'tooltips' in data_from_client:
-        global tooltips
-        tooltips = True if data_from_client['tooltips'] == 'true' else False
+        global tmp_tooltips
+        tmp_tooltips = True if data_from_client['tooltips'] == 'true' else False
     else:
-        print('handling update')
-    return {'message': 'Data received successfully'}
+        if 'get_board' in data_from_client:
+            boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
+                              session['user_id'], data_from_client['get_board'])
+            board = remove_dictlist_keys(boards, 'id')[0]
+            ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
+                          session['user_id'], data_from_client['get_board'])
+            for t in ts:
+                t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
+                    '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
+            board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
+            if 'viewed_boards' in session:
+                session['viewed_boards'].append(data_from_client['get_board'])
+            else:
+                session['viewed_boards'] = [data_from_client['get_board']]
+            return board
+    return {'message': 'Data received successfully', 'content': list(data_from_client.keys())}
 
 
 @app.route('/')
@@ -61,15 +75,19 @@ def index():
 @app.route('/todos', methods=['GET', 'POST'])
 @login_required
 def todos():
+    set_tooltips('im fucking tired')
+
     boards = db_query('SELECT * FROM boards WHERE id=?', session['user_id'])
     boards = remove_dictlist_keys(boards, 'id')
     for board in boards:
         ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
                       session['user_id'], board['board_id'])
         for t in ts:
-            t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split('::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
+            t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
+                '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
         board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
-    return render_template('todos.html', boards=boards)
+
+    return render_template('todos.html', boards=boards, viewed_boards=session['viewed_boards'] if 'viewed_boards' in session else [])
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -89,7 +107,6 @@ def signup():
 
         rows = db_query('SELECT * FROM users WHERE username = ?',
                         request.form.get('username'))
-        print("rows:::::: ", rows)
 
         if len(rows) != 0:
             return raise_error('Username already taken', request.path)
@@ -103,6 +120,8 @@ def signup():
         session['user_name'] = username
         session['user_id'] = db_query(
             'SELECT id FROM users WHERE username=?', username)
+        session['tooltips'] = tmp_tooltips
+        session['viewed_boards'] = []
 
         flash('New account made', 'success')
         return redirect('/')
@@ -128,6 +147,8 @@ def login():
 
         session['user_id'] = rows[0]['id']
         session['user_name'] = rows[0]['username']
+        session['tooltips'] = tmp_tooltips
+        session['viewed_boards'] = []
 
         flash('Successfully logged in', 'success')
         return redirect('/')

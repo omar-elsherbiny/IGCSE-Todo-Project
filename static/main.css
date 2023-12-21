@@ -115,7 +115,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 .input_number:focus {outline: none;}
 /*######################## input number*/
 
-/*######################## input number*/
+/*######################## input checkbox*/
 
 .container {
     display: flex;
@@ -215,15 +215,6 @@ input[data-autocompleted] {background-color: transparent !important;}
     padding-left: 0.5rem;
 }
 
-@keyframes slide_side {
-    from {
-        margin-left: calc(100% - clamp(5rem, 50%, 20rem));
-    }
-    to {
-        margin-left: 0;
-    }
-}
-
 .draggable.task {
     display: flex;
     flex-direction: column;
@@ -245,11 +236,11 @@ input[data-autocompleted] {background-color: transparent !important;}
     display: flex;
     flex-direction: column;
     margin-left: 8%;
+    min-height: 0.2rem;
 }
 .draggable.task>div:nth-child(2) li {
     display: flex;
     justify-content: start;
-    animation: slide_side 1s ease-in-out;
 }
 .draggable.task>div:nth-child(2) li svg {rotate: 180deg;}
 .draggable.task>div:nth-child(2) li div{
