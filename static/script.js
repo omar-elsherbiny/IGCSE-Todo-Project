@@ -107,12 +107,21 @@ function handleDragHover(ishover, draggable, prev_container, prev_afterE, dest_c
 
 function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, dest_afterE) {
     if (dest_container.id == 'trash') {
-        prev_container.removeChild(draggable);
+        if (prev_container.id == 'boards_list') {
+
+        } else {
+            if (draggable.classList.contains('board')) {
+                const idx = Number(draggable.id.split('').slice(5).join(''));
+                updateData({ 'rem_board': idx });
+            }
+            prev_container.removeChild(draggable);
+        }
     }
     if (dest_container.id == 'boards_view' && prev_container.id == 'boards_list' && draggable.classList.contains('board')) {
         const idx = Number(draggable.id.split('').slice(5).join(''));
         updateData({ 'get_board': idx })
             .then(board => {
+                if (board == null) { return; }
                 let board_template = `
                 <div id="board${board.id}" class="draggable board open" draggable="true">
                     <div style="border-color: #${board.color};">

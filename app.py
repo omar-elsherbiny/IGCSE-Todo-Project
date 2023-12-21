@@ -58,10 +58,17 @@ def receive_data():
                     '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
             board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
             if 'viewed_boards' in session:
-                session['viewed_boards'].append(data_from_client['get_board'])
+                if data_from_client['get_board'] not in session['viewed_boards']:
+                    session['viewed_boards'].append(
+                        data_from_client['get_board'])
+                    return board
             else:
                 session['viewed_boards'] = [data_from_client['get_board']]
-            return board
+                return board
+            return 'null'
+        if 'rem_board' in data_from_client:
+            session['viewed_boards'] = list(set(session['viewed_boards']))
+            session['viewed_boards'].remove(data_from_client['rem_board'])
     return {'message': 'Data received successfully', 'content': list(data_from_client.keys())}
 
 
