@@ -19,8 +19,6 @@ def set_tooltips(*args):
             flash(arg, 'info')
 
 # REMOVE
-
-
 @app.route('/flash')
 def flash_test():
     flash('message')
@@ -82,8 +80,6 @@ def index():
 @app.route('/todos', methods=['GET', 'POST'])
 @login_required
 def todos():
-    set_tooltips('im fucking tired')
-
     boards = db_query('SELECT * FROM boards WHERE id=?', session['user_id'])
     boards = remove_dictlist_keys(boards, 'id')
     for board in boards:

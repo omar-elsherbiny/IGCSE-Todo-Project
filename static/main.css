@@ -281,6 +281,11 @@ input[data-autocompleted] {background-color: transparent !important;}
     height: clamp(3.5rem, 10rem, 20rem);
     background-color: whitesmoke;
 }
+#adder.center {
+    position: relative;
+    bottom: calc(-50% + 1.75rem);
+    right: -1.75rem;
+}
 #adder svg {
     color: rgba(0, 0, 0, 0.25);
     transition: all 0.5s ease-in-out;

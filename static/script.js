@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    loadDnD();
+    updateAdderCenter();
+})
+
+function loadDnD() {
     const draggables = document.querySelectorAll('.draggable');
     const containers = document.querySelectorAll('.dropzone');
     let re_container, re_afterE;
@@ -30,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         })
-
+        
         container.addEventListener('drop', event => {
             event.preventDefault();
             const draggable = document.querySelector('.dragging');
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
     })
-})
+}
 
 function getDragAfter(container, y) {
     const draggableEs = [...container.querySelectorAll('.draggable:not(.dragging)')];
@@ -115,6 +120,7 @@ function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, 
                 updateData({ 'rem_board': idx });
             }
             prev_container.removeChild(draggable);
+            updateAdderCenter();
         }
     }
     if (dest_container.id == 'boards_view' && prev_container.id == 'boards_list' && draggable.classList.contains('board')) {
@@ -123,7 +129,7 @@ function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, 
             .then(board => {
                 if (board == null) { return; }
                 let board_template = `
-                <div id="board${board.id}" class="draggable board open" draggable="true">
+                <div id="board${board.board_id}" class="draggable board open" draggable="true">
                     <div style="border-color: #${board.color};">
                         <h4>${board.board_name}</h4>
                         <input class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
@@ -155,7 +161,18 @@ function handleDragDrop(draggable, prev_container, prev_afterE, dest_container, 
                 }
                 board_template += `</div></div>`;
                 document.getElementById('boards_view').innerHTML += board_template;
+                loadDnD();
+                updateAdderCenter();
             });
+    }
+}
+
+function updateAdderCenter() {
+    let adder = document.getElementById('adder');
+    if (document.getElementById('boards_view').childElementCount == 0) {
+        adder.classList.add('center');
+    } else {
+        adder.classList.remove('center');
     }
 }
 
