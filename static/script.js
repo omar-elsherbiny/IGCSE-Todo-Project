@@ -12,7 +12,8 @@ function loadDnD() {
         draggable.addEventListener('dragstart', function () {
             if (document.querySelector('.dragging') == null) {
                 draggable.classList.add('dragging');
-                [re_container, re_afterE] = [draggable.parentElement, draggable.nextElementSibling];
+                re_container = draggable.parentElement;
+                re_afterE = draggable.nextElementSibling;
             }
         })
 
@@ -35,7 +36,7 @@ function loadDnD() {
                 }
             }
         })
-        
+
         container.addEventListener('drop', event => {
             event.preventDefault();
             const draggable = document.querySelector('.dragging');
