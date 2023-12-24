@@ -6,20 +6,18 @@ document.addEventListener('DOMContentLoaded', function () {
 function loadDnD() {
     const draggables = document.querySelectorAll('.draggable');
     const containers = document.querySelectorAll('.dropzone');
-    let re_container, re_afterE;
+    let po_afterE;
 
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', function () {
             if (document.querySelector('.dragging') == null) {
                 draggable.classList.add('dragging');
-                re_container = draggable.parentElement;
-                re_afterE = draggable.nextElementSibling;
             }
         })
 
         draggable.addEventListener('dragend', function () {
             draggable.classList.remove('dragging');
-            re_container, re_afterE = null;
+            po_afterE = null;
         })
     })
 
@@ -28,12 +26,7 @@ function loadDnD() {
             event.preventDefault();
             const draggable = document.querySelector('.dragging');
             if (checkValidTags(draggable, container)) {
-                const afterE = getDragAfter(container, event.clientY);
-                if (afterE == null) {
-                    container.appendChild(draggable);
-                } else if (afterE.parentElement === container) {
-                    container.insertBefore(draggable, afterE);
-                }
+                po_afterE = getDragAfter(container, event.clientY);
             }
         })
 
@@ -42,24 +35,20 @@ function loadDnD() {
             const draggable = document.querySelector('.dragging');
             if (container.classList.contains("dropzone")) {
                 container.classList.remove("dragover");
-                handleDragHover(false, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+                handleDragHover(false, draggable, draggable.parentNode, draggable.nextElementSibling, container, po_afterE);
             }
             if (checkValidTags(draggable, container)) {
-                if (re_afterE == null) {
-                    re_container.appendChild(draggable);
-                } else {
-                    re_container.insertBefore(draggable, re_afterE);
-                }
-                handleDragDrop(draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+                console.log('just before', draggable);
+                handleDragDrop(draggable, draggable.parentNode, draggable.nextElementSibling, container, po_afterE);
             }
-            re_container, re_afterE = null;
+            po_afterE = null;
         })
 
         container.addEventListener('dragenter', event => {
             const draggable = document.querySelector('.dragging');
             if (container.classList.contains("dropzone") && checkValidTags(draggable, container)) {
                 container.classList.add("dragover");
-                handleDragHover(true, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+                handleDragHover(true, draggable, draggable.parentNode, draggable.nextElementSibling, container, po_afterE);
             }
         })
 
@@ -70,7 +59,7 @@ function loadDnD() {
                 if (!newTarget || !container.contains(newTarget)) {
                     // Check if the new target is not a child of the container
                     container.classList.remove("dragover");
-                    handleDragHover(false, draggable, re_container, re_afterE, container, draggable.nextElementSibling);
+                    handleDragHover(false, draggable, draggable.parentNode, draggable.nextElementSibling, container, po_afterE);
                 }
             }
         })
@@ -102,6 +91,7 @@ function checkValidTags(draggable, container) {
 }
 
 function handleDragHover(ishover, draggable, prev_container, prev_afterE, dest_container, dest_afterE) {
+    console.log('inside', draggable)
     if (dest_container.id == 'trash') {
         if (ishover) {
             document.getElementById('trash').classList.add('open');
@@ -195,4 +185,3 @@ function updateData(data) {
             throw error;
         });
 }
-
