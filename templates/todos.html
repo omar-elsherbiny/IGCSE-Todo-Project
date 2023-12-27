@@ -26,17 +26,17 @@ Boards
                 d="m3.55 12l7.35 7.35q.375.375.363.875t-.388.875q-.375.375-.875.375t-.875-.375l-7.7-7.675q-.3-.3-.45-.675T.825 12q0-.375.15-.75t.45-.675l7.7-7.7q.375-.375.888-.363t.887.388q.375.375.375.875t-.375.875L3.55 12Z" />
         </svg>
     </div>
-    <div id="sidebar_content" class="scroll rotating-border">
+    <div id="sidebar_content" class="scroll">
         <h3 style="border-bottom: solid var(--border-highlight); margin-bottom: 1rem;">Your Boards:</h3>
-        <div id="boards_list" class="board dropzone">
+        <div id="boards_list" class="dropzone dboard_closed">
             {% for board in boards %}
-                <div id="board{{ board.board_id }}" class="draggable board closed" style="border-color: #{{ board.color }};" draggable="true">
+                <div id="board{{ board.board_id }}" class="draggable board_closed" style="border-color: #{{ board.color }};" draggable="true">
                     <h4>{{ board.board_name }}</h4>
                     <h5>{{ board.tasks|length }}</h5>
                 </div>
             {% endfor %}
         </div>
-        <div id="trash" class="board task list_item dropzone">
+        <div id="trash" class="dropzone dboard_closed dboard_open dtask dlist_item" ondragenter="trashEnter(event)" ondragleave="trashLeave(event)" ondrop="trashDrop(event)">
             <svg id="trash_lid" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72"><defs><clipPath id="_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM"><rect width="32" height="32"/></clipPath></defs><g clip-path="url(#_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM)"><path d=" M 25.333 5.333 L 20.667 5.333 L 19.333 4 L 12.667 4 L 11.333 5.333 L 6.667 5.333 L 6.667 8 L 25.333 8" fill="currentColor"/></g></svg>
             <svg id="trash_can" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72"><defs><clipPath id="_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc"><rect width="32" height="32"/></clipPath></defs><g clip-path="url(#_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc)"><path d=" M 8 25.333 C 8 26.806 9.194 28 10.667 28 L 21.333 28 C 22.806 28 24 26.806 24 25.333 L 24 9.333 L 8 9.333 L 8 25.333 Z " fill="currentColor"/></g></svg>
         </div>
@@ -60,10 +60,10 @@ Boards
         <h6>option2</h6>
     </div>
 </div>
-<div id="boards_view" class="board dropzone">
+<div id="boards_view" class="dropzone dboard_closed dboard_open">
     {% for board in boards %}
         {% if board.board_id in viewed_boards %}
-            <div id="board{{ board.board_id }}" class="draggable board open" draggable="true">
+            <div id="board{{ board.board_id }}" class="draggable board_open" draggable="true">
                 <div style="border-color: #{{ board.color }};">
                     <h4>{{ board.board_name }}</h4>
                     {% if board.is_pinned %}
@@ -73,7 +73,7 @@ Boards
                     {% endif %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
                 </div>
-                <div class="dropzone task">
+                <div class="dropzone dtask">
                     {% for task in board.tasks %}
                     <div class="draggable task" draggable="true">
                         <div>

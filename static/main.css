@@ -161,14 +161,14 @@ input[data-autocompleted] {background-color: transparent !important;}
     cursor: move;
     cursor: grab;
 }
-.draggable.dragging {
+.draggable:active {
     opacity: 0.9;
     transform: scale(0.8, 0.9);
-    cursor: grabbing;
+    cursor: grabbing !important;
 }
 /*######################## containers*/
 
-.draggable.board.closed {
+.draggable.board_closed {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,7 +183,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     border-left: 0.3rem solid #32d7c4;
     transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
-.draggable.board.open {
+.draggable.board_open {
     display: flex;
     flex-direction: column;
     width: clamp(5rem, 40%, 50dvw);
@@ -195,7 +195,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 
     transition: transform 0.3s ease-in-out;
 }
-.draggable.board.open>div:nth-child(1) {
+.draggable.board_open>div:nth-child(1) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -207,7 +207,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 
     border-left: 0.5rem solid #32d7c4;
 }
-.draggable.board.open>div:nth-child(2) {
+.draggable.board_open>div:nth-child(2) {
     display: flex;
     flex-direction: column;
     align-items: start;
