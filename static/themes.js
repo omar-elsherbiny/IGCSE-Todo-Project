@@ -71,3 +71,16 @@ function toggleAdderMenu() {
         icon.style.transform = 'rotate(-180deg)';
     }
 }
+
+function toggleTaskList(board, index) {
+    console.log(board, index);
+
+    const boardDiv = document.querySelector('#board' + board + '.board_open');
+    const taskDiv = boardDiv.querySelector('.dtask .task:nth-child(' + index + ')');
+    const taskHeadDiv = taskDiv.querySelector('div:nth-child(1)');
+    const taskListDiv = taskDiv.querySelector('.dlist_item');
+
+    taskHeadDiv.querySelector('#task_dropdown_down').classList.toggle('hide');
+    taskHeadDiv.querySelector('#task_dropdown_up').classList.toggle('hide');
+    taskListDiv.style.display = (taskListDiv.style.display === 'none') ? '' : 'none';
+}

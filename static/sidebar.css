@@ -18,6 +18,12 @@
     transition: all 0.5s ease-in-out;
     overflow-x: hidden;
 }
+#sidebar_content h3 {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid var(--border-highlight);
+    margin-bottom: 1rem;
+}
 
 #pulltab {
     position: relative;
@@ -39,6 +45,13 @@
 }
 #pulltab:hover svg {color: whitesmoke;}
 /*######################## pulltab*/
+
+#board_adder {
+    color: var(--border-highlight);
+    transition: color 0.3s ease-in-out;
+}
+#board_adder:hover {color: whitesmoke;}
+/*######################## board_adder*/
 
 #boards_list {flex: 1;}
 /*######################## boards_list*/

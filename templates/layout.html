@@ -40,12 +40,12 @@
     <header class="slide_in">
         {% with msgs=get_flashed_messages(True) %}
         {% if msgs %}
-        {% for msg in msgs %}
         <script>
             function hide_alert(i) {
                 document.getElementById("beep" + String(i)).style.animation = "nope_out 0.5s ease forwards";
             }
         </script>
+        {% for msg in msgs %}
         <div class="alert {{ msg[0] }}" id="beep{{ loop.index }}">
             <p>{{ msg[1] }}</p>
             <svg onclick="hide_alert({{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
