@@ -88,7 +88,26 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .input_button:hover::after {transform: translate(-5px, -5px);}
 /*######################## input button*/
-/* UNUSED */
+
+.input_radio {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.input_radio input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    scale: 0;
+}
+.input_radio label {
+    background-color: #dcdcdcdc;
+    border-radius: 10px;
+    padding: 0.1rem 0.2rem;
+}
+.input_radio label:hover {
+    background-color: #d2d2d2;
+}
+/*######################## input radio*/
 .input_number {
     margin: 0.5rem;
     width: 2.5rem;
@@ -113,9 +132,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     margin: 0;
 }
 .input_number:focus {outline: none;}
-/*######################## input number*/
-
-/*######################## input checkbox*/
+/*######################## input number UNUSED*/
 
 .container {
     display: flex;
