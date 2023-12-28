@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateAdderCenter();
 })
 
+let reset;
 function loadDnD() {
     const draggables = document.querySelectorAll('.draggable');
     const containers = document.querySelectorAll('.dropzone');
@@ -14,12 +15,14 @@ function loadDnD() {
                 draggable.classList.add('dragging');
                 re_container = draggable.parentElement;
                 re_afterE = draggable.nextElementSibling;
+                reset = true;
             }
         })
 
         draggable.addEventListener('dragend', function () {
             draggable.classList.remove('dragging');
             re_container, re_afterE = null;
+            reset = true;
         })
     })
 
@@ -43,7 +46,8 @@ function loadDnD() {
             if (container.classList.contains("dropzone")) {
                 container.classList.remove("dragover");
             }
-            if (draggable!=null && checkValidTags(draggable, container)) {
+            console.log(reset);
+            if (reset && draggable != null && checkValidTags(draggable, container)) {
                 if (re_afterE == null) {
                     re_container.appendChild(draggable);
                 } else {
@@ -134,15 +138,64 @@ function trashLeave(event) {
         document.getElementById('trash').classList.remove('open');
     }
 }
-
 function trashDrop(event) {
-    event.preventDefault();
     const draggable = document.querySelector('.dragging');
 
     let valid = [draggable.classList.contains('board_closed'), draggable.classList.contains('board_open'), draggable.classList.contains('task'), draggable.classList.contains('list_item')];
     if (valid.some(e => e === true)) {
         draggable.remove();
         document.getElementById('trash').classList.remove('open');
-        console.log(valid);
+        if (valid[1]) {
+            const idx = Number(draggable.id.split('').slice(5).join(''));
+            updateData({ 'rem_board': idx });
+            updateAdderCenter();
+        }
     }
+}
+
+function boardsViewDrop(event) {
+    const draggable = document.querySelector('.dragging');
+    if (draggable.classList.contains('board_closed')) {
+        const idx = Number(draggable.id.split('').slice(5).join(''));
+        updateData({ 'get_board': idx })
+            .then(board => {
+                if (board == null) { return; }
+                let board_template = `
+                <div id="board${board.board_id}" class="draggable board_open" draggable="true">
+                    <div style="border-color: #${board.color};">
+                        <h4>${board.board_name}</h4>
+                        <input class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
+                    </div>
+                    <div class="dropzone dtask">`;
+                for (const task of board.tasks) {
+                    let tmp = `
+                    <div class="draggable task" draggable="true">
+                    <div>
+                        <svg class="task_dropdown" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062"/></svg>
+                        <h5>${task.task}</h5>
+                        <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
+                        <svg class="task_check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z"/></svg>
+                    </div>
+                    <div class="dropzone dlist_item">`
+                    for (const li of task.list) {
+                        tmp += `
+                        <li class="draggable list_item" draggable="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="currentColor" d="m7.825 10l2.9 2.9q.3.3.288.7t-.288.7q-.3.3-.7.313t-.7-.288L4.7 9.7q-.15-.15-.213-.325T4.426 9q0-.2.063-.375T4.7 8.3l4.575-4.575q.3-.3.713-.3t.712.3q.3.3.3.7t-.3.7L7.825 8H17q.825 0 1.413.588T19 10v9q0 .425-.288.713T18 20q-.425 0-.712-.288T17 19v-9z"/></svg>
+                        <div>
+                            <input class="input_checkbox" type="checkbox" ${li.checked ? 'checked' : ''}>
+                            <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2);">|</h4>
+                            <h6>${li.content}</h6>
+                        </div></li>`
+                    }
+                    tmp += `</div></div>`;
+                    board_template += tmp;
+                }
+                board_template += `</div></div>`;
+                document.getElementById('boards_view').innerHTML += board_template;
+                loadDnD();
+                updateAdderCenter();
+            });
+    }
+    if (draggable.classList.contains('board_open')) { reset = false; }
 }

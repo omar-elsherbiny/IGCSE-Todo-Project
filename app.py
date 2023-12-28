@@ -65,8 +65,11 @@ def receive_data():
                 return board
             return 'null'
         if 'rem_board' in data_from_client:
-            session['viewed_boards'] = list(set(session['viewed_boards']))
+            session['viewed_boards'] = list(
+                dict.fromkeys(session['viewed_boards']))
             session['viewed_boards'].remove(data_from_client['rem_board'])
+        if 'upd_board' in data_from_client:
+            session['viewed_boards'] = data_from_client['upd_board']
     return {'message': 'Data received successfully', 'content': list(data_from_client.keys())}
 
 
@@ -89,8 +92,10 @@ def todos():
             t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
                 '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
         board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
+    viewed_boards = [b for _, b in sorted(zip(
+        session['viewed_boards'], boards), key=lambda pair: pair[0])] if 'viewed_boards' in session else []
 
-    return render_template('todos.html', boards=boards, viewed_boards=session['viewed_boards'] if 'viewed_boards' in session else [])
+    return render_template('todos.html', boards=boards, viewed_boards=viewed_boards)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
