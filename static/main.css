@@ -104,10 +104,23 @@ input[data-autocompleted] {background-color: transparent !important;}
     border-radius: 10px;
     padding: 0.1rem 0.2rem;
 }
-.input_radio label:hover {
-    background-color: #d2d2d2;
-}
+.input_radio label:hover {background-color: #d2d2d2;}
+.input_radio input[type="radio"]:checked+label {border: 2px solid var(--accent);}
+.input_radio label svg {transition: all 0.5s ease-in-out, color 0.3s ease-in-out, scale 0.25s ease-in !important;}
+.input_radio input[type="radio"]:checked+label svg {scale: 1.2;}
+.input_radio #option1+label svg {color: var(--no-priority);}
+.input_radio #option2+label svg {color: var(--low-priority);}
+.input_radio #option3+label svg {color: var(--medium-priority);}
+.input_radio #option4+label svg {color: var(--high-priority);}
 /*######################## input radio*/
+
+.input_dropdown {
+    background-color: #d2d2d2;
+    text-align: center;
+    border-radius: 10px;
+    transition: all .3s ease;
+}
+/*######################## input dropdown*/
 .input_number {
     margin: 0.5rem;
     width: 2.5rem;
