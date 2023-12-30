@@ -73,8 +73,6 @@ function toggleAdderMenu() {
 }
 
 function toggleTaskList(board, index) {
-    console.log(board, index);
-
     const boardDiv = document.querySelector('#board' + board + '.board_open');
     const taskDiv = boardDiv.querySelector('.dtask .task:nth-child(' + index + ')');
     const taskHeadDiv = taskDiv.querySelector('div:nth-child(1)');

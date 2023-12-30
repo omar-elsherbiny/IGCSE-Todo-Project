@@ -115,7 +115,6 @@ input[data-autocompleted] {background-color: transparent !important;}
 
 .input_dropdown {
     padding: 0.1rem;
-    margin-top: 0.1rem;
     border-radius: 5px;
     background-color: #dcdcdcdc;
     outline: none;
@@ -286,11 +285,14 @@ input[data-autocompleted] {background-color: transparent !important;}
     justify-content: space-evenly;
     align-items: center;
 
-    width: clamp(5rem, 50%, 20rem);
+    width: clamp(5rem, 60%, 20rem);
     border-radius: 3px;
     background-color: rgba(245, 245, 245, 0.5);
     border: 2px solid #aba8a8;
     box-shadow: var(--shadow-elevation-low);
+}
+.draggable.task>div:nth-child(2) li div:has(input[type="checkbox"]:checked) {
+    filter: saturate(0.1) brightness(0.65);
 }
 /*######################## draggables*/
 
@@ -316,7 +318,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 #adder.open {
     width: clamp(3.5rem, 15rem, 20rem);
-    height: clamp(3.5rem, 10rem, 20rem);
+    height: clamp(3.5rem, 11rem, 20rem);
     background-color: whitesmoke;
 }
 #adder.center {

@@ -19,6 +19,8 @@ def set_tooltips(*args):
             flash(arg, 'info')
 
 # REMOVE
+
+
 @app.route('/flash')
 def flash_test():
     flash('message')
@@ -70,6 +72,12 @@ def receive_data():
             session['viewed_boards'].remove(data_from_client['rem_board'])
         if 'upd_board' in data_from_client:
             session['viewed_boards'] = data_from_client['upd_board']
+
+        if 'upd_list' in data_from_client:
+            ls = '||'.join(
+                [a+'::'+str(b) for a, b in sorted(data_from_client['upd_list'], key=lambda x: x[1])])
+            db_query('UPDATE tasks SET list=? WHERE id=? AND board_id=? AND task=?', ls,
+                     session['user_id'], data_from_client['board'], data_from_client['task'])
     return {'message': 'Data received successfully', 'content': list(data_from_client.keys())}
 
 

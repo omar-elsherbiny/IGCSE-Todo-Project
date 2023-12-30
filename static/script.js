@@ -99,15 +99,6 @@ function checkValidTags(draggable, container) {
     return false;
 }
 
-function updateAdderCenter() {
-    let adder = document.getElementById('adder');
-    if (document.getElementById('boards_view').childElementCount == 0) {
-        adder.classList.add('center');
-    } else {
-        adder.classList.remove('center');
-    }
-}
-
 function updateData(data) {
     return fetch('/receive_data', {
         method: 'PUT',
@@ -127,6 +118,33 @@ function updateData(data) {
         });
 }
 
+function updateAdderCenter() {
+    let adder = document.getElementById('adder');
+    if (document.getElementById('boards_view').childElementCount == 0) {
+        adder.classList.add('center');
+    } else {
+        adder.classList.remove('center');
+    }
+}
+
+function updateTaskLi(board, index) {
+    const parentE = document.querySelector('#board' + board + '.board_open .dtask .task:nth-child(' + index + ') .dlist_item');
+    const childrenArray = Array.from(parentE.children);
+    childrenArray.sort((a, b) => {
+        const isCheckedA = a.querySelector('input[type="checkbox"]').checked;
+        const isCheckedB = b.querySelector('input[type="checkbox"]').checked;
+
+        return isCheckedA - isCheckedB;
+    });
+    childrenArray.forEach(child => {
+        parentE.appendChild(child);
+    });
+
+    const processedTags = childrenArray.map(child => {
+        return [child.querySelector('h6').textContent, child.querySelector('input[type="checkbox"]').checked ? 1 : 0];
+    });
+    updateData({ 'upd_list': processedTags, 'board': board, 'task': parentE.parentElement.querySelector('div h5').textContent });
+}
 ////////////////////////////////////
 function trashEnter(event) {
     document.getElementById('trash').classList.add('open');
@@ -167,16 +185,16 @@ function boardsViewDrop(event) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
                     </div>
                     <div class="dropzone dtask">`;
-                for (const [index,task] of board.tasks.entries()) {
+                for (const [index, task] of board.tasks.entries()) {
                     let tmp = `
                     <div class="draggable task" draggable="true">
                     <div>
-                        <svg id="task_dropdown_down" onclick="toggleTaskList(${board.board_id},${index+1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                        <svg id="task_dropdown_down" onclick="toggleTaskList(${board.board_id},${index + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 24 24">
                             <path fill="currentColor"
                                 d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062" />
                         </svg>
-                        <svg id="task_dropdown_up" onclick="toggleTaskList(${board.board_id},${index+1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                        <svg id="task_dropdown_up" onclick="toggleTaskList(${board.board_id},${index + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 24 24">
                             <path fill="currentColor"
                                 d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z" />
@@ -188,10 +206,10 @@ function boardsViewDrop(event) {
                     <div class="dropzone dlist_item" style="display: none;">`
                     for (const li of task.list) {
                         tmp += `
-                        <li class="draggable list_item" draggable="true">
+                        <li class="draggable list_item" draggable="true" ondrop="taskLiDrop(event,${board.board_id},${index + 1})">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="currentColor" d="m7.825 10l2.9 2.9q.3.3.288.7t-.288.7q-.3.3-.7.313t-.7-.288L4.7 9.7q-.15-.15-.213-.325T4.426 9q0-.2.063-.375T4.7 8.3l4.575-4.575q.3-.3.713-.3t.712.3q.3.3.3.7t-.3.7L7.825 8H17q.825 0 1.413.588T19 10v9q0 .425-.288.713T18 20q-.425 0-.712-.288T17 19v-9z"/></svg>
                         <div>
-                            <input class="input_checkbox" type="checkbox" ${li.checked ? 'checked' : ''}>
+                            <input class="input_checkbox" type="checkbox" onchange="updateTaskLi(${board.board_id},${index + 1})" ${li.checked ? 'checked' : ''}>
                             <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2);">|</h4>
                             <h6>${li.content}</h6>
                         </div></li>`
@@ -205,5 +223,19 @@ function boardsViewDrop(event) {
                 updateAdderCenter();
             });
     }
-    if (draggable.classList.contains('board_open')) { reset = false; }
+    if (draggable.classList.contains('board_open')) {
+        reset = false;
+        const processedIDs = Array.from(document.getElementById('boards_view').children).map(child => {
+            return Number(child.id.split('').slice(5).join(''));
+        });
+        updateData({ 'upd_board': processedIDs });
+    }
+}
+
+function taskLiDrop(event, board, index) {
+    const draggable = document.querySelector('.dragging');
+    if (draggable.classList.contains('list_item')) {
+        reset = false;
+        updateTaskLi(board, index);
+    }
 }
