@@ -88,7 +88,7 @@
 }
 /*######################## trash*/
 
-input[type="checkbox"].pin+svg {
+input[type="checkbox"].pin+label svg {
     position: relative;
     display: flex;
     align-items: center;
@@ -99,7 +99,7 @@ input[type="checkbox"].pin {
     scale: 0;
     position: absolute;
 }
-input[type="checkbox"].pin+svg:hover {color: rgb(117, 117, 117);}
-input[type="checkbox"].pin:checked+svg {color: #2590f4;}
-input[type="checkbox"].pin:checked+svg:hover {color: #2875bd;}
+input[type="checkbox"].pin+label svg:hover {color: rgb(117, 117, 117);}
+input[type="checkbox"].pin:checked+label svg {color: #2590f4;}
+input[type="checkbox"].pin:checked+label svg:hover {color: #2875bd;}
 /*######################## pin*/

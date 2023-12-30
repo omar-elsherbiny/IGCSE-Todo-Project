@@ -45,6 +45,8 @@ def receive_data():
         global tmp_tooltips
         tmp_tooltips = True if data_from_client['tooltips'] == 'true' else False
     else:
+        if 'upd_boards' in data_from_client:
+            session['viewed_boards'] = data_from_client['upd_boards']
         if 'get_board' in data_from_client:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
                               session['user_id'], data_from_client['get_board'])
@@ -68,10 +70,13 @@ def receive_data():
             session['viewed_boards'] = list(
                 dict.fromkeys(session['viewed_boards']))
             session['viewed_boards'].remove(data_from_client['rem_board'])
-        if 'upd_board' in data_from_client:
-            session['viewed_boards'] = data_from_client['upd_board']
         if 'del_board' in data_from_client:
-            db_query('DELETE FROM boards WHERE id=? AND board_id=?', session['user_id'], data_from_client['del_board'])
+            db_query('DELETE FROM boards WHERE id=? AND board_id=?',
+                     session['user_id'], data_from_client['del_board'])
+        if 'upd_board_data' in data_from_client:
+            if 'pin' in data_from_client:
+                db_query('UPDATE boards SET is_pinned=? WHERE id=? AND board_id=?',
+                         int(data_from_client['pin']), session['user_id'], data_from_client['upd_board_data'])
 
         if 'upd_list' in data_from_client:
             ls = '||'.join(

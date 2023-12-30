@@ -199,8 +199,13 @@ function boardsViewDrop(event) {
                 <div id="board${board.board_id}" class="draggable board_open" draggable="true">
                     <div style="border-color: #${board.color};">
                         <h4>${board.board_name}</h4>
-                        <input class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
+                        <input id="pin${board.board_id}" onchange="updateData({'upd_board_data':${board.board_id},'pin':event.target.checked})" class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
+                        <label for="pin${board.board_id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
+                            </svg>
+                        </label>
                     </div>
                     <div class="dropzone dtask">`;
                 for (const [index, task] of board.tasks.entries()) {
@@ -246,7 +251,7 @@ function boardsViewDrop(event) {
         const processedIDs = Array.from(document.getElementById('boards_view').children).map(child => {
             return Number(child.id.split('').slice(5).join(''));
         });
-        updateData({ 'upd_board': processedIDs });
+        updateData({ 'upd_boards': processedIDs });
     }
 }
 
