@@ -57,17 +57,19 @@ Boards
             d="M11 13H6q-.425 0-.712-.288T5 12q0-.425.288-.712T6 11h5V6q0-.425.288-.712T12 5q.425 0 .713.288T13 6v5h5q.425 0 .713.288T19 12q0 .425-.288.713T18 13h-5v5q0 .425-.288.713T12 19q-.425 0-.712-.288T11 18v-5Z" />
     </svg>
     <div id="adder_menu" class="close">
-        <select name="cars" class="input_dropdown" style="color: #1e060d;">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
-        <div class="input_box">
-            <input name="name" type="text" placeholder="Session Text" style="color: #1e060d;">
+        <div style="display: flex; justify-content: space-around; align-items: center;">
+            <h6>Board:</h6>
+            <select name="task_boards" class="input_dropdown">
+                {% for board in boards %}
+                    <option value="{{ board.board_id }}">{{ board.board_name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="input_box">
-            <input name="start" type="date" style="color: #1e060d;">
+            <input name="task_name" type="text" placeholder="Task" maxlength="200">
+        </div>
+        <div class="input_box">
+            <input name="start" type="date">
         </div>
         <div class="input_radio">
             <input type="radio" id="option1" name="radioGroup" checked>

@@ -46,8 +46,7 @@ function loadDnD() {
             if (container.classList.contains("dropzone")) {
                 container.classList.remove("dragover");
             }
-            console.log(reset);
-            if (reset && draggable != null && checkValidTags(draggable, container)) {
+            if (reset && draggable != null) { //  && checkValidTags(draggable, container)
                 if (re_afterE == null) {
                     re_container.appendChild(draggable);
                 } else {

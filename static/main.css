@@ -68,7 +68,6 @@ input[data-autocompleted] {background-color: transparent !important;}
     color: var(--text);
     transform: scale(105%);
 }
-
 .input_button:active {border-color: var(--text);}
 .input_button::after {
     background-color: var(--accent);
@@ -115,11 +114,14 @@ input[data-autocompleted] {background-color: transparent !important;}
 /*######################## input radio*/
 
 .input_dropdown {
-    background-color: #d2d2d2;
-    text-align: center;
-    border-radius: 10px;
-    transition: all .3s ease;
+    padding: 0.1rem;
+    margin-top: 0.1rem;
+    border-radius: 5px;
+    background-color: #dcdcdcdc;
+    outline: none;
+    cursor: pointer;
 }
+.input_dropdown:focus-within {outline: 2px solid var(--accent);}
 /*######################## input dropdown*/
 .input_number {
     margin: 0.5rem;
@@ -336,4 +338,8 @@ input[data-autocompleted] {background-color: transparent !important;}
     transform: scale(0%);
 }
 #adder_menu.open {transform: scale(100%);}
+
+#adder_menu h6,
+#adder_menu input {color: #1e060d;}
+#adder_menu input::placeholder {color: rgb(from #1e060d r g b / 65%);}
 /*######################## adder*/
