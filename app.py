@@ -19,8 +19,6 @@ def set_tooltips(*args):
             flash(arg, 'info')
 
 # REMOVE
-
-
 @app.route('/flash')
 def flash_test():
     flash('message')
@@ -72,6 +70,8 @@ def receive_data():
             session['viewed_boards'].remove(data_from_client['rem_board'])
         if 'upd_board' in data_from_client:
             session['viewed_boards'] = data_from_client['upd_board']
+        if 'del_board' in data_from_client:
+            db_query('DELETE FROM boards WHERE id=? AND board_id=?', session['user_id'], data_from_client['del_board'])
 
         if 'upd_list' in data_from_client:
             ls = '||'.join(

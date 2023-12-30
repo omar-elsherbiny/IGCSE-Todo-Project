@@ -5,12 +5,12 @@ Boards
 {% endblock %}
 
 {% block navbar1 %}
-    <a class="link" href="./">Home</a>
-    <a class="link" href="./todos">Boards</a>
+<a class="link" href="./">Home</a>
+<a class="link" href="./todos">Boards</a>
 {% endblock %}
 
 {% block navbar2 %}
-    <a class="link" href="./account">{{ session["user_name"] }}</a>
+<a class="link" href="./account">{{ session["user_name"] }}</a>
 {% endblock %}
 
 {% block sidebar %}
@@ -36,15 +36,41 @@ Boards
         </h3>
         <div id="boards_list" class="dropzone dboard_closed">
             {% for board in boards %}
-                <div id="board{{ board.board_id }}" class="draggable board_closed" style="border-color: #{{ board.color }};" draggable="true">
-                    <h4>{{ board.board_name }}</h4>
-                    <h5>{{ board.tasks|length }}</h5>
-                </div>
+            <div id="board{{ board.board_id }}" class="draggable board_closed" style="border-color: #{{ board.color }};"
+                draggable="true">
+                <h4>{{ board.board_name }}</h4>
+                <h5>{{ board.tasks|length }}</h5>
+            </div>
             {% endfor %}
         </div>
-        <div id="trash" class="dropzone dboard_closed dboard_open dtask dlist_item" ondragenter="trashEnter(event)" ondragleave="trashLeave(event)" ondrop="trashDrop(event)">
-            <svg id="trash_lid" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72"><defs><clipPath id="_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM"><rect width="32" height="32"/></clipPath></defs><g clip-path="url(#_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM)"><path d=" M 25.333 5.333 L 20.667 5.333 L 19.333 4 L 12.667 4 L 11.333 5.333 L 6.667 5.333 L 6.667 8 L 25.333 8" fill="currentColor"/></g></svg>
-            <svg id="trash_can" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72"><defs><clipPath id="_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc"><rect width="32" height="32"/></clipPath></defs><g clip-path="url(#_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc)"><path d=" M 8 25.333 C 8 26.806 9.194 28 10.667 28 L 21.333 28 C 22.806 28 24 26.806 24 25.333 L 24 9.333 L 8 9.333 L 8 25.333 Z " fill="currentColor"/></g></svg>
+        <div id="trash" class="dropzone dboard_closed dboard_open dtask dlist_item" ondragenter="trashEnter(event)"
+            ondragleave="trashLeave(event)" ondrop="trashDrop(event)">
+            <svg id="trash_lid" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72">
+                <defs>
+                    <clipPath id="_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM">
+                        <rect width="32" height="32" />
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#_clipPath_6GA0x26RE67WlJB4gojEOTtjF2GfcBJM)">
+                    <path
+                        d=" M 25.333 5.333 L 20.667 5.333 L 19.333 4 L 12.667 4 L 11.333 5.333 L 6.667 5.333 L 6.667 8 L 25.333 8"
+                        fill="currentColor" />
+                </g>
+            </svg>
+            <svg id="trash_can" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="isolation:isolate" viewBox="0 0 32 32" width="72" height="72">
+                <defs>
+                    <clipPath id="_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc">
+                        <rect width="32" height="32" />
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#_clipPath_3AJ68E5Gphz7Yy2bVBawHATG5Dkm3Jyc)">
+                    <path
+                        d=" M 8 25.333 C 8 26.806 9.194 28 10.667 28 L 21.333 28 C 22.806 28 24 26.806 24 25.333 L 24 9.333 L 8 9.333 L 8 25.333 Z "
+                        fill="currentColor" />
+                </g>
+            </svg>
         </div>
     </div>
 </div>
@@ -52,7 +78,8 @@ Boards
 
 {% block main %}
 <div id="adder" class="close">
-    <svg onclick="toggleAdderMenu()" id="adder_icon" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24">
+    <svg onclick="toggleAdderMenu()" id="adder_icon" xmlns="http://www.w3.org/2000/svg" width="55" height="55"
+        viewBox="0 0 24 24">
         <path fill="currentColor"
             d="M11 13H6q-.425 0-.712-.288T5 12q0-.425.288-.712T6 11h5V6q0-.425.288-.712T12 5q.425 0 .713.288T13 6v5h5q.425 0 .713.288T19 12q0 .425-.288.713T18 13h-5v5q0 .425-.288.713T12 19q-.425 0-.712-.288T11 18v-5Z" />
     </svg>
@@ -61,7 +88,7 @@ Boards
             <h6>Board:</h6>
             <select name="task_boards" class="input_dropdown">
                 {% for board in boards %}
-                    <option value="{{ board.board_id }}">{{ board.board_name }}</option>
+                <option value="{{ board.board_id }}">{{ board.board_name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -74,32 +101,33 @@ Boards
         <div class="input_radio">
             <input type="radio" id="option1" name="radioGroup" checked>
             <label for="option1">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-                    viewBox="0 0 24 24" width="28" height="28">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="isolation:isolate" viewBox="0 0 24 24" width="28" height="28">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
                         d="M15.02 19.52c-2.34.736-5 .606-7.32-.52L3 20l1.3-3.9C1.976 12.663 2.874 8.228 6.4 5.726c3.526-2.501 8.59-2.296 11.845.48c1.96 1.671 2.898 3.963 2.755 6.227M19 16v3m0 3v.01" />
                 </svg>
             </label>
             <input type="radio" id="option2" name="radioGroup">
             <label for="option2">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-                    viewBox="0 0 32 32" width="28" height="28">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="isolation:isolate" viewBox="0 0 32 32" width="28" height="28">
                     <path fill-rule="evenodd" fill="currentColor"
                         d=" M 16 18.667 Q 15.433 18.667 15.05 18.283 Q 14.668 17.899 14.666 17.333 L 14.666 8 Q 14.666 7.433 15.05 7.051 Q 15.434 6.668 16 6.667 Q 16.566 6.667 16.95 7.051 Q 17.334 7.435 17.333 8 L 17.333 17.333 Q 17.333 17.9 16.949 18.284 Q 16.565 18.668 16 18.667 Z  M 16 25.333 Q 15.433 25.333 15.05 24.949 Q 14.668 24.565 14.666 24 Q 14.666 23.433 15.05 23.051 Q 15.434 22.668 16 22.667 Q 16.566 22.667 16.95 23.051 Q 17.334 23.435 17.333 24 Q 17.333 24.567 16.949 24.951 Q 16.565 25.335 16 25.333 Z " />
                 </svg>
             </label>
             <input type="radio" id="option3" name="radioGroup">
             <label for="option3">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-                    viewBox="0 0 32 32" width="28" height="28">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="isolation:isolate" viewBox="0 0 32 32" width="28" height="28">
                     <path fill-rule="evenodd" fill="currentColor"
                         d=" M 18.667 18.667 Q 18.1 18.667 17.717 18.283 Q 17.335 17.899 17.333 17.333 L 17.333 8 Q 17.333 7.433 17.717 7.051 Q 18.101 6.668 18.667 6.667 Q 19.233 6.667 19.617 7.051 Q 20.001 7.435 20 8 L 20 17.333 Q 20 17.9 19.616 18.284 Q 19.232 18.668 18.667 18.667 Z  M 18.667 25.333 Q 18.1 25.333 17.717 24.949 Q 17.335 24.565 17.333 24 Q 17.333 23.433 17.717 23.051 Q 18.101 22.668 18.667 22.667 Q 19.233 22.667 19.617 23.051 Q 20.001 23.435 20 24 Q 20 24.567 19.616 24.951 Q 19.232 25.335 18.667 25.333 Z  M 13.333 18.667 Q 12.767 18.667 12.384 18.283 Q 12.001 17.899 12 17.333 L 12 8 Q 12 7.433 12.384 7.051 Q 12.768 6.668 13.333 6.667 Q 13.9 6.667 14.284 7.051 Q 14.668 7.435 14.667 8 L 14.667 17.333 Q 14.667 17.9 14.283 18.284 Q 13.899 18.668 13.333 18.667 Z  M 13.333 25.333 Q 12.767 25.333 12.384 24.949 Q 12.001 24.565 12 24 Q 12 23.433 12.384 23.051 Q 12.768 22.668 13.333 22.667 Q 13.9 22.667 14.284 23.051 Q 14.668 23.435 14.667 24 Q 14.667 24.567 14.283 24.951 Q 13.899 25.335 13.333 25.333 Z " />
                 </svg>
             </label>
             <input type="radio" id="option4" name="radioGroup">
             <label for="option4">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
-                    viewBox="0 0 32 32" width="28" height="28">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="isolation:isolate" viewBox="0 0 32 32" width="28" height="28">
                     <path
                         d=" M 16 18.667 Q 15.433 18.667 15.051 18.283 Q 14.668 17.899 14.667 17.333 L 14.667 8 Q 14.667 7.433 15.051 7.051 Q 15.435 6.668 16 6.667 Q 16.567 6.667 16.951 7.051 Q 17.335 7.435 17.333 8 L 17.333 17.333 Q 17.333 17.9 16.949 18.284 Q 16.565 18.668 16 18.667 Z  M 16 25.333 Q 15.433 25.333 15.051 24.949 Q 14.668 24.565 14.667 24 Q 14.667 23.433 15.051 23.051 Q 15.435 22.668 16 22.667 Q 16.567 22.667 16.951 23.051 Q 17.335 23.435 17.333 24 Q 17.333 24.567 16.949 24.951 Q 16.565 25.335 16 25.333 Z  M 10.667 18.667 Q 10.1 18.667 9.717 18.283 Q 9.335 17.899 9.333 17.333 L 9.333 8 Q 9.333 7.433 9.717 7.051 Q 10.101 6.668 10.667 6.667 Q 11.233 6.667 11.617 7.051 Q 12.001 7.435 12 8 L 12 17.333 Q 12 17.9 11.616 18.284 Q 11.232 18.668 10.667 18.667 Z  M 10.667 25.333 Q 10.1 25.333 9.717 24.949 Q 9.335 24.565 9.333 24 Q 9.333 23.433 9.717 23.051 Q 10.101 22.668 10.667 22.667 Q 11.233 22.667 11.617 23.051 Q 12.001 23.435 12 24 Q 12 24.567 11.616 24.951 Q 11.232 25.335 10.667 25.333 Z  M 21.333 18.667 Q 20.767 18.667 20.384 18.283 Q 20.001 17.899 20 17.333 L 20 8 Q 20 7.433 20.384 7.051 Q 20.768 6.668 21.333 6.667 Q 21.9 6.667 22.284 7.051 Q 22.668 7.435 22.667 8 L 22.667 17.333 Q 22.667 17.9 22.283 18.284 Q 21.899 18.668 21.333 18.667 Z  M 21.333 25.333 Q 20.767 25.333 20.384 24.949 Q 20.001 24.565 20 24 Q 20 23.433 20.384 23.051 Q 20.768 22.668 21.333 22.667 Q 21.9 22.667 22.284 23.051 Q 22.668 23.435 22.667 24 Q 22.667 24.567 22.283 24.951 Q 21.899 25.335 21.333 25.333 Z "
                         fill-rule="evenodd" fill="currentColor" />
@@ -110,55 +138,67 @@ Boards
 </div>
 <div id="boards_view" class="dropzone dboard_closed dboard_open" ondrop="boardsViewDrop(event)">
     {% for board in viewed_boards %}
-        <div id="board{{ board.board_id }}" class="draggable board_open" draggable="true">
-            <div style="border-color: #{{ board.color }};">
-                <h4>{{ board.board_name }}</h4>
-                {% if board.is_pinned %}
-                    <input class="pin" type="checkbox" checked>
-                {% else %}
-                    <input class="pin" type="checkbox">
-                {% endif %}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z"/></svg>
-            </div>
-            <div class="dropzone dtask">
-                {% for task in board.tasks %}
-                <div class="draggable task" draggable="true">
-                    <div>
-                        <svg id="task_dropdown_down" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062" />
-                        </svg>
-                        <svg id="task_dropdown_up" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z" />
-                        </svg>
-                        <h5>{{ task.task }}</h5>
-                        <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                        <svg id="task_check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z"/></svg>
-                    </div>
-                    <div class="dropzone dlist_item" style="display: none;">
-                        {% set outer_loop = loop %}
-                        {% for li in task.list %}
-                            <li class="draggable list_item" draggable="true" ondrop="taskLiDrop(event,{{ board.board_id }},{{ outer_loop.index }})">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="currentColor" d="m7.825 10l2.9 2.9q.3.3.288.7t-.288.7q-.3.3-.7.313t-.7-.288L4.7 9.7q-.15-.15-.213-.325T4.426 9q0-.2.063-.375T4.7 8.3l4.575-4.575q.3-.3.713-.3t.712.3q.3.3.3.7t-.3.7L7.825 8H17q.825 0 1.413.588T19 10v9q0 .425-.288.713T18 20q-.425 0-.712-.288T17 19v-9z"/></svg>
-                                <div>
-                                    {% if li.checked %}
-                                    <input class="input_checkbox" type="checkbox" onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})" checked>
-                                    {% else %}
-                                    <input class="input_checkbox" type="checkbox" onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})">
-                                    {% endif %}
-                                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2);">|</h4>
-                                    <h6>{{ li.content }}</h6>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+    <div id="board{{ board.board_id }}" class="draggable board_open" draggable="true">
+        <div style="border-color: #{{ board.color }};">
+            <h4>{{ board.board_name }}</h4>
+            {% if board.is_pinned %}
+            <input class="pin" type="checkbox" checked>
+            {% else %}
+            <input class="pin" type="checkbox">
+            {% endif %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
+            </svg>
         </div>
+        <div class="dropzone dtask">
+            {% for task in board.tasks %}
+            <div class="draggable task" draggable="true">
+                <div>
+                    <svg id="task_dropdown_down" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})"
+                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062" />
+                    </svg>
+                    <svg id="task_dropdown_up" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})"
+                        class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z" />
+                    </svg>
+                    <h5>{{ task.task }}</h5>
+                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
+                    <svg id="task_check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z" />
+                    </svg>
+                </div>
+                <div class="dropzone dlist_item" style="display: none;">
+                    {% set outer_loop = loop %}
+                    {% for li in task.list %}
+                    <li class="draggable list_item" draggable="true"
+                        ondrop="taskLiDrop(event,{{ board.board_id }},{{ outer_loop.index }})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+                            <path fill="currentColor"
+                                d="m7.825 10l2.9 2.9q.3.3.288.7t-.288.7q-.3.3-.7.313t-.7-.288L4.7 9.7q-.15-.15-.213-.325T4.426 9q0-.2.063-.375T4.7 8.3l4.575-4.575q.3-.3.713-.3t.712.3q.3.3.3.7t-.3.7L7.825 8H17q.825 0 1.413.588T19 10v9q0 .425-.288.713T18 20q-.425 0-.712-.288T17 19v-9z" />
+                        </svg>
+                        <div>
+                            {% if li.checked %}
+                            <input class="input_checkbox" type="checkbox"
+                                onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})" checked>
+                            {% else %}
+                            <input class="input_checkbox" type="checkbox"
+                                onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})">
+                            {% endif %}
+                            <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2);">|</h4>
+                            <h6>{{ li.content }}</h6>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

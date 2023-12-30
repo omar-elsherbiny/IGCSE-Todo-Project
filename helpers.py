@@ -30,11 +30,8 @@ def db_query(query, *params):
             res = db.execute(query, params).fetchall()
             print(f'sql query result={res}')
             return res
-        elif 'INSERT' in query:
+        elif any(k in query for k in ('INSERT', 'UPDATE', 'DELETE')):
             db.execute(query, params)
-            connection_obj.commit()
-        elif 'UPDATE' in query:
-            res = db.execute(query, params)
             connection_obj.commit()
 
 

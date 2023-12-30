@@ -291,9 +291,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     border: 2px solid #aba8a8;
     box-shadow: var(--shadow-elevation-low);
 }
-.draggable.task>div:nth-child(2) li div:has(input[type="checkbox"]:checked) {
-    filter: saturate(0.1) brightness(0.65);
-}
+.draggable.task>div:nth-child(2) li div:has(input[type="checkbox"]:checked) {filter: saturate(0.1) brightness(0.65);}
 /*######################## draggables*/
 
 #adder {

@@ -99,9 +99,9 @@ function checkValidTags(draggable, container) {
     return false;
 }
 
-function updateData(data) {
+function updateData(data, method = 'PUT') {
     return fetch('/receive_data', {
-        method: 'PUT',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -160,12 +160,30 @@ function trashDrop(event) {
 
     let valid = [draggable.classList.contains('board_closed'), draggable.classList.contains('board_open'), draggable.classList.contains('task'), draggable.classList.contains('list_item')];
     if (valid.some(e => e === true)) {
-        draggable.remove();
         document.getElementById('trash').classList.remove('open');
+        if (valid[0]) {
+            const head = document.querySelector('header');
+            head.innerHTML += `
+            <div class="alert" id="beep${head.childElementCount + 1}">
+                <p>Are you sure you want to delete ${draggable.querySelector('h4').textContent} permenantly?</p>
+                <svg onclick="updateData({'del_board':${Number(draggable.id.split('').slice(5).join(''))}}).then(res =>{window.location.href='/todos';})"
+                    xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z" />
+                </svg>
+                <svg onclick="hide_alert(${head.childElementCount + 1})" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 512 512">
+                    <path
+                        d="M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z"
+                        fill="#888888" />
+                </svg>
+            </div>`
+        }
         if (valid[1]) {
             const idx = Number(draggable.id.split('').slice(5).join(''));
             updateData({ 'rem_board': idx });
             updateAdderCenter();
+            draggable.remove();
         }
     }
 }
