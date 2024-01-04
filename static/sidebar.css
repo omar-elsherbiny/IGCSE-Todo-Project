@@ -42,6 +42,7 @@
 #pulltab svg {
     color: var(--border-highlight);
     transition: color 0.3s ease-in-out;
+    cursor: pointer;
 }
 #pulltab:hover svg {color: whitesmoke;}
 /*######################## pulltab*/
@@ -49,6 +50,7 @@
 #board_adder {
     color: var(--border-highlight);
     transition: color 0.3s ease-in-out;
+    cursor: pointer;
 }
 #board_adder:hover {color: whitesmoke;}
 /*######################## board_adder*/

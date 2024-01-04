@@ -47,6 +47,9 @@ def receive_data():
     else:
         if 'upd_boards' in data_from_client:
             session['viewed_boards'] = data_from_client['upd_boards']
+
+        # add_board
+        # edit_board
         if 'get_board' in data_from_client:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
                               session['user_id'], data_from_client['get_board'])
@@ -78,6 +81,15 @@ def receive_data():
                 db_query('UPDATE boards SET is_pinned=? WHERE id=? AND board_id=?',
                          int(data_from_client['pin']), session['user_id'], data_from_client['upd_board_data'])
 
+        if 'add_task' in data_from_client:
+            db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
+                     session['user_id'], data_from_client['board_id'], data_from_client['task'], data_from_client['date'], data_from_client['priority'])
+        # rem_task / done
+        # move_task
+
+        # add_list
+        # rem_list
+        # move_list
         if 'upd_list' in data_from_client:
             ls = '||'.join(
                 [a+'::'+str(b) for a, b in sorted(data_from_client['upd_list'], key=lambda x: x[1])])
@@ -105,8 +117,9 @@ def todos():
             t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
                 '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
         board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
-    viewed_boards = [b for _, b in sorted(zip(
-        session['viewed_boards'], boards), key=lambda pair: pair[0])] if 'viewed_boards' in session else []
+
+    viewed_boards = sorted([board for board in boards if board['board_id'] in session.get(
+        'viewed_boards', [])], key=lambda x: session.get('viewed_boards', []).index(x['board_id']))
 
     return render_template('todos.html', boards=boards, viewed_boards=viewed_boards)
 

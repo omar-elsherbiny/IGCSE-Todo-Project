@@ -262,3 +262,15 @@ function taskLiDrop(event, board, index) {
         updateTaskLi(board, index);
     }
 }
+
+function addTask(event) {
+    let task = document.getElementById('task_name').value;
+    if (task != '') {
+        let board_id = document.getElementById('task_board').value;
+        let time = document.getElementById('task_time').value;
+        let date = document.getElementById('task_date').value;
+        let datetime = date == '' || time == '' ? null : time + ' ' + date;
+        let priority = document.querySelector('input[name="priorityGroup"]:checked').value;
+        updateData({ 'add_task': true, 'task': task, 'board_id': board_id, 'date': datetime, 'priority': priority });
+    }
+}
