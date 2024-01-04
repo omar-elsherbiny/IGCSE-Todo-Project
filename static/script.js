@@ -127,6 +127,17 @@ function updateAdderCenter() {
     }
 }
 
+function updateAdderValid() {
+    let task = document.getElementById('task_name').value;
+    if (task != '') {
+        document.getElementById('adder').style.height = 'clamp(3.5rem, 12rem, 20rem)';
+        document.querySelector('#adder svg').style.color = '#1fad26';
+    } else {
+        document.getElementById('adder').style.height = '';
+        document.querySelector('#adder svg').style.color = '';
+    }
+}
+
 function updateTaskLi(board, index) {
     const parentE = document.querySelector('#board' + board + '.board_open .dtask .task:nth-child(' + index + ') .dlist_item');
     const childrenArray = Array.from(parentE.children);
