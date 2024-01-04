@@ -85,7 +85,8 @@ def receive_data():
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
                      session['user_id'], data_from_client['board_id'], data_from_client['task'], data_from_client['date'], data_from_client['priority'])
         if 'rem_task' in data_from_client:
-            pass
+            db_query('DELETE FROM tasks WHERE id=? AND board_id=? AND task_id=?',
+                     session['user_id'], data_from_client['board_id'], data_from_client['rem_task'])
         # move_task
 
         # add_list
@@ -154,7 +155,7 @@ def signup():
 
         session['user_name'] = username
         session['user_id'] = db_query(
-            'SELECT id FROM users WHERE username=?', username)
+            'SELECT id FROM users WHERE username=?', username)[0]['id']
         session['tooltips'] = tmp_tooltips
         session['viewed_boards'] = []
 

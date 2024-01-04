@@ -156,6 +156,13 @@ function updateTaskLi(board, index) {
     });
     updateData({ 'upd_list': processedTags, 'board': board, 'task': parentE.parentElement.querySelector('div h5').textContent });
 }
+
+function clearInputs() {
+    let inputFields = document.querySelectorAll('input');
+    inputFields.forEach(function (input) {
+        input.value = '';
+    });
+}
 ////////////////////////////////////
 function trashEnter(event) {
     document.getElementById('trash').classList.add('open');
@@ -197,7 +204,13 @@ function trashDrop(event) {
             draggable.remove();
         }
         if (valid[2]) {
-            //updateData({'rem_task'})
+            let check = draggable.querySelector('#task_check');
+            if (check.onclick) {
+                check.onclick();
+            } else if (check.dispatchEvent) {
+                var clickEvent = new Event('click', { bubbles: true });
+                check.dispatchEvent(clickEvent);
+            }
             draggable.remove();
         }
     }
@@ -225,7 +238,7 @@ function boardsViewDrop(event) {
                     <div class="dropzone dtask">`;
                 for (const [index, task] of board.tasks.entries()) {
                     let tmp = `
-                    <div class="draggable task" draggable="true">
+                    <div id="task${task.task_id}" class="draggable task" draggable="true">
                     <div style="border-color: var(--priority${task.priority});">
                         <svg id="task_dropdown_down" onclick="toggleTaskList(${board.board_id},${index + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 24 24">
@@ -239,7 +252,7 @@ function boardsViewDrop(event) {
                         </svg>
                         <h5>${task.task}</h5>
                         <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                        <svg id="task_check" onclick="doneTask(event)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <svg id="task_check" onclick="doneTask(${board.board_id},${task.task_id}" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                             <path fill="currentColor"
                                 d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z" />
                         </svg>
@@ -317,8 +330,11 @@ function addTask(event) {
             </div></div>`
             b.innerHTML += tmp;
         }
+        clearInputs();
     }
 }
-function doneTask(event) {
-    event.target.parentElement.style.animation = "nope_out 0.5s ease forwards";
+function doneTask(board_id, task_id) {
+    updateData({ 'rem_task': task_id, 'board_id': board_id });
+    let t = document.querySelector('#board' + board_id + '.board_open #task' + task_id);
+    if (t != null) t.style.animation = "nope_out 0.5s ease forwards";
 }
