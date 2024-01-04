@@ -84,7 +84,8 @@ def receive_data():
         if 'add_task' in data_from_client:
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
                      session['user_id'], data_from_client['board_id'], data_from_client['task'], data_from_client['date'], data_from_client['priority'])
-        # rem_task / done
+        if 'rem_task' in data_from_client:
+            pass
         # move_task
 
         # add_list

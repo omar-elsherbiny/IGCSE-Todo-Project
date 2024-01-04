@@ -66,6 +66,7 @@ function toggleAdderMenu() {
     if (adder_open) {
         adder_open = false;
         icon.style.transform = 'rotate(0deg)';
+        document.getElementById('adder').style.height = '';
     } else {
         adder_open = true;
         icon.style.transform = 'rotate(-180deg)';

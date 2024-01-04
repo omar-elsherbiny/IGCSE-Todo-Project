@@ -131,10 +131,10 @@ function updateAdderValid() {
     let task = document.getElementById('task_name').value;
     if (task != '') {
         document.getElementById('adder').style.height = 'clamp(3.5rem, 12rem, 20rem)';
-        document.querySelector('#adder svg').style.color = '#1fad26';
+        document.getElementById('adder_icon').style.color = '#1fad26';
     } else {
         document.getElementById('adder').style.height = '';
-        document.querySelector('#adder svg').style.color = '';
+        document.getElementById('adder_icon').style.color = '';
     }
 }
 
@@ -196,6 +196,10 @@ function trashDrop(event) {
             updateAdderCenter();
             draggable.remove();
         }
+        if (valid[2]) {
+            //updateData({'rem_task'})
+            draggable.remove();
+        }
     }
 }
 
@@ -235,7 +239,10 @@ function boardsViewDrop(event) {
                         </svg>
                         <h5>${task.task}</h5>
                         <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                        <svg class="task_check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z"/></svg>
+                        <svg id="task_check" onclick="doneTask(event)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z" />
+                        </svg>
                     </div>
                     <div class="dropzone dlist_item" style="display: none;">`
                     for (const li of task.list) {
@@ -284,6 +291,9 @@ function addTask(event) {
         let priority = document.querySelector('input[name="priorityGroup"]:checked').value;
         updateData({ 'add_task': true, 'task': task, 'board_id': board_id, 'date': datetime, 'priority': priority });
 
+        let n = document.querySelector('#board' + board_id + '.board_closed h5');
+        n.textContent = Number(n.textContent) + 1;
+
         let b = document.querySelector('#board' + board_id + '.board_open .dropzone.dtask');
         if (b != null) {
             let tmp = `
@@ -308,4 +318,7 @@ function addTask(event) {
             b.innerHTML += tmp;
         }
     }
+}
+function doneTask(event) {
+    event.target.parentElement.style.animation = "nope_out 0.5s ease forwards";
 }
