@@ -161,7 +161,7 @@ Boards
         <div class="dropzone dtask">
             {% for task in board.tasks %}
             <div class="draggable task" draggable="true">
-                <div>
+                <div style="border-color: var(--priority{{ task.priority }});">
                     <svg id="task_dropdown_down" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})"
                         xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                         <path fill="currentColor"

@@ -107,10 +107,10 @@ input[data-autocompleted] {background-color: transparent !important;}
 .input_radio input[type="radio"]:checked+label {border: 2px solid var(--accent);}
 .input_radio label svg {transition: all 0.5s ease-in-out, color 0.3s ease-in-out, scale 0.25s ease-in !important;}
 .input_radio input[type="radio"]:checked+label svg {scale: 1.2;}
-.input_radio #priority0+label svg {color: var(--no-priority);}
-.input_radio #priority1+label svg {color: var(--low-priority);}
-.input_radio #priority2+label svg {color: var(--medium-priority);}
-.input_radio #priority3+label svg {color: var(--high-priority);}
+.input_radio #priority0+label svg {color: var(--priority0);}
+.input_radio #priority1+label svg {color: var(--priority1);}
+.input_radio #priority2+label svg {color: var(--priority2);}
+.input_radio #priority3+label svg {color: var(--priority3);}
 /*######################## input radio*/
 
 .input_dropdown {
@@ -317,7 +317,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 #adder.open {
     width: clamp(3.5rem, 15rem, 20rem);
-    height: clamp(3.5rem, 11rem, 20rem);
+    height: clamp(3.5rem, 12rem, 20rem);
     background-color: whitesmoke;
 }
 #adder.center {

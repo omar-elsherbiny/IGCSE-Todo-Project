@@ -211,7 +211,7 @@ function boardsViewDrop(event) {
                 for (const [index, task] of board.tasks.entries()) {
                     let tmp = `
                     <div class="draggable task" draggable="true">
-                    <div>
+                    <div style="border-color: var(--priority${task.priority});">
                         <svg id="task_dropdown_down" onclick="toggleTaskList(${board.board_id},${index + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             viewBox="0 0 24 24">
                             <path fill="currentColor"
@@ -272,5 +272,29 @@ function addTask(event) {
         let datetime = date == '' || time == '' ? null : time + ' ' + date;
         let priority = document.querySelector('input[name="priorityGroup"]:checked').value;
         updateData({ 'add_task': true, 'task': task, 'board_id': board_id, 'date': datetime, 'priority': priority });
+
+        let b = document.querySelector('#board' + board_id + '.board_open .dropzone.dtask');
+        if (b != null) {
+            let tmp = `
+            <div class="draggable task" draggable="true">
+            <div style="border-color: var(--priority${priority});">
+                <svg id="task_dropdown_down" onclick="toggleTaskList(${board_id},${b.childElementCount + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062" />
+                </svg>
+                <svg id="task_dropdown_up" onclick="toggleTaskList(${board_id},${b.childElementCount + 1})" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})" class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z" />
+                </svg>
+                <h5>${task}</h5>
+                <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
+                <svg class="task_check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z"/></svg>
+            </div>
+            <div class="dropzone dlist_item" style="display: none;">
+            </div></div>`
+            b.innerHTML += tmp;
+        }
     }
 }

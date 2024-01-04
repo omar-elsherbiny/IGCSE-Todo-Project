@@ -18,10 +18,10 @@
         34.4px 29.4px 54.3px -1.4px hsl(var(--shadow-color) / 0.46),
         51.3px 43.8px 80.9px -1.7px hsl(var(--shadow-color) / 0.48),
         74.6px 63.8px 117.8px -2px hsl(var(--shadow-color) / 0.5);
-    --no-priority: #7c7c7c;
-    --low-priority: #1996ff;
-    --medium-priority: #ffaf19;
-    --high-priority: #e14b3c;
+    --priority0: #7c7c7c;
+    --priority1: #1996ff;
+    --priority2: #ffaf19;
+    --priority3: #e14b3c;
 }
 
 :root[data-theme="light"] {
