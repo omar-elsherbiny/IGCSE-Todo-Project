@@ -1,8 +1,9 @@
 from flask import Flask, flash, get_flashed_messages, redirect, render_template, request, session
 from flask_session import Session
 
-from helpers import login_required, raise_error, db_query, remove_dictlist_keys
+from helpers import login_required, raise_error, db_query, remove_dictlist_keys, current_time, sorted_on_time
 from crypto import get_hash, check_hash
+
 
 app = Flask(__name__)
 
@@ -49,12 +50,13 @@ def receive_data():
             session['viewed_boards'] = client_data['upd_boards']
 
         if 'add_board' in client_data:
-            db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)",  # LAST MODIFIED = NOW
-                     session['user_id'], client_data['add_board'], client_data['color'][1:], '00:00AM 0000-00-00')
+            db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)",
+                     session['user_id'], client_data['add_board'], client_data['color'][1:], current_time())
         # edit_board
         if 'get_board' in client_data:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
                               session['user_id'], client_data['get_board'])
+            boards = sorted_on_time(boards,'last_modified')
             board = remove_dictlist_keys(boards, 'id')[0]
             ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
                           session['user_id'], client_data['get_board'])
@@ -115,6 +117,7 @@ def index():
 @login_required
 def todos():
     boards = db_query('SELECT * FROM boards WHERE id=?', session['user_id'])
+    boards = sorted_on_time(boards,'last_modified')
     boards = remove_dictlist_keys(boards, 'id')
     for board in boards:
         ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',

@@ -1,6 +1,7 @@
 import sqlite3
 from flask import flash, redirect, render_template, session
 from functools import wraps
+from datetime import datetime
 
 
 def login_required(f):
@@ -37,3 +38,9 @@ def db_query(query, *params):
 
 def remove_dictlist_keys(dictlist, *keys):
     return [{key: val for key, val in d.items() if key not in keys} for d in dictlist]
+
+def current_time():
+    return datetime.now().strftime("%H:%M %Y-%m-%d")
+
+def sorted_on_time(dictlist, time_attr):
+    return sorted(dictlist, key=lambda x: datetime.strptime(x[time_attr], "%H:%M %Y-%m-%d"), reverse=True)

@@ -120,9 +120,9 @@ function updateData(data, method = 'PUT') {
 
 function updateAdderCenter() {
     let adder = document.getElementById('adder');
-    if (document.getElementById('boards_view').childElementCount == 0) {
+    if (adder && document.getElementById('boards_view').childElementCount == 0) {
         adder.classList.add('center');
-    } else {
+    } else if (adder) {
         adder.classList.remove('center');
     }
 }
@@ -334,7 +334,6 @@ function addTask(event) {
         let date = document.getElementById('task_date').value;
         let datetime = date == '' || time == '' ? null : time + ' ' + date;
         let priority = document.querySelector('input[name="priorityGroup"]:checked').value;
-        console.log(datetime);
         updateData({ 'add_task': true, 'task': task, 'board_id': board_id, 'date': datetime, 'priority': priority });
 
         let n = document.querySelector('#board' + board_id + '.board_closed h5');
