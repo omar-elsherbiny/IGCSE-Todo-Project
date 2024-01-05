@@ -158,7 +158,7 @@ function updateTaskLi(board, index) {
 }
 
 function clearInputs() {
-    let inputFields = document.querySelectorAll('input');
+    let inputFields = document.querySelectorAll('input:not([type="radio"])');
     inputFields.forEach(function (input) {
         input.value = '';
     });
@@ -310,7 +310,10 @@ function boardTemp() {
         });
 
         document.addEventListener('click', function (event) {
-            if (board_temp && !board_temp.contains(event.target) && event.target !== board_adder && !board_adder.contains(event.target)) board_temp.remove();
+            if (board_temp && board_name.value != '' && !board_temp.contains(event.target) && event.target !== board_adder && !board_adder.contains(event.target)) {
+                updateData({ 'add_board': board_name.value, 'color': document.getElementById('board_color').value })
+                    .then(res => { window.location.href = '/todos'; })
+            }
         });
     }
 }
@@ -331,6 +334,7 @@ function addTask(event) {
         let date = document.getElementById('task_date').value;
         let datetime = date == '' || time == '' ? null : time + ' ' + date;
         let priority = document.querySelector('input[name="priorityGroup"]:checked').value;
+        console.log(datetime);
         updateData({ 'add_task': true, 'task': task, 'board_id': board_id, 'date': datetime, 'priority': priority });
 
         let n = document.querySelector('#board' + board_id + '.board_closed h5');

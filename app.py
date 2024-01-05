@@ -49,7 +49,7 @@ def receive_data():
             session['viewed_boards'] = client_data['upd_boards']
 
         if 'add_board' in client_data:
-            db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)", #LAST MODIFIED = NOW
+            db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)",  # LAST MODIFIED = NOW
                      session['user_id'], client_data['add_board'], client_data['color'][1:], '00:00AM 0000-00-00')
         # edit_board
         if 'get_board' in client_data:
@@ -78,6 +78,8 @@ def receive_data():
         if 'del_board' in client_data:
             db_query('DELETE FROM boards WHERE id=? AND board_id=?',
                      session['user_id'], client_data['del_board'])
+            db_query('DELETE FROM tasks WHERE id=? AND board_id=?',
+                     session['user_id'], client_data['del_board'])
         if 'upd_board_data' in client_data:
             if 'pin' in client_data:
                 db_query('UPDATE boards SET is_pinned=? WHERE id=? AND board_id=?',
@@ -99,7 +101,7 @@ def receive_data():
                 [a+'::'+str(b) for a, b in sorted(client_data['upd_list'], key=lambda x: x[1])])
             db_query('UPDATE tasks SET list=? WHERE id=? AND board_id=? AND task=?', ls,
                      session['user_id'], client_data['board'], client_data['task'])
-    return {'message': 'Data received successfully', 'content': list(client_data.keys())}
+    return {'message': 'Data received successfully', 'content': client_data}
 
 
 @app.route('/')
