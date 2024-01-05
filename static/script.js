@@ -293,7 +293,7 @@ function boardTemp() {
             <div class="input_default_box">
                 <input id="board_name" type="text" placeholder="Board Name" maxlength="30">
             </div>
-            <input id="board_color" type="color">
+            <input id="board_color" class="input_color" type="color">
         </div>`
         boards_list.innerHTML += tmp;
 

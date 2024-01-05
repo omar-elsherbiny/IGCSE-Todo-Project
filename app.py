@@ -19,6 +19,11 @@ def set_tooltips(*args):
         for arg in args:
             flash(arg, 'info')
 
+
+def board_modified(board_id):
+    db_query('UPDATE boards SET last_modified=? WHERE id=? AND board_id=?',
+             current_time(), session['user_id'], board_id)
+
 # REMOVE
 @app.route('/flash')
 def flash_test():
@@ -56,7 +61,7 @@ def receive_data():
         if 'get_board' in client_data:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
                               session['user_id'], client_data['get_board'])
-            boards = sorted_on_time(boards,'last_modified')
+            boards = sorted_on_time(boards, 'last_modified')
             board = remove_dictlist_keys(boards, 'id')[0]
             ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
                           session['user_id'], client_data['get_board'])
@@ -90,9 +95,11 @@ def receive_data():
         if 'add_task' in client_data:
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
                      session['user_id'], client_data['board_id'], client_data['task'], client_data['date'], client_data['priority'])
+            board_modified(client_data['board_id'])
         if 'rem_task' in client_data:
             db_query('DELETE FROM tasks WHERE id=? AND board_id=? AND task_id=?',
                      session['user_id'], client_data['board_id'], client_data['rem_task'])
+            board_modified(client_data['board_id'])
         # move_task
 
         # add_list
@@ -103,6 +110,7 @@ def receive_data():
                 [a+'::'+str(b) for a, b in sorted(client_data['upd_list'], key=lambda x: x[1])])
             db_query('UPDATE tasks SET list=? WHERE id=? AND board_id=? AND task=?', ls,
                      session['user_id'], client_data['board'], client_data['task'])
+            board_modified(client_data['board'])
     return {'message': 'Data received successfully', 'content': client_data}
 
 
@@ -117,7 +125,6 @@ def index():
 @login_required
 def todos():
     boards = db_query('SELECT * FROM boards WHERE id=?', session['user_id'])
-    boards = sorted_on_time(boards,'last_modified')
     boards = remove_dictlist_keys(boards, 'id')
     for board in boards:
         ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
@@ -130,7 +137,7 @@ def todos():
     viewed_boards = sorted([board for board in boards if board['board_id'] in session.get(
         'viewed_boards', [])], key=lambda x: session.get('viewed_boards', []).index(x['board_id']))
 
-    return render_template('todos.html', boards=boards, viewed_boards=viewed_boards)
+    return render_template('todos.html', boards=sorted_on_time(boards, 'last_modified'), viewed_boards=viewed_boards)
 
 
 @app.route('/signup', methods=['GET', 'POST'])

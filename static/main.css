@@ -135,6 +135,26 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .input_dropdown:focus-within {outline: 2px solid var(--accent);}
 /*######################## input dropdown*/
+
+.input_color {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 3rem;
+    height: 1.75rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.input_color::-webkit-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+.input_color::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+/*######################## input color*/
 .input_number {
     margin: 0.5rem;
     width: 2.5rem;

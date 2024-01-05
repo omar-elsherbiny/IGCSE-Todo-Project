@@ -40,7 +40,9 @@ def remove_dictlist_keys(dictlist, *keys):
     return [{key: val for key, val in d.items() if key not in keys} for d in dictlist]
 
 def current_time():
-    return datetime.now().strftime("%H:%M %Y-%m-%d")
+    return datetime.now().strftime("%H:%M:%S %Y-%m-%d")
 
-def sorted_on_time(dictlist, time_attr):
-    return sorted(dictlist, key=lambda x: datetime.strptime(x[time_attr], "%H:%M %Y-%m-%d"), reverse=True)
+def sorted_on_time(dictlist, time_attr, seconds=True):
+    if not seconds:
+        return sorted(dictlist, key=lambda x: datetime.strptime(x[time_attr], "%H:%M %Y-%m-%d"), reverse=True)
+    return sorted(dictlist, key=lambda x: datetime.strptime(x[time_attr], "%H:%M:%S %Y-%m-%d"), reverse=True)
