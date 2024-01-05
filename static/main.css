@@ -23,7 +23,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     position: relative;
     margin: 0.5rem;
 }
-.input_box>input {
+.input_box input {
     position: relative;
     width: 97%;
     border: none;
@@ -31,11 +31,11 @@ input[data-autocompleted] {background-color: transparent !important;}
     color: var(--text);
     border-bottom: 0.5px solid black;
 }
-.input_box>input::placeholder {
+.input_box input::placeholder {
     color: rgb(from var(--text) r g b / 65%);
     opacity: 1;
 }
-.input_box>input:focus {outline: none;}
+.input_box input:focus {outline: none;}
 .input_box::after {
     content: '';
     position: absolute;
@@ -49,6 +49,19 @@ input[data-autocompleted] {background-color: transparent !important;}
 }
 .input_box:focus-within::after {width: 100%;}
 /*######################## input box*/
+
+.input_default_box input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--text-alt);
+}
+/*######################## input default box*/
 
 .input_button {
     position: relative;

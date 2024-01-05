@@ -38,66 +38,68 @@ def after_request(response):
 
 @app.route('/receive_data', methods=['POST', 'PUT'])
 def receive_data():
-    data_from_client = request.get_json()
-    print(f'{data_from_client=}')
+    client_data = request.get_json()
+    print(f'{client_data=}')
     # Process the received data as needed
-    if 'tooltips' in data_from_client:
+    if 'tooltips' in client_data:
         global tmp_tooltips
-        tmp_tooltips = True if data_from_client['tooltips'] == 'true' else False
+        tmp_tooltips = True if client_data['tooltips'] == 'true' else False
     else:
-        if 'upd_boards' in data_from_client:
-            session['viewed_boards'] = data_from_client['upd_boards']
+        if 'upd_boards' in client_data:
+            session['viewed_boards'] = client_data['upd_boards']
 
-        # add_board
+        if 'add_board' in client_data:
+            db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)", #LAST MODIFIED = NOW
+                     session['user_id'], client_data['add_board'], client_data['color'][1:], '00:00AM 0000-00-00')
         # edit_board
-        if 'get_board' in data_from_client:
+        if 'get_board' in client_data:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
-                              session['user_id'], data_from_client['get_board'])
+                              session['user_id'], client_data['get_board'])
             board = remove_dictlist_keys(boards, 'id')[0]
             ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
-                          session['user_id'], data_from_client['get_board'])
+                          session['user_id'], client_data['get_board'])
             for t in ts:
                 t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
                     '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
             board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
             if 'viewed_boards' in session:
-                if data_from_client['get_board'] not in session['viewed_boards']:
+                if client_data['get_board'] not in session['viewed_boards']:
                     session['viewed_boards'].append(
-                        data_from_client['get_board'])
+                        client_data['get_board'])
                     return board
             else:
-                session['viewed_boards'] = [data_from_client['get_board']]
+                session['viewed_boards'] = [client_data['get_board']]
                 return board
             return 'null'
-        if 'rem_board' in data_from_client:
+        if 'rem_board' in client_data:
             session['viewed_boards'] = list(
                 dict.fromkeys(session['viewed_boards']))
-            session['viewed_boards'].remove(data_from_client['rem_board'])
-        if 'del_board' in data_from_client:
+            session['viewed_boards'].remove(client_data['rem_board'])
+        if 'del_board' in client_data:
             db_query('DELETE FROM boards WHERE id=? AND board_id=?',
-                     session['user_id'], data_from_client['del_board'])
-        if 'upd_board_data' in data_from_client:
-            if 'pin' in data_from_client:
+                     session['user_id'], client_data['del_board'])
+        if 'upd_board_data' in client_data:
+            if 'pin' in client_data:
                 db_query('UPDATE boards SET is_pinned=? WHERE id=? AND board_id=?',
-                         int(data_from_client['pin']), session['user_id'], data_from_client['upd_board_data'])
+                         int(client_data['pin']), session['user_id'], client_data['upd_board_data'])
 
-        if 'add_task' in data_from_client:
+        if 'add_task' in client_data:
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
-                     session['user_id'], data_from_client['board_id'], data_from_client['task'], data_from_client['date'], data_from_client['priority'])
-        if 'rem_task' in data_from_client:
+                     session['user_id'], client_data['board_id'], client_data['task'], client_data['date'], client_data['priority'])
+        if 'rem_task' in client_data:
             db_query('DELETE FROM tasks WHERE id=? AND board_id=? AND task_id=?',
-                     session['user_id'], data_from_client['board_id'], data_from_client['rem_task'])
+                     session['user_id'], client_data['board_id'], client_data['rem_task'])
         # move_task
 
         # add_list
         # rem_list
         # move_list
-        if 'upd_list' in data_from_client:
+        if 'upd_list' in client_data:
             ls = '||'.join(
-                [a+'::'+str(b) for a, b in sorted(data_from_client['upd_list'], key=lambda x: x[1])])
+                [a+'::'+str(b) for a, b in sorted(client_data['upd_list'], key=lambda x: x[1])])
             db_query('UPDATE tasks SET list=? WHERE id=? AND board_id=? AND task=?', ls,
-                     session['user_id'], data_from_client['board'], data_from_client['task'])
-    return {'message': 'Data received successfully', 'content': list(data_from_client.keys())}
+                     session['user_id'], client_data['board'], client_data['task'])
+    return {'message': 'Data received successfully', 'content': list(client_data.keys())}
 
 
 @app.route('/')

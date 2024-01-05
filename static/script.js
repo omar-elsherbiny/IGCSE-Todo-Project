@@ -285,6 +285,35 @@ function boardsViewDrop(event) {
         updateData({ 'upd_boards': processedIDs });
     }
 }
+function boardTemp() {
+    if (document.querySelector('#board_temp') == null) {
+        let boards_list = document.getElementById(('boards_list'));
+        const tmp = `
+        <div id="board_temp" class="draggable board_closed" style="border-color: #555555;">
+            <div class="input_default_box">
+                <input id="board_name" type="text" placeholder="Board Name" maxlength="30">
+            </div>
+            <input id="board_color" type="color">
+        </div>`
+        boards_list.innerHTML += tmp;
+
+        let board_temp = document.querySelector('#board_temp');
+        let board_name = document.getElementById('board_name');
+        let board_adder = document.getElementById('board_adder');
+
+        board_name.focus();
+        board_name.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && board_name.value != '') {
+                updateData({ 'add_board': board_name.value, 'color': document.getElementById('board_color').value })
+                    .then(res => { window.location.href = '/todos'; })
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (board_temp && !board_temp.contains(event.target) && event.target !== board_adder && !board_adder.contains(event.target)) board_temp.remove();
+        });
+    }
+}
 
 function taskLiDrop(event, board, index) {
     const draggable = document.querySelector('.dragging');
