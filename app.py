@@ -96,10 +96,16 @@ def receive_data():
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
                      session['user_id'], client_data['board_id'], client_data['task'], client_data['date'], client_data['priority'])
             board_modified(client_data['board_id'])
+            return db_query(
+                "SELECT task_id FROM tasks WHERE id=? AND board_id=? AND task=? AND priority=? AND custom_order=-1",
+                session['user_id'], client_data['board_id'], client_data['task'], client_data['priority'])[-1]
         if 'rem_task' in client_data:
             db_query('DELETE FROM tasks WHERE id=? AND board_id=? AND task_id=?',
                      session['user_id'], client_data['board_id'], client_data['rem_task'])
             board_modified(client_data['board_id'])
+            if client_data['done']:
+                db_query('UPDATE users SET tasks_done = tasks_done + 1 WHERE id=?',
+                         session['user_id'])
         # move_task
 
         # add_list
@@ -220,5 +226,5 @@ def account():
 
 
 if __name__ == '__main__':
-    # app.run()
+    # app.run('192.168.1.14',5000)
     pass
