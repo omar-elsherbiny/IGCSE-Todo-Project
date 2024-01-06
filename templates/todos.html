@@ -6,7 +6,7 @@ Boards
 
 {% block navbar1 %}
 <a class="link" href="./">Home</a>
-<a class="link" href="./todos">Boards</a>
+<a class="link alt" href="./todos">Boards</a>
 {% endblock %}
 
 {% block navbar2 %}
@@ -140,6 +140,14 @@ Boards
             </label>
         </div>
     </div>
+</div>
+<div style="display: flex; gap: 0.5rem;">
+    <h5>Sort type:</h5>
+    <select id="task_sort_type" class="input_dropdown">
+        <option value="priority">By Priority</option>
+        <option value="priority">By Date</option>
+        <option value="custom" disabled>Custom Order</option>
+    </select>
 </div>
 <div id="boards_view" class="dropzone dboard_closed dboard_open" ondrop="boardsViewDrop(event)">
     {% for board in viewed_boards %}
