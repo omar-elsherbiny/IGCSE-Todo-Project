@@ -310,9 +310,13 @@ function boardTemp() {
         });
 
         document.addEventListener('click', function (event) {
-            if (board_temp && board_name.value != '' && !board_temp.contains(event.target) && event.target !== board_adder && !board_adder.contains(event.target)) {
-                updateData({ 'add_board': board_name.value, 'color': document.getElementById('board_color').value })
-                    .then(res => { window.location.href = '/todos'; })
+            if (board_temp && !board_temp.contains(event.target) && event.target !== board_adder && !board_adder.contains(event.target)) {
+                if (board_name.value != '') {
+                    updateData({ 'add_board': board_name.value, 'color': document.getElementById('board_color').value })
+                        .then(res => { window.location.href = '/todos'; })
+                } else {
+                    board_temp.remove();
+                }
             }
         });
     }

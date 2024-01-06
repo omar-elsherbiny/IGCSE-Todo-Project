@@ -115,9 +115,10 @@ input[data-autocompleted] {background-color: transparent !important;}
     background-color: #dcdcdcdc;
     border-radius: 10px;
     padding: 0.1rem 0.2rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 .input_radio label:hover {background-color: #d2d2d2;}
-.input_radio input[type="radio"]:checked+label {border: 2px solid var(--accent);}
+.input_radio input[type="radio"]:checked+label {outline: 2px solid var(--accent);}
 .input_radio label svg {transition: all 0.5s ease-in-out, color 0.3s ease-in-out, scale 0.25s ease-in !important;}
 .input_radio input[type="radio"]:checked+label svg {scale: 1.2;}
 .input_radio #priority0+label svg {color: var(--priority0);}
@@ -128,12 +129,15 @@ input[data-autocompleted] {background-color: transparent !important;}
 
 .input_dropdown {
     padding: 0.1rem;
-    border-radius: 5px;
-    background-color: #dcdcdcdc;
+    border-radius: 3px;
+    background-color: whitesmoke;
+    border: 2px solid #716e6e;
     outline: none;
     cursor: pointer;
+    box-shadow: var(--shadow-elevation-low);
+    transition: border 0.25s ease-in;
 }
-.input_dropdown:focus-within {outline: 2px solid var(--accent);}
+.input_dropdown:focus-within {border: 2px solid var(--accent);}
 /*######################## input dropdown*/
 
 .input_color {
