@@ -56,6 +56,12 @@
 /*######################## board_adder*/
 
 #boards_list {flex: 1;}
+.draggable.board_closed svg {
+    color: rgba(255, 255, 255, 0.15);
+    transition: color 0.3s ease-in-out;
+    cursor: pointer;
+}
+.draggable.board_closed svg:hover {color: whitesmoke;}
 /*######################## boards_list*/
 
 #trash {

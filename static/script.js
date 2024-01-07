@@ -129,7 +129,8 @@ function updateAdderCenter() {
 
 function updateAdderValid() {
     let task = document.getElementById('task_name').value;
-    if (task != '') {
+    let board_id = document.getElementById('task_board').value;
+    if (task != '' && board_id != '') {
         document.getElementById('adder').style.height = 'clamp(3.5rem, 12rem, 20rem)';
         document.getElementById('adder_icon').style.color = '#1fad26';
     } else {
@@ -321,13 +322,51 @@ function boardTemp() {
         });
     }
 }
+function boardEdit(event, board_id, prev_name, prev_color) {
+    if (document.querySelector('#board_temp') == null) {
+        const tmp = `
+        <div id="board_temp" class="draggable board_closed" style="border-color: #${prev_color};">
+        <div class="input_default_box">
+        <input id="board_name" type="text" placeholder="Board Name" maxlength="30" value="${prev_name}">
+        </div>
+        <input id="board_color" class="input_color" type="color" value="#${prev_color}" oninput="document.getElementById('board_temp').style.borderColor=event.target.value">
+        </div>`
+        let prev_board = document.querySelector('#board' + board_id + '.board_closed');
+        prev_board.insertAdjacentHTML('beforebegin', tmp);
+        prev_board.remove();
 
-function taskLiDrop(event, board, index) {
-    const draggable = document.querySelector('.dragging');
-    if (draggable.classList.contains('list_item')) {
-        reset = false;
-        updateTaskLi(board, index);
+        let board_temp = document.querySelector('#board_temp');
+        let board_name = document.getElementById('board_name');
+        board_name.focus();
+        board_name.setSelectionRange(board_name.value.length, board_name.value.length);
+        board_name.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && board_name.value != '') {
+                updateData({ 'edit_board': board_id, 'name': board_name.value, 'color': document.getElementById('board_color').value })
+                    .then(res => { window.location.href = '/todos'; })
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (board_temp && !board_temp.contains(event.target)
+                && !isBoardEditE(event.target)) {
+                if (board_name.value != '') {
+                    updateData({ 'edit_board': board_id, 'name': board_name.value, 'color': document.getElementById('board_color').value })
+                        .then(res => { window.location.href = '/todos'; })
+                } else {
+                    board_temp.remove();
+                    window.location.href = '/todos';
+                }
+            }
+        });
     }
+}
+function isBoardEditE(element) {
+    if (element.nodeName === "svg" && element.getAttribute("onclick") && element.getAttribute("onclick").includes("boardEdit")) return true
+    if (element.nodeName === "path") {
+        let svgParent = element.closest('svg');
+        if (svgParent && svgParent.getAttribute("onclick") && svgParent.getAttribute("onclick").includes("boardEdit")) return true
+    }
+    return false;
 }
 
 function addTask(event) {
@@ -390,4 +429,12 @@ function doneTask(board_id, task_id) {
     }
     let n = document.querySelector('#board' + board_id + '.board_closed h5');
     n.textContent = Number(n.textContent) - 1;
+}
+
+function taskLiDrop(event, board, index) {
+    const draggable = document.querySelector('.dragging');
+    if (draggable.classList.contains('list_item')) {
+        reset = false;
+        updateTaskLi(board, index);
+    }
 }

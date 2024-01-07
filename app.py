@@ -57,7 +57,10 @@ def receive_data():
         if 'add_board' in client_data:
             db_query("INSERT INTO boards (id,board_name,color,last_modified) VALUES (?,?,?,?)",
                      session['user_id'], client_data['add_board'], client_data['color'][1:], current_time())
-        # edit_board
+        if 'edit_board' in client_data:
+            db_query('UPDATE boards SET board_name=?, color=? WHERE id=? AND board_id=?',
+                     client_data['name'], client_data['color'][1:], session['user_id'], int(client_data['edit_board']))
+            board_modified(int(client_data['edit_board']))
         if 'get_board' in client_data:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
                               session['user_id'], int(client_data['get_board']))
