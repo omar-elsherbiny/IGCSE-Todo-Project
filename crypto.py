@@ -62,8 +62,8 @@ def inverse_matrix(matrix):
 
     return inverse_matrix
 
-def gen_matrix(size):
-    seed()
+def gen_matrix(size,perma_seed=None):
+    seed(perma_seed)
     matrix = -1
     while matrix == -1 or inverse_matrix(matrix) == None:
         matrix = [choices([1, 2, 3, 4, 5, 6, 7, 8, 9], k=size) for i in range(size)]
