@@ -60,11 +60,11 @@ def receive_data():
         # edit_board
         if 'get_board' in client_data:
             boards = db_query('SELECT * FROM boards WHERE id=? AND board_id=?',
-                              session['user_id'], client_data['get_board'])
+                              session['user_id'], int(client_data['get_board']))
             boards = sorted_on_time(boards, 'last_modified')
             board = remove_dictlist_keys(boards, 'id')[0]
             ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
-                          session['user_id'], client_data['get_board'])
+                          session['user_id'], int(client_data['get_board']))
             for t in ts:
                 t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
                     '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
@@ -84,24 +84,24 @@ def receive_data():
             session['viewed_boards'].remove(client_data['rem_board'])
         if 'del_board' in client_data:
             db_query('DELETE FROM boards WHERE id=? AND board_id=?',
-                     session['user_id'], client_data['del_board'])
+                     session['user_id'], int(client_data['del_board']))
             db_query('DELETE FROM tasks WHERE id=? AND board_id=?',
-                     session['user_id'], client_data['del_board'])
+                     session['user_id'], int(client_data['del_board']))
         if 'upd_board_data' in client_data:
             if 'pin' in client_data:
                 db_query('UPDATE boards SET is_pinned=? WHERE id=? AND board_id=?',
-                         int(client_data['pin']), session['user_id'], client_data['upd_board_data'])
+                         int(client_data['pin']), session['user_id'], int(client_data['upd_board_data']))
 
         if 'add_task' in client_data:
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
-                     session['user_id'], client_data['board_id'], client_data['task'], client_data['date'], client_data['priority'])
+                     session['user_id'], int(client_data['board_id']), client_data['task'], client_data['date'], int(client_data['priority']))
             board_modified(client_data['board_id'])
             return db_query(
                 "SELECT task_id FROM tasks WHERE id=? AND board_id=? AND task=? AND priority=? AND custom_order=-1",
-                session['user_id'], client_data['board_id'], client_data['task'], client_data['priority'])[-1]
+                session['user_id'], int(client_data['board_id']), client_data['task'], int(client_data['priority']))[-1]
         if 'rem_task' in client_data:
             db_query('DELETE FROM tasks WHERE id=? AND board_id=? AND task_id=?',
-                     session['user_id'], client_data['board_id'], client_data['rem_task'])
+                     session['user_id'], int(client_data['board_id']), int(client_data['rem_task']))
             board_modified(client_data['board_id'])
             if client_data['done']:
                 db_query('UPDATE users SET tasks_done = tasks_done + 1 WHERE id=?',
@@ -115,8 +115,8 @@ def receive_data():
             ls = '||'.join(
                 [a+'::'+str(b) for a, b in sorted(client_data['upd_list'], key=lambda x: x[1])])
             db_query('UPDATE tasks SET list=? WHERE id=? AND board_id=? AND task=?', ls,
-                     session['user_id'], client_data['board'], client_data['task'])
-            board_modified(client_data['board'])
+                     session['user_id'], int(client_data['board']), client_data['task'])
+            board_modified(int(client_data['board']))
     return {'message': 'Data received successfully', 'content': client_data}
 
 
