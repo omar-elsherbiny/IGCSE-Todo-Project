@@ -147,31 +147,39 @@ Boards
         </div>
     </div>
 </div>
-<div style="display: flex; gap: 0.5rem;">
-    <h5>Sort type:</h5>
-    <select id="task_sort_type" class="input_dropdown">
-        <option value="priority">By Priority</option>
-        <option value="priority">By Date</option>
-        <option value="priority">By Most Recent</option>
-        <option value="custom" disabled>Custom Order</option>
-    </select>
-</div>
 <div id="boards_view" class="dropzone dboard_closed dboard_open" ondrop="boardsViewDrop(event)">
     {% for board in viewed_boards %}
     <div id="board{{ board.board_id }}" class="draggable board_open" draggable="true">
         <div style="border-color: #{{ board.color }};">
             <h4>{{ board.board_name }}</h4>
-            {% if board.is_pinned %}
-            <input id="pin{{ board.board_id }}" onchange="updateData({'upd_board_data':{{ board.board_id }},'pin':event.target.checked})" class="pin" type="checkbox" checked>
-            {% else %}
-            <input id="pin{{ board.board_id }}" class="pin" type="checkbox">
-            {% endif %}
-            <label for="pin{{ board.board_id }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
-                </svg>
-            </label>
+            <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
+                <div class="svg_dropdown">
+                    <svg onclick="document.querySelector('.svg_dropdown').classList.add('open')" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0" />
+                    </svg>
+                    <div>
+                        <option value="priority">By Priority</option>
+                        <hr>
+                        <option value="date">By Date</option>
+                        <hr>
+                        <option value="recent">By Most Recent</option>
+                        <hr>
+                        <option value="custom" disabled>Custom Order</option>
+                    </div>
+                </div>
+                {% if board.is_pinned %}
+                <input id="pin{{ board.board_id }}" onchange="updateData({'upd_board_data':{{ board.board_id }},'pin':event.target.checked})" class="pin" type="checkbox" checked>
+                {% else %}
+                <input id="pin{{ board.board_id }}" onchange="updateData({'upd_board_data':{{ board.board_id }},'pin':event.target.checked})" class="pin" type="checkbox">
+                {% endif %}
+                <label for="pin{{ board.board_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
+                    </svg>
+                </label>
+            </div>
         </div>
         <div class="dropzone dtask">
             {% for task in board.tasks %}

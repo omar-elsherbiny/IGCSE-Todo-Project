@@ -228,6 +228,22 @@ function boardsViewDrop(event) {
                 <div id="board${board.board_id}" class="draggable board_open" draggable="true">
                     <div style="border-color: #${board.color};">
                         <h4>${board.board_name}</h4>
+                        <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
+                        <div class="svg_dropdown">
+                            <svg onclick="document.querySelector('.svg_dropdown').classList.add('open')" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0" />
+                            </svg>
+                            <div>
+                                <option value="priority">By Priority</option>
+                                <hr>
+                                <option value="date">By Date</option>
+                                <hr>
+                                <option value="recent">By Most Recent</option>
+                                <hr>
+                                <option value="custom" disabled>Custom Order</option>
+                            </div>
+                        </div>
                         <input id="pin${board.board_id}" onchange="updateData({'upd_board_data':${board.board_id},'pin':event.target.checked})" class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
                         <label for="pin${board.board_id}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -235,6 +251,7 @@ function boardsViewDrop(event) {
                                     d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
                             </svg>
                         </label>
+                        </div>
                     </div>
                     <div class="dropzone dtask">`;
                 for (const [index, task] of board.tasks.entries()) {
@@ -292,7 +309,7 @@ function boardTemp() {
         const tmp = `
         <div id="board_temp" class="draggable board_closed" style="border-color: #555555;">
             <div class="input_default_box">
-                <input id="board_name" type="text" placeholder="Board Name" maxlength="30">
+                <input id="board_name" type="text" placeholder="Board Name" maxlength="25">
             </div>
             <input id="board_color" class="input_color" type="color">
         </div>`
@@ -327,7 +344,7 @@ function boardEdit(board_id, prev_name, prev_color) {
         const tmp = `
         <div id="board_temp" class="draggable board_closed" style="border-color: #${prev_color};">
         <div class="input_default_box">
-        <input id="board_name" type="text" placeholder="Board Name" maxlength="30" value="${prev_name}">
+        <input id="board_name" type="text" placeholder="Board Name" maxlength="25" value="${prev_name}">
         </div>
         <input id="board_color" class="input_color" type="color" value="#${prev_color}" oninput="document.getElementById('board_temp').style.borderColor=event.target.value">
         </div>`

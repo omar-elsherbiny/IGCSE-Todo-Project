@@ -140,6 +140,47 @@ input[data-autocompleted] {background-color: transparent !important;}
 .input_dropdown:focus-within {border: 2px solid var(--accent);}
 /*######################## input dropdown*/
 
+.svg_dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.svg_dropdown svg {cursor: pointer;}
+.svg_dropdown svg:hover {color: rgb(117, 117, 117);}
+.svg_dropdown svg.custom {color: #2590f4;}
+.svg_dropdown svg.custom:hover {color: #2875bd;}
+.svg_dropdown div {
+    position: absolute;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    scale: 0;
+    height: 0;
+    width: 0;
+    transition: all 0.5s ease-in-out;
+}
+.svg_dropdown div hr {
+    width: 85%;
+    color: 2px solid var(--border-highlight);
+}
+.svg_dropdown div option {cursor: pointer;}
+.svg_dropdown div option:hover {background-color: rgb(from var(--border-highlight) r g b / 5%);}
+.svg_dropdown div option:disabled:hover {background-color: transparent;}
+.svg_dropdown.open div {
+    scale: 1;
+    height: clamp(3.5rem, 5.5rem, 20rem);
+    width: clamp(3.5rem, 8rem, 20rem);
+    border-radius: 10px;
+    padding: 0.25rem;
+    background-color: whitesmoke;
+    box-shadow: var(--shadow-elevation-medium)
+}
+/*######################## input dropdown*/
+
 .input_color {
     -webkit-appearance: none;
     -moz-appearance: none;
