@@ -322,7 +322,7 @@ function boardTemp() {
         });
     }
 }
-function boardEdit(event, board_id, prev_name, prev_color) {
+function boardEdit(board_id, prev_name, prev_color) {
     if (document.querySelector('#board_temp') == null) {
         const tmp = `
         <div id="board_temp" class="draggable board_closed" style="border-color: #${prev_color};">
