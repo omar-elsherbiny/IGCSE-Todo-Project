@@ -496,13 +496,24 @@ input[data-autocompleted] {background-color: transparent !important;}
     overflow: hidden;
 }
 .timer_clock h5 {z-index: 99;}
-.timer_clock::before {
-    content: '';
+.timer_clock div {
     position: absolute;
     top: 0;
     width: 6rem;
     height: 6rem;
     z-index: 1;
     background-color: var(--border-highlight);
+}
+@keyframes scale_bounce2 {
+    0%,100% {
+        scale: 1;
+    }
+    50% {
+        scale: 1.1;
+    }
+}
+@keyframes smol_background {
+    from {top: 0;}
+    to {top: 100%;}
 }
 /*######################## timer*/

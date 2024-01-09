@@ -11,6 +11,8 @@ function startTimer(duration) {
     timerDuration = duration;
     elapsedTime = 0;
     paused = false;
+    document.querySelector('.timer_clock h5').style.animation = 'scale_bounce2 ease-in-out 1s infinite';
+    document.querySelector('.timer_clock div').style.animation = 'smol_background linear ' + timerDuration + 's';
 
     updateTimerDisplay();
 
@@ -26,14 +28,24 @@ function startTimer(duration) {
     }, 1000);
 }
 
-function pauseTimer() {paused = true;}
+function pauseTimer() {
+    document.querySelector('.timer_clock h5').style.animation = '';
+    document.querySelector('.timer_clock div').style.animationPlayState = 'paused';
+    paused = true;
+}
 
-function resumeTimer() {paused = false;}
+function resumeTimer() {
+    paused = false;
+    document.querySelector('.timer_clock h5').style.animation = 'scale_bounce2 ease-in-out 1s infinite';
+    document.querySelector('.timer_clock div').style.animationPlayState = 'running';
+}
 
 function resetTimer() {
     clearInterval(timer);
     elapsedTime = 0;
     paused = false;
+    document.querySelector('.timer_clock h5').style.animation = '';
+    document.querySelector('.timer_clock div').style.animation = '';
     updateTimerDisplay();
 }
 
