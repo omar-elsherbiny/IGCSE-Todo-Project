@@ -230,8 +230,8 @@ function boardsViewDrop(event) {
                         <h4>${board.board_name}</h4>
                         <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
                         <div class="svg_dropdown">
-                            <svg onclick="document.querySelector('.svg_dropdown').classList.add('open')" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="currentColor"
+                            <svg onclick="event.target.parentElement.classList.toggle('open')" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                                <path onclick="event.target.parentElement.parentElement.classList.toggle('open')" fill="currentColor"
                                     d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0" />
                             </svg>
                             <div>
