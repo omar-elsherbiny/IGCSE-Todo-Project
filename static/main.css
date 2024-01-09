@@ -170,7 +170,10 @@ input[data-autocompleted] {background-color: transparent !important;}
 .svg_dropdown div option {cursor: pointer;}
 .svg_dropdown div option.selected {border: 2px solid #2590f4;}
 .svg_dropdown div option:hover {background-color: rgb(from var(--border-highlight) r g b / 5%);}
-.svg_dropdown div option:disabled:hover {background-color: transparent;}
+.svg_dropdown div option:disabled:hover {
+    background-color: transparent;
+    cursor: default;
+}
 .svg_dropdown.open div {
     scale: 1;
     height: clamp(3.5rem, 5.5rem, 20rem);

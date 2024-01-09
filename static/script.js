@@ -235,13 +235,13 @@ function boardsViewDrop(event) {
                                     d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0" />
                             </svg>
                             <div>
-                                <option value="priority">By Priority</option>
+                                <option value="0">By Priority</option>
                                 <hr>
-                                <option value="date">By Date</option>
+                                <option value="1">By Date</option>
                                 <hr>
-                                <option value="recent">By Most Recent</option>
+                                <option value="2">By Most Recent</option>
                                 <hr>
-                                <option value="custom" disabled>Custom Order</option>
+                                <option value="3" disabled>Custom Order</option>
                             </div>
                         </div>
                         <input id="pin${board.board_id}" onchange="updateData({'upd_board_data':${board.board_id},'pin':event.target.checked})" class="pin" type="checkbox" ${board.is_pinned ? 'checked' : ''}>
@@ -311,7 +311,7 @@ function boardTemp() {
             <div class="input_default_box">
                 <input id="board_name" type="text" placeholder="Board Name" maxlength="25">
             </div>
-            <input id="board_color" class="input_color" type="color">
+            <input id="board_color" class="input_color" type="color" value="#555555" oninput="document.getElementById('board_temp').style.borderColor=event.target.value">
         </div>`
         boards_list.innerHTML += tmp;
 

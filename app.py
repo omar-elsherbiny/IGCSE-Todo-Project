@@ -96,8 +96,9 @@ def receive_data():
                          int(client_data['pin']), session['user_id'], int(client_data['upd_board_data']))
 
         if 'add_task' in client_data:
-            db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order) VALUES (?,?,?,'',?,?,-1)",
-                     session['user_id'], int(client_data['board_id']), client_data['task'], client_data['date'], int(client_data['priority']))
+            db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order,creation_date) VALUES (?,?,?,'',?,?,-1,?)",
+                     session['user_id'], int(client_data['board_id']), 
+                     client_data['task'], client_data['date'], int(client_data['priority']), current_time())
             board_modified(client_data['board_id'])
             return db_query(
                 "SELECT task_id FROM tasks WHERE id=? AND board_id=? AND task=? AND priority=? AND custom_order=-1",
