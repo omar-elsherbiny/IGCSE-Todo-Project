@@ -487,7 +487,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     transition: color 0.3s ease-in-out;
     cursor: pointer;
 }
-.timer_control svg:hover {color: whitesmoke;}
+.timer_control svg:hover {color: var(--text-alt);}
 .timer_clock {
     position: relative;
     width: 6rem;

@@ -1,13 +1,17 @@
+
 let timer;
 let timerDuration = 300;
 let paused = false;
 let elapsedTime = 0;
+
+const padZero = (value) => (value < 10 ? '0' + value : value);
 
 function startTimer() {
     if (timer) {
         clearInterval(timer);
     }
 
+    localStorage.setItem('timer_duration', timerDuration);
     elapsedTime = 0;
     paused = false;
     document.querySelector('#start_controls').classList.toggle('hide');
@@ -23,8 +27,7 @@ function startTimer() {
             updateTimerDisplay();
 
             if (elapsedTime >= timerDuration) {
-                document.querySelector('#start_controls').classList.toggle('hide');
-                document.querySelector('#playing_controls').classList.toggle('hide');
+                resetTimer();
                 clearInterval(timer);
             }
         }
@@ -63,8 +66,7 @@ function updateTimerDisplay() {
     const hours = Math.floor(remainingTime / 3600);
     const minutes = Math.floor((remainingTime % 3600) / 60);
     const seconds = remainingTime % 60;
-
-    const padZero = (value) => (value < 10 ? '0' + value : value);
+    localStorage.setItem('timer_remaining', remainingTime);
 
     if (hours > 0) {
         document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
@@ -80,11 +82,15 @@ function addTimer(time) {
     const minutes = Math.floor((timerDuration % 3600) / 60);
     const seconds = timerDuration % 60;
 
-    const padZero = (value) => (value < 10 ? '0' + value : value);
-
     if (hours > 0) {
         document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
     } else {
         document.querySelector('#timer h5').textContent = padZero(minutes) + ':' + padZero(seconds);
     }
+}
+
+if (localStorage.getItem('timer_remaining') && localStorage.getItem('timer_remaining')!=localStorage.getItem('timer_duration')) {
+    timerDuration=Number(localStorage.getItem('timer_remaining'));
+    startTimer();
+    pauseTimer();
 }
