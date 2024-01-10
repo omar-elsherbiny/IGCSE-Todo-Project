@@ -479,7 +479,15 @@ input[data-autocompleted] {background-color: transparent !important;}
 .timer_control {
     display: flex;
     height: fit-content;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.1rem;
 }
+.timer_control svg {
+    transition: color 0.3s ease-in-out;
+    cursor: pointer;
+}
+.timer_control svg:hover {color: whitesmoke;}
 .timer_clock {
     position: relative;
     width: 6rem;

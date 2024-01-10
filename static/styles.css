@@ -102,7 +102,7 @@ h5 {font-size: 1.1rem;/* 20px 1.250rem*/}
 h6 {font-size: 1rem;/*  */}
 small {font-size: 0.800rem;/* 12.8px */}
 
-.hide {display: none;}
+.hide {display: none !important;}
 
 .prevent-select {
     -webkit-user-select: none;
