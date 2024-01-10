@@ -438,7 +438,6 @@ input[data-autocompleted] {background-color: transparent !important;}
     display: grid;
     grid-template-areas:
         "a a a b b"
-        "a a a c c"
         "a a a c c";
     gap: 1rem;
 }
@@ -479,9 +478,10 @@ input[data-autocompleted] {background-color: transparent !important;}
 .timer_control {
     display: flex;
     height: fit-content;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
     gap: 0.1rem;
+    width: 100%;
 }
 .timer_control svg {
     transition: color 0.3s ease-in-out;
