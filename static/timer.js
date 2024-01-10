@@ -10,8 +10,6 @@ function startTimer() {
 
     elapsedTime = 0;
     paused = false;
-    //document.querySelector('#timer h4').classList.toggle('hide');
-    //document.querySelector('.timer_clock').classList.toggle('hide');
     document.querySelector('#start_controls').classList.toggle('hide');
     document.querySelector('#playing_controls').classList.toggle('hide');
     document.querySelector('.timer_clock h5').style.animation = 'scale_bounce2 ease-in-out 1s infinite';
@@ -25,8 +23,6 @@ function startTimer() {
             updateTimerDisplay();
 
             if (elapsedTime >= timerDuration) {
-                //document.querySelector('#timer h4').classList.toggle('hide');
-                //document.querySelector('.timer_clock').classList.toggle('hide');
                 document.querySelector('#start_controls').classList.toggle('hide');
                 document.querySelector('#playing_controls').classList.toggle('hide');
                 clearInterval(timer);
@@ -58,23 +54,37 @@ function resetTimer() {
     document.querySelector('.timer_clock h5').style.animation = '';
     document.querySelector('.timer_clock div').style.animation = '';
     updateTimerDisplay();
-    //document.querySelector('#timer h4').classList.toggle('hide');
-    //document.querySelector('.timer_clock').classList.toggle('hide');
     document.querySelector('#start_controls').classList.toggle('hide');
     document.querySelector('#playing_controls').classList.toggle('hide');
 }
 
 function updateTimerDisplay() {
-    const timerDisplay = document.querySelector('.timer_clock h5');
     const remainingTime = timerDuration - elapsedTime;
-    const minutes = Math.floor(remainingTime / 60);
+    const hours = Math.floor(remainingTime / 3600);
+    const minutes = Math.floor((remainingTime % 3600) / 60);
     const seconds = remainingTime % 60;
-    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    const padZero = (value) => (value < 10 ? '0' + value : value);
+
+    if (hours > 0) {
+        document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
+    } else {
+        document.querySelector('#timer h5').textContent = padZero(minutes) + ':' + padZero(seconds);
+    }
 }
 
 function addTimer(time) {
-    timerDuration = (timerDuration + time) > 0 ? (timerDuration + time) : timerDuration;
-    const minutes = Math.floor(timerDuration / 60);
+    timerDuration = (timerDuration + time) > 0 ? (timerDuration + time) : 30;
+
+    const hours = Math.floor(timerDuration / 3600);
+    const minutes = Math.floor((timerDuration % 3600) / 60);
     const seconds = timerDuration % 60;
-    document.querySelector('#timer h5').textContent = minutes + ':' + (seconds < 10 ? seconds + '0' : seconds);
+
+    const padZero = (value) => (value < 10 ? '0' + value : value);
+
+    if (hours > 0) {
+        document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
+    } else {
+        document.querySelector('#timer h5').textContent = padZero(minutes) + ':' + padZero(seconds);
+    }
 }
