@@ -6,12 +6,17 @@ let elapsedTime = 0;
 
 const padZero = (value) => (value < 10 ? '0' + value : value);
 
+function currentTime() {
+    return Math.floor(new Date().getTime() / 1000);
+}
+
 function startTimer() {
     if (timer) {
         clearInterval(timer);
     }
 
     localStorage.setItem('timer_duration', timerDuration);
+    localStorage.setItem('timer_first_epoch', currentTime());
     elapsedTime = 0;
     paused = false;
     document.querySelector('#start_controls').classList.toggle('hide');
@@ -79,7 +84,6 @@ function updateTimerDisplay() {
     const hours = Math.floor(remainingTime / 3600);
     const minutes = Math.floor((remainingTime % 3600) / 60);
     const seconds = remainingTime % 60;
-    localStorage.setItem('timer_remaining', remainingTime);
 
     if (hours > 0) {
         document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
@@ -102,8 +106,12 @@ function addTimer(time) {
     }
 }
 
-if (localStorage.getItem('timer_remaining') && localStorage.getItem('timer_remaining')!=localStorage.getItem('timer_duration')) {
-    timerDuration=Number(localStorage.getItem('timer_remaining'));
-    startTimer();
-    pauseTimer();
+if (localStorage.getItem('timer_duration')) {
+    const first_epoch = Number(localStorage.getItem('timer_first_epoch'));
+    const duration = Number(localStorage.getItem('timer_duration'));
+    let timeLeft = duration - (currentTime() - first_epoch);
+    if (timeLeft>0) {
+        timerDuration = timeLeft;
+        startTimer();
+    }
 }

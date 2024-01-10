@@ -97,7 +97,7 @@ def receive_data():
 
         if 'add_task' in client_data:
             db_query("INSERT INTO tasks (id,board_id,task,list,date,priority,custom_order,creation_date) VALUES (?,?,?,'',?,?,-1,?)",
-                     session['user_id'], int(client_data['board_id']), 
+                     session['user_id'], int(client_data['board_id']),
                      client_data['task'], client_data['date'], int(client_data['priority']), current_time())
             board_modified(client_data['board_id'])
             return db_query(
@@ -128,7 +128,9 @@ def receive_data():
 @login_required
 def index():
     set_tooltips('Welcome here', 'test', 'hehehehe')
-    return render_template('index.html')
+    tasks_done = db_query(
+        'SELECT tasks_done FROM users WHERE id=?', session['user_id'])[0]['tasks_done']
+    return render_template('index.html', tasks_done=tasks_done)
 
 
 @app.route('/todos', methods=['GET', 'POST'])

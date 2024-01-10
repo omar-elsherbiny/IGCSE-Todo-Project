@@ -28,7 +28,14 @@ Home
         </svg>
     </div>
     <div id="n_tasks" class="container">
-        <h4>n</h4>
+        {% if tasks_done==0 %}
+        <h4>No Tasks Done Yet</h4>
+        {% elif tasks_done==1 %}
+        <h4>{{ tasks_done }} task done</h4>
+        {% else %}
+        <h4>{{ tasks_done }} tasks done</h4>
+        <h6>Good Job!</h6>
+        {% endif %}
     </div>
     <div id="timer" class="container">
         <div class="timer_clock">
@@ -39,7 +46,7 @@ Home
             <svg onclick="addTimer(-300)" style="margin-right: 0.5rem;" version="1.1" id="Layer_1" onclick="addTimer(-30)" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32"
                 enable-background="new 0 0 32 32" xml:space="preserve">
-                <path stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M5.333,16c0-0.736,0.597-1.333,1.333-1.333h18.667
+                <path stroke="currentColor" stroke-width="2" stroke-miterlimit="10" d="M5.333,16c0-0.736,0.597-1.333,1.333-1.333h18.667
             	c0.736,0,1.332,0.597,1.332,1.333s-0.596,1.334-1.332,1.334H6.667C5.93,17.334,5.333,16.736,5.333,16" />
             </svg>
             <svg onclick="addTimer(-30)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 12 12">
@@ -56,7 +63,7 @@ Home
             <svg onclick="addTimer(300)" style="margin-left: 0.5rem;" version="1.1" id="Layer_1" onclick="addTimer(30)" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32"
                 enable-background="new 0 0 32 32" xml:space="preserve">
-                <path stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M14.667,17.334H8c-0.378,0-0.694-0.129-0.949-0.385
+                <path stroke="currentColor" stroke-width="2" stroke-miterlimit="10" d="M14.667,17.334H8c-0.378,0-0.694-0.129-0.949-0.385
             	C6.795,16.693,6.667,16.377,6.667,16c0-0.378,0.128-0.694,0.384-0.949C7.307,14.795,7.623,14.667,8,14.667h6.667V8
             	c0-0.378,0.128-0.694,0.384-0.949C15.307,6.795,15.623,6.667,16,6.667c0.378,0,0.695,0.128,0.951,0.384S17.334,7.623,17.334,8v6.667
             	H24c0.378,0,0.695,0.128,0.951,0.384s0.383,0.572,0.383,0.949c0,0.378-0.129,0.695-0.385,0.951S24.377,17.334,24,17.334h-6.666V24
