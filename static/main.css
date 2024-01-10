@@ -474,6 +474,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     padding: 0;
     margin: 0;
     background-color: var(--secondary);
+    justify-content: space-around;
 }
 .timer_control {
     display: flex;
@@ -481,7 +482,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     justify-content: center;
     align-items: center;
     gap: 0.1rem;
-    width: 100%;
+    width: 12.65rem;
 }
 .timer_control svg {
     transition: color 0.3s ease-in-out;

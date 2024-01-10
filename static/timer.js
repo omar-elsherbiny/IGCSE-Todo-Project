@@ -71,7 +71,7 @@ function updateTimerDisplay() {
     if (hours > 0) {
         document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
     } else {
-        document.querySelector('#timer h5').textContent = padZero(minutes) + ':' + padZero(seconds);
+        document.querySelector('#timer h5').textContent = minutes + ':' + padZero(seconds);
     }
 }
 
@@ -85,7 +85,7 @@ function addTimer(time) {
     if (hours > 0) {
         document.querySelector('#timer h5').textContent = hours + ':' + padZero(minutes) + ':' + padZero(seconds);
     } else {
-        document.querySelector('#timer h5').textContent = padZero(minutes) + ':' + padZero(seconds);
+        document.querySelector('#timer h5').textContent = minutes + ':' + padZero(seconds);
     }
 }
 
