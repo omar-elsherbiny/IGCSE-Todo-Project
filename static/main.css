@@ -432,7 +432,7 @@ input[data-autocompleted] {background-color: transparent !important;}
 
 #home_grid {
     width: 85%;
-    height: 85%;
+    height: clamp(15rem,64%,100%);
     justify-items: center;
     align-items: stretch;
     display: grid;
@@ -454,17 +454,19 @@ input[data-autocompleted] {background-color: transparent !important;}
     margin: 0;
     color: var(--text-alt);
     background-color: var(--text);
+    padding: 0.5rem 0;
 }
 #pinned_boards {
     width: 85%;
-    height: 85%;
     justify-items: center;
-    align-items: stretch;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    column-count: 2;
+    margin: 1rem auto;
 }
-#pinned_boards div {
-    width: auto;
+#pinned_boards>div {
+    height: fit-content;
+    width: 80%;
+    break-inside: avoid;
+    margin: 0 auto 1rem auto;
 }
 /*######################## home*/
 
@@ -475,6 +477,8 @@ input[data-autocompleted] {background-color: transparent !important;}
     margin: 0;
     background-color: var(--secondary);
     justify-content: space-around;
+    padding: 0.5rem 0;
+    gap: 10px;
 }
 .timer_control {
     display: flex;

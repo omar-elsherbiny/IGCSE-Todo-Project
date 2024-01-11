@@ -46,7 +46,7 @@ Home
             <svg onclick="addTimer(-300)" style="margin-right: 0.5rem;" version="1.1" id="Layer_1" onclick="addTimer(-30)" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32"
                 enable-background="new 0 0 32 32" xml:space="preserve">
-                <path stroke="currentColor" stroke-width="2" stroke-miterlimit="10" d="M5.333,16c0-0.736,0.597-1.333,1.333-1.333h18.667
+                <path stroke="currentColor" fill="currentColor" stroke-width="2" stroke-miterlimit="10" d="M5.333,16c0-0.736,0.597-1.333,1.333-1.333h18.667
             	c0.736,0,1.332,0.597,1.332,1.333s-0.596,1.334-1.332,1.334H6.667C5.93,17.334,5.333,16.736,5.333,16" />
             </svg>
             <svg onclick="addTimer(-30)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 12 12">
@@ -63,7 +63,7 @@ Home
             <svg onclick="addTimer(300)" style="margin-left: 0.5rem;" version="1.1" id="Layer_1" onclick="addTimer(30)" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32"
                 enable-background="new 0 0 32 32" xml:space="preserve">
-                <path stroke="currentColor" stroke-width="2" stroke-miterlimit="10" d="M14.667,17.334H8c-0.378,0-0.694-0.129-0.949-0.385
+                <path stroke="currentColor" fill="currentColor" stroke-width="2" stroke-miterlimit="10" d="M14.667,17.334H8c-0.378,0-0.694-0.129-0.949-0.385
             	C6.795,16.693,6.667,16.377,6.667,16c0-0.378,0.128-0.694,0.384-0.949C7.307,14.795,7.623,14.667,8,14.667h6.667V8
             	c0-0.378,0.128-0.694,0.384-0.949C15.307,6.795,15.623,6.667,16,6.667c0.378,0,0.695,0.128,0.951,0.384S17.334,7.623,17.334,8v6.667
             	H24c0.378,0,0.695,0.128,0.951,0.384s0.383,0.572,0.383,0.949c0,0.378-0.129,0.695-0.385,0.951S24.377,17.334,24,17.334h-6.666V24
@@ -90,18 +90,17 @@ Home
     </div>
 </div>
 <h4 class="prevent-select" style="margin: 1.5rem 0 0 1rem;">Pinned Boards:</h4>
+{% if pinned_boards|length > 0 %}
 <div id="pinned_boards">
-    <div id="board1" class="draggable board_open" draggable="true">
-        <div style="border-color: #db1414;">
-            <h4>MyBoard</h4>
+    {% for board in pinned_boards %}
+    <div id="board{{ board.board_id }}" class="draggable board_open">
+        <div style="border-color: #{{ board.color }};">
+            <h4>{{ board.board_name }}</h4>
             <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
                 <div class="svg_dropdown">
-                    <svg onclick="event.target.parentElement.classList.toggle('open')"
-                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path onclick="event.target.parentElement.parentElement.classList.toggle('open')"
-                            fill="currentColor"
-                            d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0">
-                        </path>
+                    <svg onclick="event.target.parentElement.classList.toggle('open')" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path onclick="event.target.parentElement.parentElement.classList.toggle('open')" fill="currentColor"
+                            d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0" />
                     </svg>
                     <div>
                         <option value="0">By Priority</option>
@@ -110,190 +109,79 @@ Home
                         <hr>
                         <option value="2">By Most Recent</option>
                         <hr>
-                        <option value="3" disabled="">Custom Order</option>
+                        <option value="3" disabled>Custom Order</option>
                     </div>
                 </div>
-
-                <input id="pin1" onchange="updateData({'upd_board_data':1,'pin':event.target.checked})" class="pin"
-                    type="checkbox">
-
-                <label for="pin1">
+                {% if board.is_pinned %}
+                <input id="pin{{ board.board_id }}" onchange="updateData({'upd_board_data':{{ board.board_id }},'pin':event.target.checked})" class="pin" type="checkbox" checked>
+                {% else %}
+                <input id="pin{{ board.board_id }}" onchange="updateData({'upd_board_data':{{ board.board_id }},'pin':event.target.checked})" class="pin" type="checkbox">
+                {% endif %}
+                <label for="pin{{ board.board_id }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor"
-                            d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z">
-                        </path>
+                            d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z" />
                     </svg>
                 </label>
             </div>
         </div>
         <div class="dropzone dtask">
-
-            <div id="task1" class="draggable task" draggable="true">
-                <div style="border-color: var(--priority2);">
-                    <svg id="task_dropdown_down" onclick="toggleTaskList(1,1)" xmlns="http://www.w3.org/2000/svg"
-                        width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062">
-                        </path>
-                    </svg>
-                    <svg id="task_dropdown_up" onclick="toggleTaskList(1,1)" class="hide"
+            {% for task in board.tasks %}
+            <div id="task{{ task.task_id }}" class="draggable task" draggable="true">
+                <div style="border-color: var(--priority{{ task.priority }});">
+                    <svg id="task_dropdown_down" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})"
                         xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                         <path fill="currentColor"
-                            d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z">
-                        </path>
+                            d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062" />
                     </svg>
-                    <h5>dsadasd</h5>
-                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                    <svg id="task_check" onclick="doneTask(1,1)" xmlns="http://www.w3.org/2000/svg" width="32"
-                        height="32" viewBox="0 0 24 24">
+                    <svg id="task_dropdown_up" onclick="toggleTaskList({{ board.board_id }},{{ loop.index }})"
+                        class="hide" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                         <path fill="currentColor"
-                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z">
-                        </path>
+                            d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z" />
+                    </svg>
+                    <h5>{{ task.task }}</h5>
+                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
+                    <svg id="task_check" onclick="doneTask({{ board.board_id }},{{ task.task_id }})" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z" />
                     </svg>
                 </div>
                 <div class="dropzone dlist_item" style="display: none;">
-
-
+                    {% set outer_loop = loop %}
+                    {% for li in task.list %}
+                    <li class="draggable list_item" draggable="true"
+                        ondrop="taskLiDrop(event,{{ board.board_id }},{{ outer_loop.index }})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+                            <path fill="currentColor"
+                                d="m7.825 10l2.9 2.9q.3.3.288.7t-.288.7q-.3.3-.7.313t-.7-.288L4.7 9.7q-.15-.15-.213-.325T4.426 9q0-.2.063-.375T4.7 8.3l4.575-4.575q.3-.3.713-.3t.712.3q.3.3.3.7t-.3.7L7.825 8H17q.825 0 1.413.588T19 10v9q0 .425-.288.713T18 20q-.425 0-.712-.288T17 19v-9z" />
+                        </svg>
+                        <div>
+                            {% if li.checked %}
+                            <input class="input_checkbox" type="checkbox"
+                                onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})" checked>
+                            {% else %}
+                            <input class="input_checkbox" type="checkbox"
+                                onchange="updateTaskLi({{ board.board_id }},{{ outer_loop.index }})">
+                            {% endif %}
+                            <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2);">|</h4>
+                            <h6>{{ li.content }}</h6>
+                        </div>
+                    </li>
+                    {% endfor %}
                 </div>
             </div>
-
+            {% endfor %}
         </div>
     </div>
-    <div id="board1" class="draggable board_open" draggable="true">
-        <div style="border-color: #db1414;">
-            <h4>MyBoard</h4>
-            <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
-                <div class="svg_dropdown">
-                    <svg onclick="event.target.parentElement.classList.toggle('open')"
-                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path onclick="event.target.parentElement.parentElement.classList.toggle('open')"
-                            fill="currentColor"
-                            d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0">
-                        </path>
-                    </svg>
-                    <div>
-                        <option value="0">By Priority</option>
-                        <hr>
-                        <option value="1">By Date</option>
-                        <hr>
-                        <option value="2">By Most Recent</option>
-                        <hr>
-                        <option value="3" disabled="">Custom Order</option>
-                    </div>
-                </div>
-
-                <input id="pin1" onchange="updateData({'upd_board_data':1,'pin':event.target.checked})" class="pin"
-                    type="checkbox">
-
-                <label for="pin1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z">
-                        </path>
-                    </svg>
-                </label>
-            </div>
-        </div>
-        <div class="dropzone dtask">
-
-            <div id="task1" class="draggable task" draggable="true">
-                <div style="border-color: var(--priority2);">
-                    <svg id="task_dropdown_down" onclick="toggleTaskList(1,1)" xmlns="http://www.w3.org/2000/svg"
-                        width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062">
-                        </path>
-                    </svg>
-                    <svg id="task_dropdown_up" onclick="toggleTaskList(1,1)" class="hide"
-                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z">
-                        </path>
-                    </svg>
-                    <h5>dsadasd</h5>
-                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                    <svg id="task_check" onclick="doneTask(1,1)" xmlns="http://www.w3.org/2000/svg" width="32"
-                        height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="dropzone dlist_item" style="display: none;">
-
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div id="board1" class="draggable board_open" draggable="true">
-        <div style="border-color: #db1414;">
-            <h4>MyBoard</h4>
-            <div style="display: flex;justify-content: space-around;align-items: center;gap: 1rem;">
-                <div class="svg_dropdown">
-                    <svg onclick="event.target.parentElement.classList.toggle('open')"
-                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path onclick="event.target.parentElement.parentElement.classList.toggle('open')"
-                            fill="currentColor"
-                            d="M11 20q-.425 0-.712-.288T10 19v-6L4.2 5.6q-.375-.5-.112-1.05T5 4h14q.65 0 .913.55T19.8 5.6L14 13v6q0 .425-.288.713T13 20zm1-7.7L16.95 6h-9.9zm0 0">
-                        </path>
-                    </svg>
-                    <div>
-                        <option value="0">By Priority</option>
-                        <hr>
-                        <option value="1">By Date</option>
-                        <hr>
-                        <option value="2">By Most Recent</option>
-                        <hr>
-                        <option value="3" disabled="">Custom Order</option>
-                    </div>
-                </div>
-
-                <input id="pin1" onchange="updateData({'upd_board_data':1,'pin':event.target.checked})" class="pin"
-                    type="checkbox">
-
-                <label for="pin1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="m13.827 1.69l8.486 8.485l-1.415 1.414l-.707-.707l-4.242 4.243l-.707 3.536l-1.415 1.414l-4.242-4.243l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.243-4.243l1.414-1.414l3.536-.707l4.242-4.243l-.707-.707zm.707 3.536l-4.67 4.67l-2.822.565l6.5 6.5l.564-2.822l4.671-4.67z">
-                        </path>
-                    </svg>
-                </label>
-            </div>
-        </div>
-        <div class="dropzone dtask">
-
-            <div id="task1" class="draggable task" draggable="true">
-                <div style="border-color: var(--priority2);">
-                    <svg id="task_dropdown_down" onclick="toggleTaskList(1,1)" xmlns="http://www.w3.org/2000/svg"
-                        width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 14.975q-.2 0-.375-.062T11.3 14.7l-4.6-4.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l3.9 3.9l3.9-3.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062">
-                        </path>
-                    </svg>
-                    <svg id="task_dropdown_up" onclick="toggleTaskList(1,1)" class="hide"
-                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 13.825L8.1 17.7q-.275.275-.687.288T6.7 17.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.213t.375-.062q.2 0 .375.062t.325.213l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275zm0-6L8.1 11.7q-.275.275-.687.288T6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275z">
-                        </path>
-                    </svg>
-                    <h5>dsadasd</h5>
-                    <h4 class="prevent-select" style="color: rgba(0, 0, 0, 0.2); margin-left: 0.5rem;">|</h4>
-                    <svg id="task_check" onclick="doneTask(1,1)" xmlns="http://www.w3.org/2000/svg" width="32"
-                        height="32" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="m10 13.6l5.9-5.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-6.6 6.6q-.3.3-.7.3t-.7-.3l-2.6-2.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="dropzone dlist_item" style="display: none;">
-
-
-                </div>
-            </div>
-
-        </div>
-    </div>
+    {% endfor %}
 </div>
+{% else %}
+<div style="display: flex;justify-content: center;align-items: center; height: 30%;flex-direction: column;color: var(--border-highlight);">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m3 3l18 18M15 4.5l-3.249 3.249m-2.57 1.433L7 10l-1.5 1.5l7 7L14 17l.82-2.186m1.43-2.563L19.5 9M9 15l-4.5 4.5M14.5 4L20 9.5" />
+    </svg>
+    <h6>No Boards Pinned Yet</h6>
+</div>
+{% endif %}
 {% endblock %}

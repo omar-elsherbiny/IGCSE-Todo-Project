@@ -130,7 +130,18 @@ def index():
     set_tooltips('Welcome here', 'test', 'hehehehe')
     tasks_done = db_query(
         'SELECT tasks_done FROM users WHERE id=?', session['user_id'])[0]['tasks_done']
-    return render_template('index.html', tasks_done=tasks_done)
+
+    pinned_boards = db_query(
+        'SELECT * FROM boards WHERE id=? AND is_pinned=1', session['user_id'])
+    pinned_boards = remove_dictlist_keys(pinned_boards, 'id')
+    for board in pinned_boards:
+        ts = db_query('SELECT * FROM tasks WHERE id=? AND board_id=?',
+                      session['user_id'], board['board_id'])
+        for t in ts:
+            t['list'] = sorted([{'content': x.split('::')[0], 'checked': int(x.split(
+                '::')[1])} for x in t['list'].split('||') if x], key=lambda x: x['checked'])
+        board['tasks'] = remove_dictlist_keys(ts, 'id', 'board_id')
+    return render_template('index.html', tasks_done=tasks_done, pinned_boards=pinned_boards)
 
 
 @app.route('/todos', methods=['GET', 'POST'])
