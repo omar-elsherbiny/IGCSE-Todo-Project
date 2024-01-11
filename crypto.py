@@ -1,5 +1,4 @@
 from random import seed, choices
-import numpy
 
 chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 

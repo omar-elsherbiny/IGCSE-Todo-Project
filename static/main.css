@@ -500,9 +500,10 @@ input[data-autocompleted] {background-color: transparent !important;}
     color: whitesmoke;
 
     border-radius: 50%;
-    border: 5px solid whitesmoke;
+    border: 5px solid var(--accent);
     box-shadow: var(--shadow-elevation-low);
     overflow: hidden;
+    transition: border 0.5s ease-in-out;
 }
 .timer_clock h5 {z-index: 99;}
 .timer_clock div {
