@@ -479,6 +479,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     justify-content: space-around;
     padding: 0.5rem 0;
     gap: 10px;
+    --timer-start: 0;
 }
 .timer_control {
     display: flex;
@@ -527,7 +528,7 @@ input[data-autocompleted] {background-color: transparent !important;}
     }
 }
 @keyframes smol_background {
-    from {top: 0;}
+    from {top: var(--timer-start);}
     to {top: 100%;}
 }
 /*######################## timer*/
